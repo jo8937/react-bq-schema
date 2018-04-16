@@ -5,7 +5,7 @@ Error: File to import not found or unreadable: ~bootstrap/scss/bootstrap.
 
 1: @import 'custom_bootstrap';
 2: 
-3: @import '~bootstrap/scss/bootstrap';
+3: @import "~bootstrap/scss/bootstrap";
 
 Backtrace:
 src/styles/scss/index.scss:3
@@ -53,4 +53,4 @@ C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-listen-4.0.0/lib/sass-listen/interna
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: File to import not found or unreadable: ~bootstrap/scss/bootstrap.\A        Load path: d:/a/react-bq-schema/src/styles/scss\A         on line 3 of src/styles/scss/index.scss\A \A 1: @import 'custom_bootstrap';\A 2: \A 3: @import '~bootstrap/scss/bootstrap';"; }
+  content: "Error: File to import not found or unreadable: ~bootstrap/scss/bootstrap.\A        Load path: d:/a/react-bq-schema/src/styles/scss\A         on line 3 of src/styles/scss/index.scss\A \A 1: @import 'custom_bootstrap';\A 2: \A 3: @import \"~bootstrap/scss/bootstrap\";"; }
