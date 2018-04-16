@@ -210,8 +210,8 @@ class App extends Component {
       </Pagination>
           </p> 
           <p>
-          <Table>
-        <thead>
+          <Table className="table-bordered-top-down table-thead-padded table-striped">
+        <thead className="thead-light">
           <tr>
             <th>#</th>
             <th>First Name</th>

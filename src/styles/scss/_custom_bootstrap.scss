@@ -1,7 +1,7 @@
 // stylelint-disable
 $white:    #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
+$gray-100: #f5f6f9 !default;
+$gray-200: #f5f6f9 !default; // #e5e5e5
 $gray-300: #dee2e6 !default;
 $gray-400: #ced4da !default;
 $gray-500: #adb5bd !default;
@@ -34,16 +34,33 @@ $yellow:  #ffc107 !default;
 $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
+ 
+/*
+    border-color: #22b66e;
+    background-color: #32bb78;
 
-$new-color: #ada214;
-// Array of colors from _variables.scss
+    #f5f6f9
+    #e5e5e5
+*/
+$table-head-bg: #f5f6f9;
+
+$input-bg: #fff;
+$component-active-bg: #2a84d8;
+//$input-color: ;
+$input-btn-focus-width:       .05rem !default;
+$input-btn-focus-color:       rgba($component-active-bg, 1) !default;
+$input-btn-focus-box-shadow:  0 0 0 $input-btn-focus-width $input-btn-focus-color !default;
+
+$table-accent-bg:             $gray-200 !default;
+$table-striped-order:         even !default;
+
 $theme-colors: (
-  primary: $new-color,
-  secondary: $gray-600,
-  success: $green,
-  info: $cyan,
-  warning: $yellow,
-  danger: $red,
-  light: $gray-100,
-  dark: $gray-800
+  primary: #2a84d8,
+  secondary: #c8c8c8,
+  success: #22b66e,
+  info: #5bc0de,
+  warning: #ffa715,
+  danger: #fa424a,
+  light: #bebebe,
+  dark: #30323a
 ) !default;
