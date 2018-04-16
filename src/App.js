@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import logo from './logo.svg';
-import './App.css';
-
 
 class App extends Component {
   render() {
@@ -17,6 +15,7 @@ class App extends Component {
         </p>
         <p className="App-intro">
           <Button color="danger">Danger!..</Button>
+          <Button color="primary">Primary!..</Button>
         </p>
       </div>
     );
