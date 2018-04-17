@@ -34,7 +34,7 @@ $yellow:  #ffc107 !default;
 $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
- 
+
 /*
     border-color: #22b66e;
     background-color: #32bb78;
@@ -50,13 +50,16 @@ $component-active-bg: #2a84d8;
 $input-btn-focus-width:       .05rem !default;
 $input-btn-focus-color:       rgba($component-active-bg, 1) !default;
 $input-btn-focus-box-shadow:  0 0 0 $input-btn-focus-width $input-btn-focus-color !default;
+$input-btn-border-width:       .05rem !default;
+$input-border-color: #e5e5e5 !default;
 
 $table-accent-bg:             $gray-200 !default;
 $table-striped-order:         even !default;
 
 $theme-colors: (
   primary: #2a84d8,
-  secondary: #c8c8c8,
+  //secondary: #c8c8c8,
+  secondary: #f8f9fa,
   success: #22b66e,
   info: #5bc0de,
   warning: #ffa715,
