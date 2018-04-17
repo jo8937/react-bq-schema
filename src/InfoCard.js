@@ -37,33 +37,33 @@ class InfoCard extends Component {
         <Row className={this.state.toggle ? 'd-block' : 'd-none'}>
         <Collapse isOpen={true}>
           <Container>
-          <Row>
-					<Col>
-					<table className="table borderless">
-								<tbody>
-										<tr>
-												<th scope="row" className="text-right">대상 앱 선택</th>
-												<td>com.test</td>
-										</tr>
-										<tr>
-												<th scope="row" className="text-right">테이블명</th>
-												<td>2017-01-01 15:33:44</td>
-										</tr>
-										<tr>
-												<th scope="row" className="text-right">설명</th>
-												<td>
-														<div className="textarea count">
+          <Row className="mt-md-3 mb-md-3 justify-content-center">
+								<Col xs="4" className="text-right font-weight-bold">
+								대상 앱 선택
+								</Col>
+								<Col xs="8" className="text-left">
+									One of two columns
+								</Col>
+					</Row>
+          <Row className="mt-md-3 mb-md-3 justify-content-center">
+								<Col xs="4" className="text-right font-weight-bold">
+								테이블명
+								</Col>
+								<Col xs="8" className="text-left">
+								2017-01-01 15:33:44
+								</Col>
+					</Row>
+          <Row className="mt-md-3 mb-md-3 justify-content-center">
+								<Col xs="4" className="text-right font-weight-bold">
+								설명
+								</Col>
+								<Col xs="8" className="text-left">
+								<div className="textarea count">
 																<textarea name="" id="" cols="30" rows="10"></textarea>
 																<div className="cnt"><strong>0</strong>/150</div>
 														</div>
-												</td>
-										</tr>
-								</tbody>
-						</table>
-						</Col>
-            {/* <Col className="text-right font-weight-bold">대상 게임 선택</Col>
-            <Col className="text-left">com.com2us.soccersprits</Col> */}
-          </Row>
+								</Col>
+					</Row>	
           </Container>
         </Collapse>
         </Row>
