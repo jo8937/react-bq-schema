@@ -2,3 +2,32 @@
 
 @import "~bootstrap/scss/bootstrap";
 //@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+@font-face{
+font-family:'Nanum Gothic';
+src:url('../static/fonts/NanumGothic-Regular.eot');
+src:local('?'),
+url('../static/fonts/NanumGothic-Regular.eot?#iefix') format('embedded-opentype'),
+url('../static/fonts/NanumGothic-Regular.woff2') format('woff2'),
+url('../static/fonts/NanumGothic-Regular.woff') format('woff'),
+url('../static/fonts/NanumGothic-Regular.ttf') format('truetype');
+}
+
+*:lang(ko)	{font-family:'Nanum Gothic','돋움',dotum,Arial,sans-serif;}
+*:lang(ja)	{font-family:'Hiragino Kaku Gothic Pro','ヒラギノ角ゴ Pro W3','メイリオ','Meiryo','Osaka','ＭＳ Ｐゴシック','MS PGothic',Arial,sans-serif;}
+*:lang(zh-hans),*:lang(zh-hant)	{font-family:'Times New Roman';}
+*:lang(vi)	{font-family:'Times New Roman',Palatino,Bodoni,Optima,Century,Garamond,sans-serif;}
+
+
+.fa-check{
+    color:rgb(41,181,105);
+}
+
+.bd-highlight {
+    background-color: $secondary;
+    border: .05rem solid $dark;
+}
+
+.borderless td, .borderless th {
+    border: none;
+}

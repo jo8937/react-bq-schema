@@ -35,6 +35,8 @@ $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 
+$font-family-base:  'Nanum Gothic','돋움','dotum','Arial','sans-serif' !default;
+
 /*
     border-color: #22b66e;
     background-color: #32bb78;
@@ -56,14 +58,22 @@ $input-border-color: #e5e5e5 !default;
 $table-accent-bg:             $gray-200 !default;
 $table-striped-order:         even !default;
 
+$primary:       #2a84d8 !default;
+$secondary:     #f5f6f9 !default;
+$success:       #22b66e !default;
+$info:          #5bc0de !default;
+$warning:       #ffa715 !default;
+$danger:        #fa424a !default;
+$light:         #bebebe !default;
+$dark:          #e5e5e5 !default;
+
 $theme-colors: (
-  primary: #2a84d8,
-  //secondary: #c8c8c8,
-  secondary: #f8f9fa,
-  success: #22b66e,
-  info: #5bc0de,
-  warning: #ffa715,
-  danger: #fa424a,
-  light: #bebebe,
-  dark: #30323a
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
 ) !default;

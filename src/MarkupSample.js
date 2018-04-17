@@ -5,14 +5,15 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import { Table } from 'reactstrap';
 import Checkbox from './Checkbox';
-import Editable from 'react-x-editable';
+//import Editable from 'react-x-editable';
+import EditableCustom from './EditableCustom';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
         <p>
-        <Editable
+        <EditableCustom
           name="username"
           dataType="text"
           mode="inline"
