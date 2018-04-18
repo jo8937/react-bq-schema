@@ -8,7 +8,8 @@ import { Card, CardImg, CardText, CardBody,  CardTitle, CardSubtitle, CardHeader
 import Checkbox from './Checkbox';
 //import Editable from 'react-x-editable';
 import EditableCustom from './EditableCustom';
-import InfoCard from './InfoCard';
+import Panel from './Panel';
+import PanelInfo from './PanelInfo';
 
 class App extends Component {
 
@@ -16,8 +17,8 @@ class App extends Component {
     return (
       <div className="App">
 
-      <InfoCard/>
-      <InfoCard/>
+      <PanelInfo/>
+      <PanelInfo/>
       </div>
     );
   }
