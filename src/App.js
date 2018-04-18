@@ -11,10 +11,11 @@ import EditableCustom from './EditableCustom';
 import InfoCard from './InfoCard';
 
 class App extends Component {
-  
+
   render() {
     return (
       <div className="App">
+
       <InfoCard/>
       <InfoCard/>
       </div>

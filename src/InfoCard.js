@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Card, CardImg, CardText, CardBody,  CardTitle, CardSubtitle, CardHeader,Container, Row, Col, Collapse, Alert } from 'reactstrap';
+import { CircleLoader, RingLoader } from 'react-spinners';
+import ReactLoading from 'react-loading';
+import fetch from 'cross-fetch';
 
 class InfoCard extends Component {
   constructor(props) {
@@ -7,13 +10,35 @@ class InfoCard extends Component {
 
     this.state = {
 			visible: true,
-			toggle: true
+			toggle: true,
+			loading: true
 		};
 		
 		this.eventHandler = this.eventHandler.bind(this);
 
 	}
 	
+	componentDidMount(){
+		fetch('/app/k/define/schema/view/cate.json')
+		.then(res => {
+			if (res.status >= 400) {
+				throw new Error("Bad response from server");
+			}
+			return res.json();
+		})
+		.then(schema => {
+			console.log(schema);
+			this.setState({
+				loading: false
+			});
+		})
+		.catch(err => {
+			console.log("call error");
+			console.error(err);
+			alert(err);
+		});
+	}
+
 	eventHandler(event) {
     this.setState((prevState) => ({
         toggle: !prevState.toggle
@@ -35,7 +60,16 @@ class InfoCard extends Component {
 					</Col>
         </Row>
         <Row className={this.state.toggle ? 'd-block' : 'd-none'}>
-        <Collapse isOpen={true}>
+        <Collapse isOpen={this.state.loading}>
+				<Col>
+				<RingLoader
+					color={'#2a84d8'} 
+					loading={this.state.loading} 
+				/>
+				{/* <ReactLoading type="spin" color={'#2a84d8'} className="m-auto"/> */}
+				</Col>
+				</Collapse>
+				<Collapse isOpen={this.state.loading == false}>
           <Container>
           <Row className="mt-md-3 mb-md-3 justify-content-center">
 								<Col xs="4" className="text-right font-weight-bold">

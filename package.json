@@ -4,14 +4,18 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.0",
+    "cross-fetch": "^2.1.0",
     "node-sass-chokidar": "^1.2.2",
     "open-iconic": "^1.1.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
+    "react-loading": "^1.0.4",
     "react-scripts": "1.1.4",
     "react-scripts-sass": "^1.1.3",
+    "react-spinners": "^0.3.2",
+    "react-x-editable": "v0.0.9-beta",
     "reactstrap": "^5.0.0",
-    "react-x-editable": "v0.0.9-beta"
+    "redux": "^4.0.0"
   },
   "scripts": {
     "sass:watch": "sass --watch src/styles/scss:src/styles/css",
@@ -24,5 +28,11 @@
   "devDependencies": {
     "react-open-iconic-svg": "^2.0.0",
     "sass-loader": "^7.0.1"
+  },
+  "proxy": {
+    "/app": {
+      "target": "http://localhost:3001",
+      "ws": false
+    }
   }
 }
