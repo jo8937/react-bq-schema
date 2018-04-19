@@ -14,36 +14,6 @@ class PanelInfo extends Component {
 		};
 		
 	}
-	
-	componentDidMount(){
-
-		Promise.race([
-			fetch('/app/k/define/schema/view/cate.json')
-		.then(res => {
-			if (res.status >= 400) {
-				throw new Error("Bad response from server");
-			}
-			return res.json();
-		})
-		.then(schema => {
-			console.log(schema);
-			this.setState({
-				content: this.getContent()
-			});
-		})
-		.catch(err => {
-			console.log("call error");
-			console.error(err);
-		}),
-			new Promise((_, reject) =>
-				setTimeout(() => reject(new Error('ajax timeout')), 3000)
-			)
-		]).catch(err => {
-			 alert(err.message);
-		});
-
-		
-	}
 
 	getContent(){
 		return (
@@ -72,7 +42,7 @@ class PanelInfo extends Component {
 								s
 								</Col>
 					</Row>	
-          </Container>
+      </Container>
 		);
 	}
   render() {
