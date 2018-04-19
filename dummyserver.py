@@ -45,14 +45,48 @@ def view(k,cate):
     "type" : "INTEGER",
     "description" : "User ID",
     "sampleValue" : "1",
+    "idx" : 1,
+    "category" : "test",
+    "fieldOpt" : "NULLABLE",
+    "common" : True,
+    "required" : False,
     "active" : 1,
+    "regDate" : 1520577078000,
+    "segment" : False,
+    "clientHeader" : False
+    ,"generated" : False
+  },
+  {
+    "name" : "dateTime",
+    "type" : "TIMESTAMP",
+    "description" : "datetime",
+    "sampleValue" : "2018-04-19 11:22:33",
+    "idx" : 2,
+    "category" : "test",
+    "fieldOpt" : "NULLABLE",
+    "common" : True,
+    "required" : False,
+    "active" : 1,
+    "regDate" : 1520577078000,
+    "segment" : False,
+    "clientHeader" : False
+    ,"generated" : True
   },
   {
     "name" : "longname",
     "type" : "STRING",
     "description" : "Long name of application",
     "sampleValue" : "longname sample",
+    "idx" : 3,
+    "category" : "test",
+    "fieldOpt" : "NULLABLE",
+    "common" : False,
+    "required" : False,
     "active" : 1,
+    "regDate" : 1520577078000,
+    "segment" : False,
+    "clientHeader" : False
+    ,"generated" : False    
   }]
 })
 
