@@ -13,51 +13,72 @@ import PanelInfo from './PanelInfo';
 import { CircleLoader, RingLoader } from 'react-spinners';
 import ReactLoading from 'react-loading';
 import fetch from 'cross-fetch';
+import { createStore, applyMiddleware } from 'redux'
+import {  loadingBarMiddleware , LoadingBar, loadingBarReducer, showLoading, hideLoading } from 'react-redux-loading-bar'
+import { combineReducers, dispatch } from 'redux'
+
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-			content: <RingLoader color={'#112233'}/>
+			schema: null,
+			loading: true
 		};
-		
 	}
 
 	componentDidMount(){
-
 		Promise.race([
-			fetch('/app/k/define/schema/view/cate.json')
-		.then(res => {
-			if (res.status >= 400) {
-				throw new Error("Bad response from server");
+			() => {
+				const res = this.props.store.dispatch({
+					type: "SCHEMA_REQUEST",
+					payload: fetch('/app/k/define/schema/view/cate.json')
+				})
+
+				res.then(res => {
+								if (res.status >= 400) {
+									throw new Error("Bad response from server");
+								}
+								return res.json();
+					}).then(schema => {
+						this.props.store.dispatch({
+							type: "SCHEMA_SUCCESS",
+							schema
+						});
+						this.setState({
+							loading: false
+						});
+					})
+				.catch(err => {
+					this.props.store.dispatch({
+							type: "SCHEMA_FAILURE",
+							err
+						});
+				})
 			}
-			return res.json();
-		})
-		.then(schema => {
-			console.log(schema);
-			this.setState({
-				content: this.getContent()
-			});
-		})
-		.catch(err => {
-			console.log("call error");
-			console.error(err);
-		}),
+			,
 			new Promise((_, reject) =>
 				setTimeout(() => reject(new Error('ajax timeout')), 3000)
 			)
-		]).catch(err => {
+		])
+		.catch(err => {
 			 alert(err.message);
 		});
-		
   }
-  
+	
   render() {
     return (
-      <div className="App">
-        <PanelInfo/>
-        <PanelInfo/>
+			<div className="App">
+				<header>
+					<LoadingBar />
+				</header>
+				<section>
+					sss
+				</section>
+	
+        {/* <PanelInfo data={this.state.data}/>
+        <PanelInfo data={this.state.data}/> */}
       </div>
     );
   }

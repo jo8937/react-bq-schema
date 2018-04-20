@@ -32,7 +32,7 @@ def hello():
 
 @app.route("/app/<k>/define/schema/view/<cate>.json")
 def view(k,cate):
-    #time.sleep(1)
+    time.sleep(1)
     return jsonify({
   "schema" : {
     "category" : "test",
