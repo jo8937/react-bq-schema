@@ -4,23 +4,21 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './styles/static/css/font-awesome.min.css';
 import './styles/scss/index.scss';
-import { createStore, applyMiddleware } from 'redux'
-import {  loadingBarMiddleware , LoadingBar, loadingBarReducer } from 'react-redux-loading-bar'
-import { combineReducers, dispatch } from 'redux'
+
+import {  combineReducers, createStore, applyMiddleware  } from 'redux'
+import {  loadingBarMiddleware, loadingBarReducer } from 'react-redux-loading-bar'
 
 const reducer = combineReducers({
-  // app reducers
-  loadingBar: loadingBarReducer,
-})
+    loadingBar: loadingBarReducer,
+  })
 
 const store = createStore(
-  reducer,
-	applyMiddleware(
-    loadingBarMiddleware({
-      promiseTypeSuffixes: ['REQUEST', 'SUCCESS', 'FAILURE'],
-		})
-	)
-)
+	reducer,
+	  applyMiddleware(
+	  loadingBarMiddleware()
+	  )
+);
+
 
 ReactDOM.render(<App store={store}/>, document.getElementById('root'));
 registerServiceWorker();

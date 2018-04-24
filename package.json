@@ -5,11 +5,13 @@
   "dependencies": {
     "bootstrap": "^4.1.0",
     "cross-fetch": "^2.1.0",
+    "es6-promise-polyfill": "^1.2.0",
     "node-sass-chokidar": "^1.2.2",
     "open-iconic": "^1.1.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "react-loading": "^1.0.4",
+    "react-loading-bar": "0.0.7",
     "react-redux": "^5.0.7",
     "react-redux-loading-bar": "^4.0.3",
     "react-scripts": "1.1.4",
@@ -22,12 +24,13 @@
   "scripts": {
     "sass:watch": "sass --watch src/styles/scss:src/styles/css",
     "sass:build": "sass --update src/styles/scss:src/styles/css",
-    "start": "react-scripts start",
     "build": "yarn sass:build && react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "concurrently --kill-others \"python dummyserver.py\" \"react-scripts start\""
   },
   "devDependencies": {
+    "concurrently": "^3.5.1",
     "react-open-iconic-svg": "^2.0.0",
     "sass-loader": "^7.0.1"
   },

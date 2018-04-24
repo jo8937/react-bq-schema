@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Collapse } from 'reactstrap';
-import { CircleLoader, RingLoader } from 'react-spinners';
-import ReactLoading from 'react-loading';
-import fetch from 'cross-fetch';
+//import { CircleLoader, RingLoader } from 'react-spinners';
+//import ReactLoading from 'react-loading';
 
 class Panel extends Component {
   constructor(props) {

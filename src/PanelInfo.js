@@ -12,7 +12,7 @@ class PanelInfo extends Component {
 	}
 
 	getContent(){
-		if(this.props.data != null){
+		if(this.props.data && this.props.data.schema){
 			return (
 				<Container>
 						<Row className="mt-md-3 mb-md-3 justify-content-center">
@@ -43,16 +43,17 @@ class PanelInfo extends Component {
 			);
 		}else{
 			return (
-				<RingLoader color={'#112233'}/>
+				<div>
+					<RingLoader color={'#112233'}/>
+				</div>
 			);
 		}
-
-
 	}
+
   render() {
     return (
       <Panel title="정보">
-				{this.getContent}
+				{this.getContent()}
       </Panel>
     );
   }
