@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Collapse } from 'reactstrap';
 import { CircleLoader, RingLoader } from 'react-spinners';
-import ReactLoading from 'react-loading';
-import fetch from 'cross-fetch';
 import Panel from './Panel';
+import { connect } from 'react-redux'
 
 class PanelInfo extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
 	}
 
 	getContent(){
-		if(this.props.data && this.props.data.schema){
+		if(this.props.schema != null){
 			return (
 				<Container>
 						<Row className="mt-md-3 mb-md-3 justify-content-center">
@@ -20,7 +18,7 @@ class PanelInfo extends Component {
 									대상 앱 선택
 									</Col>
 									<Col xs="8" className="text-left">
-										One of two columns
+										{Object.keys(this.props.schema).map(k => k)}
 									</Col>
 						</Row>
 						<Row className="mt-md-3 mb-md-3 justify-content-center">
@@ -59,4 +57,22 @@ class PanelInfo extends Component {
   }
 }
 
-export default PanelInfo;
+const mapStateToProps = state => {
+	return {
+    schema: state.test
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onTodoClick: id => {
+      dispatch()
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PanelInfo);
+
