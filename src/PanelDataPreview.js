@@ -4,7 +4,7 @@ import { CircleLoader, RingLoader } from 'react-spinners';
 import Panel from './Panel';
 import { connect } from 'react-redux'
 
-class PanelFieldInfo extends Component {
+class PanelDataPreview extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
@@ -16,19 +16,15 @@ class PanelFieldInfo extends Component {
 		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length){
 			return (
 				<Container>
-						{this.props.vo.fields.map( k => 
-								(
-								<Row className="mt-md-3 mb-md-3 justify-content-center" key={k.name}>
+						
+								<Row className="mt-md-3 mb-md-3 justify-content-center">
 											<Col xs="4" className="text-right font-weight-bold">
-											{k.name}
+						ss
 											</Col>
 											<Col xs="8" className="text-left">
 											....
 											</Col>
 								</Row>
-								)
-							)
-						}	
 				</Container>
 			);
 		}else{
@@ -68,5 +64,5 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PanelFieldInfo);
+)(PanelDataPreview);
 

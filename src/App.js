@@ -7,6 +7,7 @@ import LoadingBar from 'react-redux-loading-bar'
 import PropTypes from 'prop-types'
 import PanelSchemaInfo from './PanelSchemaInfo';
 import PanelFieldInfo from './PanelFieldInfo';
+import PanelDataPreview from './PanelDataPreview';
 //import Loading from 'react-loading-bar'
 //import 'react-loading-bar/dist/index.css'
 
@@ -39,8 +40,9 @@ class App extends Component {
 				<LoadingBar style={{ zIndex : 1 }} progressIncrease={50} />
 			</header>
 			<section>
-				<PanelSchemaInfo/>
-				<PanelFieldInfo/>
+				<PanelSchemaInfo title="스키마 정보"/>
+				<PanelFieldInfo title="필드 정보"/>
+				<PanelDataPreview title="데이터 미리보기"/>
 			</section>
 		</div>
 	);

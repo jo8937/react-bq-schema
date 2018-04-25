@@ -23,6 +23,12 @@ app = Flask(__name__)
 reload(sys)  
 sys.setdefaultencoding('utf8')
 
+weblog = logging.getLogger("dummy")
+streaminghandler = logging.StreamHandler(sys.stdout)
+streaminghandler.setFormatter(logging.Formatter("# %(asctime)-15s # [%(levelname)s] %(message)s")) 
+weblog.addHandler(streaminghandler)
+weblog.setLevel(logging.DEBUG)
+
 @app.route("/")
 def hello():
     return "dummy..."
@@ -37,8 +43,11 @@ def view(k,cate):
   "schema" : {
     "category" : "loginlog",
     "description" : "테스트",
-    "gameGroup" : "test",
-    "parentCategory" : ""
+    "gameGroup" : "com.test",
+    "parentCategory" : "",
+    "authorId" : "george",
+    "authorName" : "georgeName",
+    "regDate" : 1504075868000
   },
   "fields" : [ {
     "name" : "uid",
@@ -121,8 +130,9 @@ def field_active(k):
 def field_edit_proc(k):
     return jsonify(success=True)
 
-@app.route("/app/<k>/define/schema/schema_edit_proc")
+@app.route("/app/<k>/define/schema/schema_edit_proc", methods=['GET', 'POST'])
 def schema_edit_proc(k):
+    weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
     return jsonify(success=True)
 
 #############################################################

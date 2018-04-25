@@ -30,7 +30,7 @@ class Panel extends Component {
         <Row>
 					<Col>
 					<div className="d-flex bg-secondary bd-highlight">
-						<div className="p-2">{this.props.title}</div>
+						<div className="p-2 font-weight-bold">{this.props.title}</div>
 						<button type="button" aria-label="Close" onClick={this.eventHandler} className="btn btn-link ml-auto p-2">
 						<i className={this.state.toggle ? 'fa fa-angle-up' : 'fa fa-angle-down'} aria-hidden="true">&nbsp;</i>
 						</button>
