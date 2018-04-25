@@ -35,7 +35,7 @@ def view(k,cate):
     time.sleep(1)
     return jsonify({
   "schema" : {
-    "category" : "test",
+    "category" : "loginlog",
     "description" : "테스트",
     "gameGroup" : "test",
     "parentCategory" : ""

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import PanelInfo from './PanelInfo';
 import fetch from './cross-fetch-with-timeout';
 import {  combineReducers, createStore, applyMiddleware, bindActionCreators  } from 'redux'
 import { connect } from 'react-redux'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import LoadingBar from 'react-redux-loading-bar'
 import PropTypes from 'prop-types'
+import PanelSchemaInfo from './PanelSchemaInfo';
+import PanelFieldInfo from './PanelFieldInfo';
 //import Loading from 'react-loading-bar'
 //import 'react-loading-bar/dist/index.css'
 
@@ -35,10 +36,11 @@ class App extends Component {
 	return (
 		<div>
 			<header>
-				<LoadingBar />
+				<LoadingBar style={{ zIndex : 1 }} progressIncrease={50} />
 			</header>
 			<section>
-				<PanelInfo />
+				<PanelSchemaInfo/>
+				<PanelFieldInfo/>
 			</section>
 		</div>
 	);
