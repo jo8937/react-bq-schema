@@ -8,8 +8,12 @@ import PropTypes from 'prop-types'
 import PanelSchemaInfo from './PanelSchemaInfo';
 import PanelFieldInfo from './PanelFieldInfo';
 import PanelDataPreview from './PanelDataPreview';
+import { Button } from 'reactstrap';
+import {updateIntl } from 'react-intl-redux'
 //import Loading from 'react-loading-bar'
 //import 'react-loading-bar/dist/index.css'
+//import {IntlProvider, FormattedMessage} from 'react-intl';
+import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
 
 class App extends Component {
 
@@ -33,16 +37,30 @@ class App extends Component {
 		});
 	}
 
+	changeLocale = () => {
+		this.props.dispatch(
+			updateIntl ({
+				locale: 'en',
+				messages: {
+					'schema_view.use_select.select': 's',
+					'schema_view.use_select.required': 'a',
+					'schema_view.use_select.recommend': 'b',
+				}
+			  })
+		)
+	}
+
 	render() {
 	return (
 		<div>
 			<header>
-				<LoadingBar style={{ zIndex : 1 }} progressIncrease={50} />
+				<LoadingBar style={{ zIndex : 1,  backgroundColor: '#2a84d8', height: '5px' }} progressIncrease={50}/>
 			</header>
 			<section>
 				<PanelSchemaInfo title="스키마 정보"/>
 				<PanelFieldInfo title="필드 정보"/>
 				<PanelDataPreview title="데이터 미리보기"/>
+				<Button onClick={this.changeLocale}>a</Button>        <FormattedMessage id="schema_view.use_select.select"/>
 			</section>
 		</div>
 	);

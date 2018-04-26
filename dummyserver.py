@@ -75,7 +75,7 @@ def view(k,cate):
     "fieldOpt" : "NULLABLE",
     "common" : True,
     "required" : False,
-    "active" : 1,
+    "active" : 2,
     "regDate" : 1520577078000,
     "segment" : False,
     "clientHeader" : False

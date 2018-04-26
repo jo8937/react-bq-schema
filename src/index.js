@@ -5,11 +5,14 @@ import registerServiceWorker from './registerServiceWorker';
 import './styles/static/css/font-awesome.min.css';
 import './styles/scss/index.scss';
 import { Provider } from 'react-redux'; 
+import { IntlProvider } from 'react-intl-redux'
 import store from './ReduxStore'
 
 ReactDOM.render(
 	<Provider store={store}>
-		<App />
+		<IntlProvider>
+			<App />
+		</IntlProvider>
 	</Provider>
 		, document.getElementById('root'));
 registerServiceWorker();

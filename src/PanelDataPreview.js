@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Collapse } from 'reactstrap';
+import { Container, Row, Col, Collapse, Table  } from 'reactstrap';
 import { CircleLoader, RingLoader } from 'react-spinners';
 import Panel from './Panel';
 import { connect } from 'react-redux'
@@ -15,17 +15,30 @@ class PanelDataPreview extends Component {
 	getContent(){
 		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length){
 			return (
-				<Container>
-						
-								<Row className="mt-md-3 mb-md-3 justify-content-center">
-											<Col xs="4" className="text-right font-weight-bold">
-						ss
-											</Col>
-											<Col xs="8" className="text-left">
-											....
-											</Col>
-								</Row>
-				</Container>
+          <Row>
+            <Col className="m-3">
+<Table className="table-bordered-top-down table-thead-padded table-striped">
+        <thead className="thead-light">
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+					{this.props.vo.fields.map( k => 
+          <tr key={k.name}>
+            <th scope="row">{k.name}</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+          </tr>
+					)}
+        </tbody>
+			</Table> 
+          </Col>
+        </Row>
 			);
 		}else{
 			return (
