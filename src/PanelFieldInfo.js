@@ -5,6 +5,8 @@ import { CircleLoader, RingLoader } from 'react-spinners';
 import Panel from './Panel';
 import { connect } from 'react-redux'
 import SelectBoxFieldActive from './SelectBoxFieldActive'
+import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
+import { formatMessage as f } from './custom-utils'
 
 class PanelFieldInfo extends Component {
   constructor(props) {
@@ -22,12 +24,12 @@ class PanelFieldInfo extends Component {
 				<Table className="table-bordered-top-down table-thead-padded">
         <thead className="thead-light">
           <tr>
-            <th>필드명</th>
-            <th>타입</th>
-            <th>설명</th>
-            <th>샘플값</th>
-						<th>사용</th>
-						<th>상태</th>
+            <th>{f('field_name')}</th>
+            <th>{f('type')}</th>
+            <th>{f('desc')}</th>
+            <th>{f('sample_value')}</th>
+						<th>{f('usage')}</th>
+						<th>{f('state')}</th>
           </tr>
         </thead>
         <tbody>
@@ -74,16 +76,8 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onTodoClick: id => {
-      dispatch()
-    }
-  }
-}
-
-export default connect(
+export default injectIntl(connect(
   mapStateToProps,
-  mapDispatchToProps
-)(PanelFieldInfo);
+  null
+)(PanelFieldInfo));
 

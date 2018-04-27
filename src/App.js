@@ -14,14 +14,25 @@ import { Button } from 'reactstrap';
 //import {IntlProvider, FormattedMessage} from 'react-intl';
 //import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import { updateIntl } from 'react-intl-redux'
+import Select from 'react-select';
+import locales from './locale'
 
 class App extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			locale : null
+		};
 	}
 
 	componentDidMount(){
+		this.setState(
+			{
+				locale: this.props.locale
+			}
+		)
 		this.props.dispatch({
 			type: "SCHEMA_PENDING",
 			payload:
@@ -37,10 +48,13 @@ class App extends Component {
 		});
 	}
 
-	changeLocale1 = () => {
-		console.log("a");
+	changeLocale = (lang) => {
+		this.props.dispatch(updateIntl({
+			locale: lang,
+			messages: locales[lang]
+			}
+		));
 	}
-
 	render() {
 	return (
 		<div>
@@ -48,13 +62,12 @@ class App extends Component {
 				<LoadingBar style={{ zIndex : 1,  backgroundColor: '#2a84d8', height: '5px' }} progressIncrease={50}/>
 			</header>
 			<section>
-				<PanelSchemaInfo title="스키마 정보"/>
-				<PanelFieldInfo title="필드 정보"/>
-				<PanelDataPreview title="데이터 미리보기"/>
+				<PanelSchemaInfo title={<FormattedMessage id="schema_info"/>}/>
+				<PanelFieldInfo title={<FormattedMessage id="field_info"/>}/>
+				<PanelDataPreview title={<FormattedMessage id="data_preview"/>}/>
 				<div className="m-auto text-center">
-				<Button onClick={this.changeLocale}>영어</Button>        
-				<Button onClick={this.changeLocale}>한글</Button>    
-				<FormattedMessage id="schema_view.use_select.select"/>
+				<Button onClick={() => this.changeLocale('en')}>영어</Button>        
+				<Button onClick={() => this.changeLocale('ko')}>한글</Button>    
 				</div>
 			</section>
 		</div>

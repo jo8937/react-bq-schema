@@ -13,6 +13,7 @@
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.3.1",
     "react-intl": "^2.4.0",
+    "react-intl-redux": "^0.7.0",
     "react-loading": "^1.0.4",
     "react-loading-bar": "0.0.7",
     "react-redux": "^5.0.7",
@@ -28,7 +29,8 @@
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-immutable": "^4.0.0",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "sass:watch": "sass --watch src/styles/scss:src/styles/css",

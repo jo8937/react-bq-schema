@@ -14,7 +14,8 @@ class SelectBoxFieldActive extends React.Component {
       schema  : this.props.schema,
       field : this.props.field,
       value : this.props.field.active,
-      dropdownOpen: false
+      dropdownOpen: false,
+      locale : null
     };
   }
 
@@ -32,7 +33,6 @@ class SelectBoxFieldActive extends React.Component {
   render() {
     return (
       <div>
-
       <Select
           name={this.state.field.name + '_active'}
           clearable={false}

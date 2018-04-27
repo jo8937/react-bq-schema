@@ -1,3 +1,6 @@
+import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+
 const queryString = require('query-string');
 
 export default class CustomUtils{
@@ -8,3 +11,7 @@ export default class CustomUtils{
     //return 'en';
   } 
 }
+
+export function formatMessage(message, values) {
+  return <FormattedMessage id={message} defaultMessage={message} values={values}/>;
+};
