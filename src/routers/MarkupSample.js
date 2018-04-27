@@ -4,22 +4,17 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem  } from 'reactstra
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import { Table } from 'reactstrap';
-import Checkbox from './Checkbox';
-//import Editable from 'react-x-editable';
-import EditableCustom from './EditableCustom';
+import Checkbox from '../Checkbox';
 
-class App extends Component {
-  render() {
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+
+const MarkupSample = () =>  {
     return (
       <div className="App">
-        <p>
-        <EditableCustom
-          name="username"
-          dataType="text"
-          mode="inline"
-          title="Please enter username"
-        />
-        </p>
         <p>
         <Checkbox />
         </p>
@@ -257,6 +252,5 @@ class App extends Component {
       </div>
     );
   }
-}
 
-export default App;
+  export default MarkupSample;

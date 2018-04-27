@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {  combineReducers, createStore, applyMiddleware, compose } from 'redux'
 import {  loadingBarMiddleware, loadingBarReducer } from 'react-redux-loading-bar'
-import { intlReducer } from 'react-intl-redux'
 import logger from 'redux-logger'
 
 
@@ -29,7 +28,6 @@ const schemaReducer = (state = { schema: null, fields: null } , action) => {
 const rootReducer = combineReducers({
 	loadingBar: loadingBarReducer,
 	debugger: debuggerReducer,
-	intl: intlReducer,
 	schemaVo : schemaReducer
 })
 

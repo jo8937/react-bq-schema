@@ -9,11 +9,11 @@ import PanelSchemaInfo from './PanelSchemaInfo';
 import PanelFieldInfo from './PanelFieldInfo';
 import PanelDataPreview from './PanelDataPreview';
 import { Button } from 'reactstrap';
-import {updateIntl } from 'react-intl-redux'
 //import Loading from 'react-loading-bar'
 //import 'react-loading-bar/dist/index.css'
 //import {IntlProvider, FormattedMessage} from 'react-intl';
-import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
+//import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 class App extends Component {
 
@@ -37,17 +37,8 @@ class App extends Component {
 		});
 	}
 
-	changeLocale = () => {
-		this.props.dispatch(
-			updateIntl ({
-				locale: 'en',
-				messages: {
-					'schema_view.use_select.select': 's',
-					'schema_view.use_select.required': 'a',
-					'schema_view.use_select.recommend': 'b',
-				}
-			  })
-		)
+	changeLocale1 = () => {
+		console.log("a");
 	}
 
 	render() {
@@ -60,7 +51,11 @@ class App extends Component {
 				<PanelSchemaInfo title="스키마 정보"/>
 				<PanelFieldInfo title="필드 정보"/>
 				<PanelDataPreview title="데이터 미리보기"/>
-				<Button onClick={this.changeLocale}>a</Button>        <FormattedMessage id="schema_view.use_select.select"/>
+				<div className="m-auto text-center">
+				<Button onClick={this.changeLocale}>영어</Button>        
+				<Button onClick={this.changeLocale}>한글</Button>    
+				<FormattedMessage id="schema_view.use_select.select"/>
+				</div>
 			</section>
 		</div>
 	);
@@ -71,5 +66,5 @@ class App extends Component {
 // 	actions: bindActionCreators({ showLoading, hideLoading }, dispatch),
 // });
 // export default connect(() => ({}), mapDispatchToProps)(App)
-export default connect()(App);
+export default injectIntl(connect()(App));
 //export default App

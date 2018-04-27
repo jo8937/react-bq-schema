@@ -67,5 +67,7 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  null,
+  {pure:false}
 )(SelectBoxFieldActive);
