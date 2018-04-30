@@ -36,10 +36,7 @@ def hello():
 #############################################################
 # Schema Explorer
 
-@app.route("/app/<k>/define/schema/view/<cate>.json")
-def view(k,cate):
-    time.sleep(1)
-    return jsonify({
+schema = {
   "schema" : {
     "category" : "loginlog",
     "description" : "테스트",
@@ -97,7 +94,12 @@ def view(k,cate):
     "clientHeader" : False
     ,"generated" : False    
   }]
-})
+}
+
+@app.route("/app/<k>/define/schema/view/<cate>.json")
+def view(k,cate):
+    #time.sleep(1)
+    return jsonify(schema)
 
 @app.route("/app/<k>/define/schema/detail/<cate>.json")
 def viewdetail(k,cate):
@@ -116,43 +118,82 @@ def viewdetail(k,cate):
 
 @app.route("/app/<k>/define/schema/write_proc.json")
 def write_proc(k):
+    weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
     return jsonify(success=True)
 
 @app.route("/app/<k>/define/schema/field_add_proc.json")
 def field_add(k):
+    weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
     return jsonify(success=True)
 
-@app.route("/app/<k>/define/field/active")
+@app.route("/app/<k>/define/field/active", methods=['GET', 'POST'])
 def field_active(k):
+    weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
+
+    for index, row in enumerate(schema["fields"]):
+        if request.json["name"] == row["name"]:
+            weblog.debug("...")
+            schema["fields"][index]["active"] = request.json["value"]
+
     return jsonify(success=True)
 
-@app.route("/app/<k>/define/schema/field_edit_proc")
+@app.route("/app/<k>/define/schema/field_edit_proc", methods=['GET', 'POST'])
 def field_edit_proc(k):
+    weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
+
+    for index, row in enumerate(schema["fields"]):
+        if request.json["name"] == row["name"]:
+            schema["fields"][index][request.json["col"]] = request.json["value"]
+
     return jsonify(success=True)
 
 @app.route("/app/<k>/define/schema/schema_edit_proc", methods=['GET', 'POST'])
 def schema_edit_proc(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
+
+    if request.json["name"] in schema["schema"]:
+        schema["schema"][request.json["name"]] = request.json["value"]
+
     return jsonify(success=True)
+
 
 #############################################################
 # Utils
 
-@app.route("/app/<k>/define/source/generate_source")
-def generate_source(k,cate):
+@app.route("/app/<k>/define/trace/<cate>")
+def trace(k,cate):
+    j = json.dumps(schema, indent=4, ensure_ascii=False)
+    weblog.debug(j)
+    return j
+
+#############################################################
+# Utils : Source Generating .. etc 
+
+@app.route("/app/<k>/define/schema/generate_source")
+def generate_source(k):
+    #idx: 142
+    #lang: OBJC
     return "hello..."
 
 #############################################################
 # Data Explorer 
 
-@app.route("/app/<k>/define/etl/<dataset>/<tablename>.json")
+@app.route("/app/<k>/tabledata/<dataset>/<tablename>.json")
+def tabledata(k,dataset,tablename):
+    weblog.debug("show table data")
+    return jsonify(dataList=[{"title":"a"}])
+
+#############################################################
+# ETL Test
+
+@app.route("/app/<k>/define/etl/<category>/send")
 def tabledata_send_sample(k,dataset,tablename):
     return jsonify(dataList=[{"title":"a"}])
 
-@app.route("/app/<k>/tabledata/<dataset>/<tablename>.json")
-def tabledata(k,dataset,tablename):
+@app.route("/app/<k>/define/etl/<category>/monitor")
+def tabledata_send_monitor(k,dataset,tablename):
+    weblog.debug("etl monitor at...")
     return jsonify(dataList=[{"title":"a"}])
-
 
 if __name__ == "__main__":
     app.run("0.0.0.0", 3001, debug=True)

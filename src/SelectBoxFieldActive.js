@@ -28,8 +28,31 @@ class SelectBoxFieldActive extends React.Component {
   handleChange = (selectedOption) => {
     this.setState(selectedOption);
     console.log(`Selected: ${selectedOption.value}, ${selectedOption.label}`);
+
+    this.props.dispatch({
+			type: "FIELD_PROP_EDIT_PENDING",
+			payload:
+				fetch('/app/k/define/field/active',{
+					method: 'POST',
+          headers: {
+						'Content-type': 'application/json'
+					},
+					body: JSON.stringify({ category: this.props.vo.schema.category, name: this.state.field.name, value: selectedOption.value }),
+					timeout:3000
+				})
+				.then(schema_prop => {
+					this.props.dispatch({
+						type: "FIELD_PROP_EDIT_FULFILLED",
+						schema_prop
+					});
+				}).catch((err) => {
+					alert(err);
+				})
+    });
+    
   }
 
+  
   render() {
     return (
       <div>
@@ -59,6 +82,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    dispatch : dispatch,
     onTodoClick: id => {
       dispatch()
     }

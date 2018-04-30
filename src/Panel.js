@@ -23,15 +23,30 @@ class Panel extends Component {
       })
     );
 	}
+
+	moreInfo(event){
+		event.stopPropagation();
+		console.log("test")
+	}
 	
   render() {
+
+		let addtionalButton;
+		if(this.props.buttton){
+			addtionalButton = <button type="button" className="btn btn-secondary btn-small" onClick={this.moreInfo}>
+														Link
+												</button>
+		}
+
     return (
       <Container>
         <Row>
 					<Col>
-					<div className="d-flex bg-secondary bd-highlight">
+					<div className="d-flex bg-secondary bd-highlight" onClick={this.eventHandler}>
 						<div className="p-2 font-weight-bold">{this.props.title}</div>
-						<button type="button" aria-label="Close" onClick={this.eventHandler} className="btn btn-link ml-auto p-2">
+						{addtionalButton}
+						
+						<button type="button" aria-label="Close" className="btn btn-link ml-auto p-2">
 						<i className={this.state.toggle ? 'fa fa-angle-up' : 'fa fa-angle-down'} aria-hidden="true">&nbsp;</i>
 						</button>
 					</div>

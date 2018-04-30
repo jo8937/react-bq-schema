@@ -5,6 +5,7 @@ import Panel from './Panel';
 import { connect } from 'react-redux'
 import EditableCustom from './EditableCustom';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { FormattedMessage } from 'react-intl';
 
 class PanelSchemaInfo extends Component {
   constructor(props) {
@@ -14,8 +15,7 @@ class PanelSchemaInfo extends Component {
 		}
 	}
 	
-	updatePropertyValue = (k,v) => {
-		console.log(k + "," + v);
+	updatePropertyValue = (k, v, prop) => {
 		this.props.dispatch({
 			type: "SCHEMA_PROP_EDIT_PENDING",
 			payload:
@@ -24,7 +24,7 @@ class PanelSchemaInfo extends Component {
           headers: {
 						'Content-type': 'application/json'
 					},
-					body: JSON.stringify({ name: k, value: v }),
+					body: JSON.stringify({ category: this.props.vo.schema.category, name: k, value: v }),
 					timeout:3000
 				})
 				.then(schema_prop => {
@@ -58,7 +58,7 @@ class PanelSchemaInfo extends Component {
 								return (
 								<Row className="mt-md-3 mb-md-3 justify-content-center" key={k}>
 											<Col xs="4" className="text-right font-weight-bold">
-											{k}
+											<FormattedMessage id={'schema_view.' + k}/>
 											</Col>
 											<Col xs="8" className="text-left">
 											{content}
@@ -108,4 +108,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(PanelSchemaInfo);
-

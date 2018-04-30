@@ -11,7 +11,7 @@ class EditableCustom extends Editable {
       this.onSubmit = () => {
         oldOnSubmit();
         if(this.props.onSubmit){
-          this.props.onSubmit(this.props.name, this.value);
+          this.props.onSubmit(this.props.name, this.value, this.props);
         }
       }
     }

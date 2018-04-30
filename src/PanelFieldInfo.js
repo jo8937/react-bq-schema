@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import SelectBoxFieldActive from './SelectBoxFieldActive'
 import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
 import { formatMessage as f } from './custom-utils'
+import EditableCustom from './EditableCustom';
 
 class PanelFieldInfo extends Component {
   constructor(props) {
@@ -14,6 +15,29 @@ class PanelFieldInfo extends Component {
 		this.state = {
 			
 		}
+	}
+
+	updateFieldProperty = (k, v, prop) =>{
+		this.props.dispatch({
+			type: "FIELD_PROP_EDIT_PENDING",
+			payload:
+				fetch('/app/k/define/schema/field_edit_proc',{
+					method: 'POST',
+          headers: {
+						'Content-type': 'application/json'
+					},
+					body: JSON.stringify({ category: this.props.vo.schema.category, col: prop.col, name: k, value: v }),
+					timeout:3000
+				})
+				.then(schema_prop => {
+					this.props.dispatch({
+						type: "FIELD_PROP_EDIT_FULFILLED",
+						schema_prop
+					});
+				}).catch((err) => {
+					alert(err);
+				})
+		});
 	}
 	
 	getContent(){
@@ -37,8 +61,26 @@ class PanelFieldInfo extends Component {
           <tr key={k.name}>
             <th scope="row">{k.name}</th>
             <td>{k.type}</td>
-            <td>{k.description}</td>
-            <td>{k.sampleValue}</td>
+						<td>
+						<EditableCustom 
+										col = "description"
+										name={k.name}
+										dataType="text"
+										mode="inline"
+										value={k.description}
+										onSubmit={this.updateFieldProperty}
+										/>
+						</td>
+						<td>
+						<EditableCustom 
+										col = "sampleValue"
+										name={k.name}
+										dataType="text"
+										mode="inline"
+										value={k.sampleValue}
+										onSubmit={this.updateFieldProperty}
+										/>
+						</td>
 						<td>
 						<SelectBoxFieldActive field={k} schema={this.props.vo.schema}/>
 						</td>

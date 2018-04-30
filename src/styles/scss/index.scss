@@ -17,17 +17,3 @@ url('../static/fonts/NanumGothic-Regular.ttf') format('truetype');
 *:lang(ja)	{font-family:'Hiragino Kaku Gothic Pro','ヒラギノ角ゴ Pro W3','メイリオ','Meiryo','Osaka','ＭＳ Ｐゴシック','MS PGothic',Arial,sans-serif;}
 *:lang(zh-hans),*:lang(zh-hant)	{font-family:'Times New Roman';}
 *:lang(vi)	{font-family:'Times New Roman',Palatino,Bodoni,Optima,Century,Garamond,sans-serif;}
-
-
-.fa-check{
-    color:rgb(41,181,105);
-}
-
-.bd-highlight {
-    background-color: $secondary;
-    border: .05rem solid $dark;
-}
-
-.borderless td, .borderless th {
-    border: none;
-}

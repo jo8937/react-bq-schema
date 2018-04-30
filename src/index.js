@@ -4,6 +4,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './styles/static/css/font-awesome.min.css';
 import './styles/scss/index.scss';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/material.css';
 import { Provider } from 'react-redux'; 
 import { IntlProvider } from 'react-intl-redux'
 //import { IntlProvider } from 'react-intl'

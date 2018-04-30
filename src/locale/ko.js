@@ -12,5 +12,11 @@ export default {
         "sample_value" : '샘플값',        
         "usage" : '사용',        
         "state" : '상태',    
+        "schema_view.gameGroup":"그룹",
+        "schema_view.category":"카테고리",
+        "schema_view.description":"설명",
+        "schema_view.parentCategory":"상위 카테고리",        
+        "source_genaration":"소스 생성",
+        "etl_simulation":"ETL 시뮬레이션",
     }
 }

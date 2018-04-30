@@ -17,6 +17,8 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { updateIntl } from 'react-intl-redux'
 import Select from 'react-select';
 import locales from './locale'
+import PanelSourceGenerator from './PanelSourceGenerator';
+import PanelEtlSimulation from './PanelEtlSimulation';
 
 class App extends Component {
 
@@ -65,6 +67,8 @@ class App extends Component {
 				<PanelSchemaInfo title={<FormattedMessage id="schema_info"/>}/>
 				<PanelFieldInfo title={<FormattedMessage id="field_info"/>}/>
 				<PanelDataPreview title={<FormattedMessage id="data_preview"/>}/>
+				<PanelSourceGenerator title={<FormattedMessage id="source_genaration"/>}/>
+				<PanelEtlSimulation title={<FormattedMessage id="etl_simulation"/>}/>
 				<div className="m-auto text-center">
 				<Button onClick={() => this.changeLocale('en')}>영어</Button>        
 				<Button onClick={() => this.changeLocale('ko')}>한글</Button>    
