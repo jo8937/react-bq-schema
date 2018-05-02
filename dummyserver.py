@@ -96,6 +96,17 @@ schema = {
   }]
 }
 
+datalist = [{
+    "category":"loginlog",
+    "guid":"a%s" % i,
+    "dateTime":(datetime.now() + timedelta(days=i)).strftime('%Y-%m-%d %H:%M:%S'), 
+    "uid":i, 
+    "aid":2, 
+    "longName":"aaaa%s"%i, 
+    "shortName":"b%s"%i,
+    "tag1":"tag-%s"%i
+} for i in xrange(0,123)]
+
 @app.route("/app/<k>/define/schema/view/<cate>.json")
 def view(k,cate):
     time.sleep(1)
