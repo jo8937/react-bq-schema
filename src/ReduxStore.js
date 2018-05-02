@@ -15,8 +15,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import locales from './locale'
 import CustomUtils from './custom-utils'
-var initialLocale = CustomUtils.getLocale();
 
+import createSagaMiddleware from 'redux-saga'
+import mySaga from './ReduxSaga'
+
+var initialLocale = CustomUtils.getLocale();
 
 addLocaleData([...koLocaleData, ...enLocaleData, ...jaLocaleData, ...zhLocaleData])
 
@@ -31,15 +34,21 @@ const initialState = {
 		messages : locales[initialLocale]
 	}
 }
+
+const sagaMiddleware = createSagaMiddleware()
+
 const store = createStore(rootReducer, initialState,
 	composeWithDevTools(
 		applyMiddleware(
 			logger,
 			ReduxThunk,
+			sagaMiddleware,
 			customMiddleWare,
 			loadingBarMiddleware(), 
 		)
 	)
 )
+
+sagaMiddleware.run(mySaga)
 
 export default store
