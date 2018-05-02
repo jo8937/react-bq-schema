@@ -71,7 +71,7 @@ schema = {
     "category" : "test",
     "fieldOpt" : "NULLABLE",
     "common" : True,
-    "required" : False,
+    "required" : True,
     "active" : 2,
     "regDate" : 1520577078000,
     "segment" : False,
@@ -98,7 +98,7 @@ schema = {
 
 @app.route("/app/<k>/define/schema/view/<cate>.json")
 def view(k,cate):
-    #time.sleep(1)
+    time.sleep(1)
     return jsonify(schema)
 
 @app.route("/app/<k>/define/schema/detail/<cate>.json")
@@ -169,28 +169,26 @@ def trace(k,cate):
 #############################################################
 # Utils : Source Generating .. etc 
 
-@app.route("/app/<k>/define/schema/generate_source")
+@app.route("/app/<k>/define/schema/generate_source.json", methods=['GET', 'POST'])
 def generate_source(k):
     #idx: 142
     #lang: OBJC
-    return "hello..."
+    weblog.debug(json.dumps(request.form, indent=4, ensure_ascii=False))
+    return jsonify(source="hello...")
 
 #############################################################
 # Data Explorer 
 
-@app.route("/app/<k>/tabledata/<dataset>/<tablename>.json")
+@app.route("/app/<k>/data/tabledata/<dataset>/<tablename>.json")
 def tabledata(k,dataset,tablename):
     weblog.debug("show table data")
     return jsonify(dataList=[{"title":"a"}])
 
-#############################################################
-# ETL Test
-
-@app.route("/app/<k>/define/etl/<category>/send")
+@app.route("/app/<k>/data/<category>/send")
 def tabledata_send_sample(k,dataset,tablename):
     return jsonify(dataList=[{"title":"a"}])
 
-@app.route("/app/<k>/define/etl/<category>/monitor")
+@app.route("/app/<k>/data/<category>/monitor")
 def tabledata_send_monitor(k,dataset,tablename):
     weblog.debug("etl monitor at...")
     return jsonify(dataList=[{"title":"a"}])

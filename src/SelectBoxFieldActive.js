@@ -4,6 +4,7 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { connect } from 'react-redux'
 import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
+import fetch from './cross-fetch-with-timeout';
 
 class SelectBoxFieldActive extends React.Component {
   constructor(props) {

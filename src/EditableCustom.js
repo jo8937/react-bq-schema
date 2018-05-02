@@ -27,6 +27,7 @@ class EditableCustom extends Editable {
                 ? (<a ref={ref => this.editableAnchor = ref}
                       onClick={this.setEditable.bind(this, true)}
                       href="javascript:;"
+                      className="editableLink"
                     >
                       
                       { this.getValueForAnchor() || this.props.emptyValueText }

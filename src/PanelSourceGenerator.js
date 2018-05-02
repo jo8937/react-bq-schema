@@ -1,21 +1,41 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Collapse, Table  } from 'reactstrap';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 import { CircleLoader, RingLoader } from 'react-spinners';
 import classnames from 'classnames';
 import Panel from './Panel';
 import { connect } from 'react-redux'
 import {Controlled as CodeMirror} from 'react-codemirror2'
+import CustomUtils from './custom-utils'
+import fetch from './cross-fetch-with-timeout';
 //require('codemirror/mode/xml/xml');
 require('codemirror/mode/javascript/javascript');
 
-class PanelDataPreview extends Component {
+
+class PanelSourceGenerator extends Component {
   constructor(props) {
     super(props);
-    this.toggle = this.toggle.bind(this);
+    //this.toggle = this.toggle.bind(this);
 		this.state = {
-      activeTab: "json",
-      value: JSON.stringify({"test":"1"}),
+      tabList : [
+        {
+          "id":"doc",
+          "subTab" : ["JSON","REDMINE_WIKI"]
+        },
+        {
+          "id":"server",
+          "subTab" : ["JAVASCRIPT","PHP"]
+        },
+        {
+          "id":"client",
+          "subTab" : ["CSHARP","CPP","JAVA","OBJC"]
+        },
+      ],
+      dropdownOpen: [false,false,false],
+      selectedTab: "doc",
+      selectedSubTab: "JSON",
+      activeTab: null,
+      activeSubTab: null,
       options : {
         lineNumbers: true,
         theme: "default",
@@ -25,13 +45,111 @@ class PanelDataPreview extends Component {
 		}
 	}
 	
+	componentDidMount(){
+		this.props.dispatch({
+			type: "SOURCE_PENDING",
+			payload:
+        fetch('/app/k/define/schema/generate_source.json',
+        {
+					method: 'POST',
+					body: CustomUtils.formData({ category: this.props.vo ? this.props.vo.schema.category : "", lang: this.state.selectedSubTab }),
+					timeout:3000
+				})
+				.then(res => {
+					this.props.dispatch({
+						type: "SOURCE_FULFILLED",
+						source: res.source
+					});
+				}).catch((err) => {
+					alert(err);
+				})
+		});
+	}
+  
+  toggle(tab, subTabId) {
+    return (e) => {
+        this.setState({
+          activeTab: tab['id'],
+          activeSubTab: subTabId,
+          selectedTab: tab['id'],
+          selectedSubTab: subTabId
+        });
+    }
+  }
+
+  toggleDropdown = (tab) => (e) => {
+      if (this.state.activeTab !== tab['id']){
+        this.setState({
+          activeTab: tab['id']
+        });
+      }else{
+        this.setState({
+          activeTab: null
+        });
+      }
+        
+  }
+
+
+  render() {
+    let tabHtml = this.state.tabList.map( (tab,i) => {
+      let isActive = this.state.activeTab === tab["id"];
+      let isSelected = this.state.selectedTab === tab["id"];
+      return (
+      <Dropdown nav isOpen={isActive} toggle={this.toggleDropdown(tab)} className={classnames({ show: isSelected || isActive })} key={tab['id']}>
+        <DropdownToggle nav caret>
+          {tab["id"]} {isSelected ? this.state.selectedSubTab : ""}
+        </DropdownToggle>
+        <DropdownMenu>
+          {
+            tab["subTab"].map( (subTabId) => (
+              <DropdownItem onClick={this.toggle(tab,subTabId)} key={subTabId}>
+                {subTabId}
+              </DropdownItem>
+            ) 
+            )
+          }              
+        </DropdownMenu>
+      </Dropdown>
+      )
+    }
+    );
+  
+
+    return (
+      <Panel title={this.props.title}>
+          <Row>
+            <Col className="m-3">
+            <Nav tabs>
+              {tabHtml}
+              {/* 
+              <NavItem>
+                <NavLink className={classnames({ active: this.state.activeTab === '3' })} onClick={() => { this.toggle('3'); }}>
+                  Other
+                </NavLink>
+              </NavItem> 
+              */}
+            </Nav>
+        <TabContent>
+          <TabPane>
+            <Card style={{borderTop:0, borderRadius:0}}>
+                {this.getContent()}
+            </Card>
+          </TabPane>
+        </TabContent>
+            </Col>
+          </Row>
+      </Panel>
+    );
+  } // end render
+
 	getContent(){
 		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length){
 			return (
           <Row>
             <Col className="m-3">
             <CodeMirror
-                value={this.state.value}
+                value={this.props.source}
                 options={this.state.options}
                 onBeforeChange={(editor, data, value) => {
                   this.setState({value});
@@ -52,69 +170,20 @@ class PanelDataPreview extends Component {
 				</Row>
 			);
 		}
-  }
-  
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
-    }
-  }
+  } // end cont
 
-  render() {
-    return (
-      <Panel title={this.props.title}>
-          <Row>
-            <Col className="m-3">
-            <Nav tabs>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === 'json' })}
-              onClick={() => { this.toggle('json'); }}
-            >
-              JSON
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === '2' })}
-              onClick={() => { this.toggle('2'); }}
-            >
-              AAA
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === '3' })}
-              onClick={() => { this.toggle('3'); }}
-            >
-              Other
-            </NavLink>
-          </NavItem>
-        </Nav>
-        <TabContent>
-          <TabPane>
-            <Card style={{borderTop:0, borderRadius:0}}>
-                {this.getContent()}
-            </Card>
-          </TabPane>
-        </TabContent>
-            </Col>
-          </Row>
-      </Panel>
-    );
-  }
 }
 
 const mapStateToProps = state => {
 	return {
-    vo: state.schemaVo.schema
+    vo: state.schemaVo.schema,
+    source: state.schemaVo.source
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    dispatch:  dispatch,
     onTodoClick: id => {
       dispatch()
     }
@@ -124,5 +193,5 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PanelDataPreview);
+)(PanelSourceGenerator);
 

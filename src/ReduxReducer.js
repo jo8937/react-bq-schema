@@ -18,6 +18,11 @@ const schemaReducer = (state = { schema: null, fields: null } , action) => {
 				fields: action.fields
 			});
 			return newState;
+		case 'SOURCE_FULFILLED':
+			var newState = Object.assign({}, state, {
+				source: action.source
+			});
+			return newState;			
 		case 'SCHEMA_UPDATE_FULFILLED':
             return Object.assign({}, state, {});
 		default:

@@ -4,10 +4,7 @@ import {  combineReducers, createStore, applyMiddleware, bindActionCreators  } f
 import { connect } from 'react-redux'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import LoadingBar from 'react-redux-loading-bar'
-import PropTypes from 'prop-types'
-import PanelSchemaInfo from './PanelSchemaInfo';
-import PanelFieldInfo from './PanelFieldInfo';
-import PanelDataPreview from './PanelDataPreview';
+import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 //import Loading from 'react-loading-bar'
 //import 'react-loading-bar/dist/index.css'
@@ -17,6 +14,9 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { updateIntl } from 'react-intl-redux'
 import Select from 'react-select';
 import locales from './locale'
+import PanelSchemaInfo from './PanelSchemaInfo';
+import PanelFieldInfo from './PanelFieldInfo';
+import PanelDataPreview from './PanelDataPreview';
 import PanelSourceGenerator from './PanelSourceGenerator';
 import PanelEtlSimulation from './PanelEtlSimulation';
 
