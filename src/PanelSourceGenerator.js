@@ -7,10 +7,7 @@ import Panel from './Panel';
 import { connect } from 'react-redux'
 import {Controlled as CodeMirror} from 'react-codemirror2'
 import CustomUtils from './custom-utils'
-import fetch from './cross-fetch-with-timeout';
-//require('codemirror/mode/xml/xml');
 require('codemirror/mode/javascript/javascript');
-
 
 class PanelSourceGenerator extends Component {
   constructor(props) {
@@ -44,27 +41,19 @@ class PanelSourceGenerator extends Component {
       }
 		}
 	}
-	
+  
+  requestSource(lang){
+    this.props.dispatch(
+      {
+        type:"REQUEST_SOURCE",
+        lang: lang
+      }
+    )
+  }
+
 	componentDidMount(){
-		this.props.dispatch({
-			type: "SOURCE_PENDING",
-			payload:
-        fetch('/app/k/define/schema/generate_source.json',
-        {
-					method: 'POST',
-					body: CustomUtils.formData({ category: this.props.vo ? this.props.vo.schema.category : "", lang: this.state.selectedSubTab }),
-					timeout:3000
-				})
-				.then(res => {
-					this.props.dispatch({
-						type: "SOURCE_FULFILLED",
-						source: res.source
-					});
-				}).catch((err) => {
-					alert(err);
-				})
-		});
-	}
+    this.requestSource(this.state.selectedSubTab);
+  }
   
   toggle(tab, subTabId) {
     return (e) => {
@@ -74,6 +63,7 @@ class PanelSourceGenerator extends Component {
           selectedTab: tab['id'],
           selectedSubTab: subTabId
         });
+        this.requestSource(subTabId);
     }
   }
 

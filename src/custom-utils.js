@@ -12,12 +12,24 @@ export default class CustomUtils{
   } 
 
   static formData(jsonData){
+    var params = [];
+    for (var p in jsonData)
+      if (jsonData.hasOwnProperty(p)) {
+        let k = p
+        let v = jsonData[p]
+        params.push(encodeURIComponent(p) + "=" + encodeURIComponent(v ? v : ""));  
+      }
+    return params.join("&");
+    /*
     const formData = new FormData();
     for(var k in jsonData){
       formData.append(k, jsonData[k]); 
     }
     return formData;
+    */
   }
+
+  
 }
 
 export function formatMessage(message, values) {

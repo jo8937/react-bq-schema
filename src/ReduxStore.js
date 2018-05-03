@@ -17,7 +17,8 @@ import locales from './locale'
 import CustomUtils from './custom-utils'
 
 import createSagaMiddleware from 'redux-saga'
-import mySaga from './ReduxSaga'
+import rootSaga from './ReduxSaga'
+
 
 var initialLocale = CustomUtils.getLocale();
 
@@ -49,6 +50,7 @@ const store = createStore(rootReducer, initialState,
 	)
 )
 
-sagaMiddleware.run(mySaga)
+store.runSaga = sagaMiddleware.run;
+store.runSaga(rootSaga);
 
 export default store

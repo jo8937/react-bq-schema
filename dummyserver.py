@@ -185,8 +185,11 @@ def trace(k,cate):
 def generate_source(k):
     #idx: 142
     #lang: OBJC
-    weblog.debug(json.dumps(request.form, indent=4, ensure_ascii=False))
-    return jsonify(source="hello...")
+    try:
+        return jsonify(source="hello... %s" % request.values["lang"])
+    except:
+        weblog.error(json.dumps(request.values, indent=4, ensure_ascii=False),exc_info=True)
+        return jsonify(source="error")
 
 #############################################################
 # Data Explorer 

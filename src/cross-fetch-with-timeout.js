@@ -25,6 +25,9 @@ export default function timeoutfetch(url, options) {
         throw new HttpStatusError("Bad response from server : " + res.status);
       }
       return res.json();
+    }).catch(err =>{
+      console.log("============" + err);
+      throw err;
     }),
     new Promise((resolve,reject) =>
       setTimeout(() => reject(new FetchTimeoutError('ajax timeout : ' + timeoutMs)), timeoutMs)

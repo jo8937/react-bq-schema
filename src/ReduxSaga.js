@@ -1,26 +1,44 @@
 import React, { Component } from 'react';
 import {  combineReducers, createStore, applyMiddleware, compose } from 'redux'
 import CustomUtils from './custom-utils'
-import { call, put, takeLatest } from 'redux-saga/effects'
+import fetch from './cross-fetch-with-timeout';
+import { fork, call, put, takeLatest, take } from 'redux-saga/effects'
 
+import createSagaMiddleware from 'redux-saga'
+import * as effects from 'redux-saga/effects'
+import 'babel-polyfill'
+import createCombineLatest from 'redux-saga-combine-latest'
 
-// worker Saga: USER_FETCH_REQUESTED 액션에 대해 호출될 것입니다
-function* fetchData(action) {
-try {
-	//const user = yield call(Api.fetchUser, action.payload.userId);
-	yield put({type: "SAGA_PENDING", act: new Promise((resolve,reject) =>
-		{
-			console.log("----==================");
-			console.log(action);
-		}	
-  	)});
-} catch (e) {
-	yield put({type: "SAGA_ERROR", message: e.message});
+const combineLatest = createCombineLatest(effects)
+
+function* fetchSchemaToSourceGenerating(actions) {
+	try {
+	  //const user = yield call(Api.fetchUser, action.payload.userId);
+		yield put({type: "SOURCE_PENDING"});
+		let res = yield call(fetch, '/app/k/define/schema/generate_source.json',{
+																	method: 'POST',
+																	headers:
+																	{
+																		'Content-type': 'application/x-www-form-urlencoded'
+																	},
+					  												body: CustomUtils.formData({ category: actions[0].schema.category, lang:actions[1].lang }),
+																	timeout:3000});
+		yield put({
+					type: "SOURCE_FULFILLED",
+					source: res.source
+				  });
+	} catch (e) {
+	  yield put({type: "SOURCE_REJECTED", message: e.message});
+	}
 }
-}
 
-function* mySaga() {
-	yield takeLatest("SCHEMA_FULFILLED", fetchData);
+function* sourgeGeneratorSagaWait() {
+	//yield takeLatest(["SCHEMA_FULFILLED","REQUEST_SOURCE"], fetchSchemaToSourceGenerating);
+	yield combineLatest(["SCHEMA_FULFILLED","REQUEST_SOURCE"], fetchSchemaToSourceGenerating);
 }
-
-export default mySaga;
+  
+export default function* rootSaga() {
+    yield [
+        fork(sourgeGeneratorSagaWait)
+    ];
+}
