@@ -19,6 +19,7 @@ import PanelFieldInfo from './PanelFieldInfo';
 import PanelDataPreview from './PanelDataPreview';
 import PanelSourceGenerator from './PanelSourceGenerator';
 import PanelEtlSimulation from './PanelEtlSimulation';
+import CustomUtils from './custom-utils'
 
 class App extends Component {
 
@@ -38,7 +39,7 @@ class App extends Component {
 		this.props.dispatch({
 			type: "SCHEMA_PENDING",
 			payload:
-				fetch('/app/k/define/schema/view/cate.json',{timeout:3000})
+				fetch(CustomUtils.SCHEMA_URI,{timeout:3000})
 				.then(schema => {
 					this.props.dispatch({
 						type: "SCHEMA_FULFILLED",
@@ -61,7 +62,7 @@ class App extends Component {
 	return (
 		<div>
 			<header>
-				<LoadingBar style={{ zIndex : 1,  backgroundColor: '#2a84d8', height: '5px' }} progressIncrease={50}/>
+				<LoadingBar style={{ zIndex : 1,  backgroundColor: '#2a84d8', height: '5px', position:'fixed', top:0 }} progressIncrease={50}/>
 			</header>
 			<section>
 				<PanelSchemaInfo title={<FormattedMessage id="schema_info"/>}/>

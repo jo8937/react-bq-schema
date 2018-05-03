@@ -5,6 +5,7 @@ import 'react-select/dist/react-select.css';
 import { connect } from 'react-redux'
 import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
 import fetch from './cross-fetch-with-timeout';
+import CustomUtils from './custom-utils'
 
 class SelectBoxFieldActive extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class SelectBoxFieldActive extends React.Component {
     this.props.dispatch({
 			type: "FIELD_PROP_EDIT_PENDING",
 			payload:
-				fetch('/app/k/define/field/active',{
+				fetch(CustomUtils.FIELD_ACTIVE_URI,{
 					method: 'POST',
           headers: {
 						'Content-type': 'application/json'

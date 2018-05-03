@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import EditableCustom from './EditableCustom';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { FormattedMessage } from 'react-intl';
+import CustomUtils from './custom-utils'
 
 class PanelSchemaInfo extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class PanelSchemaInfo extends Component {
 		this.props.dispatch({
 			type: "SCHEMA_PROP_EDIT_PENDING",
 			payload:
-				fetch('/app/k/define/schema/schema_edit_proc',{
+				fetch(CustomUtils.SCHEMA_EDIT_URI,{
 					method: 'POST',
           headers: {
 						'Content-type': 'application/json'

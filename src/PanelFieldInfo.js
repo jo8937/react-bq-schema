@@ -8,6 +8,7 @@ import SelectBoxFieldActive from './SelectBoxFieldActive'
 import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
 import { formatMessage as f } from './custom-utils'
 import EditableCustom from './EditableCustom';
+import CustomUtils from './custom-utils'
 
 class PanelFieldInfo extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class PanelFieldInfo extends Component {
 		this.props.dispatch({
 			type: "FIELD_PROP_EDIT_PENDING",
 			payload:
-				fetch('/app/k/define/schema/field_edit_proc',{
+				fetch(CustomUtils.FIELD_EDIT_URI,{
 					method: 'POST',
           headers: {
 						'Content-type': 'application/json'

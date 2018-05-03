@@ -12,14 +12,14 @@ import urllib
 from flask import Flask
 from flask import jsonify
 from flask import request
-from flask import redirect, url_for
+from flask import redirect, url_for, send_from_directory
 from datetime import timedelta
 from flask.templating import render_template
 import ujson
 import logging
 from datetime import datetime, timedelta
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="build",static_folder='build/static',)
 
 reload(sys)  
 sys.setdefaultencoding('utf8')
@@ -32,7 +32,7 @@ weblog.setLevel(logging.DEBUG)
 
 @app.route("/")
 def hello():
-    return "dummy..."
+    return render_template("index.html")
 
 #############################################################
 # Schema Explorer
@@ -194,19 +194,19 @@ def generate_source(k):
 #############################################################
 # Data Explorer 
 
-@app.route("/app/<k>/data/tabledata/<dataset>/<tablename>.json")
+@app.route("/app/<k>/define/tabledata/<dataset>/<tablename>.json")
 def tabledata(k,dataset,tablename):
     weblog.debug("show table data")
     return jsonify(dataList=[{"title":"a"}])
 
-@app.route("/app/<k>/data/<category>/send")
+@app.route("/app/<k>/define/<category>/send")
 def tabledata_send_sample(k,dataset,tablename):
     return jsonify(dataList=[{"title":"a"}])
 
-@app.route("/app/<k>/data/<category>/monitor")
+@app.route("/app/<k>/define/<category>/monitor")
 def tabledata_send_monitor(k,dataset,tablename):
     weblog.debug("etl monitor at...")
     return jsonify(dataList=[{"title":"a"}])
 
 if __name__ == "__main__":
-    app.run("0.0.0.0", 3001, debug=True)
+    app.run("0.0.0.0", 3001, debug=True, threaded=True)

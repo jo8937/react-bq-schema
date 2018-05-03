@@ -11,7 +11,6 @@
     "es6-promise-polyfill": "^1.2.0",
     "node-sass-chokidar": "^1.2.2",
     "open-iconic": "^1.1.1",
-    "query-string": "^6.0.0",
     "react": "^16.3.1",
     "react-addons-css-transition-group": "^15.6.2",
     "react-codemirror2": "^5.0.1",
@@ -39,7 +38,8 @@
     "redux-saga": "^0.16.0",
     "redux-saga-combine-latest": "^1.0.4",
     "redux-thunk": "^2.2.0",
-    "rxjs": "^6.0.0"
+    "rxjs": "^6.0.0",
+    "webpack-cli": "^2.1.2"
   },
   "scripts": {
     "sass:watch": "sass --watch src/styles/scss:src/styles/css",

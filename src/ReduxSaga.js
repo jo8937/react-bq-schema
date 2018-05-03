@@ -15,7 +15,7 @@ function* fetchSchemaToSourceGenerating(actions) {
 	try {
 	  //const user = yield call(Api.fetchUser, action.payload.userId);
 		yield put({type: "SOURCE_PENDING"});
-		let res = yield call(fetch, '/app/k/define/schema/generate_source.json',{
+		let res = yield call(fetch, CustomUtils.SOURCE_URI,{
 																	method: 'POST',
 																	headers:
 																	{
