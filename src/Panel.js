@@ -39,11 +39,11 @@ class Panel extends Component {
 		}
 
     return (
-      <Container>
+      <Container fluid>
         <Row>
 					<Col>
 					<div className="d-flex bg-secondary bd-highlight" onClick={this.eventHandler}>
-						<div className="p-2 font-weight-bold">{this.props.title}</div>
+						<div className="p-2 panelhead">{this.props.title}</div>
 						{addtionalButton}
 						
 						<button type="button" aria-label="Close" className="btn btn-link ml-auto p-2">

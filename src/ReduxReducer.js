@@ -30,11 +30,31 @@ const schemaReducer = (state = { schema: null, fields: null } , action) => {
     }
 }
 
+const alsertMessageReducer = (state = {
+											msgIdTitle: "info",
+											msgIdMessage: "desc",
+											message: "...",
+											msgIdOk: "ok",
+											theme: "warning",
+											onOk: null,
+											open: false
+										}, action) => {
+	switch(action.type){
+		case 'TOGGLE_ALERT':
+			return Object.assign({}, state, action);
+		case 'ALERT_MESSAGE':
+			return Object.assign({}, state, action, {open:true});
+		default:
+            return state;
+    }
+};
+
 const rootReducer = combineReducers({
 	loadingBar: loadingBarReducer,
 	debugger: debuggerReducer,
 	schemaVo : schemaReducer,
-	intl: intlReducer
+	intl: intlReducer,
+	alertmessage: alsertMessageReducer
 })
 
 export default rootReducer

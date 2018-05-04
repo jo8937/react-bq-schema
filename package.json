@@ -47,7 +47,8 @@
     "build": "yarn sass:build && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "start": "concurrently --kill-others \"python dummyserver.py\" \"react-scripts start\""
+    "start": "concurrently --kill-others \"python dummyserver.py\" \"react-scripts start\"",
+    "start:alone": "react-scripts start"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
@@ -63,4 +64,6 @@
       "ws": false
     }
   }
+  ,
+  "homepage": "."
 }

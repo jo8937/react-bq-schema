@@ -5,11 +5,12 @@ import { connect } from 'react-redux'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import LoadingBar from 'react-redux-loading-bar'
 import PropTypes from 'prop-types';
-import { Button } from 'reactstrap';
 //import Loading from 'react-loading-bar'
 //import 'react-loading-bar/dist/index.css'
 //import {IntlProvider, FormattedMessage} from 'react-intl';
 //import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
+//import { Button } from 'reactstrap';
+import { Button, Container, Row, Col, Collapse } from 'reactstrap';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { updateIntl } from 'react-intl-redux'
 import Select from 'react-select';
@@ -19,6 +20,7 @@ import PanelFieldInfo from './PanelFieldInfo';
 import PanelDataPreview from './PanelDataPreview';
 import PanelSourceGenerator from './PanelSourceGenerator';
 import PanelEtlSimulation from './PanelEtlSimulation';
+import AlertWindow from './AlertWindow';
 import CustomUtils from './custom-utils'
 
 class App extends Component {
@@ -26,9 +28,18 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			modal: false,
 			locale : null
 		};
+		this.toggleModal = this.toggleModal.bind(this);
+
 	}
+
+	toggleModal() {
+		this.setState({
+		  modal: !this.state.modal
+		});
+	  }
 
 	componentDidMount(){
 		this.setState(
@@ -65,14 +76,29 @@ class App extends Component {
 				<LoadingBar style={{ zIndex : 1,  backgroundColor: '#2a84d8', height: '5px', position:'fixed', top:0 }} progressIncrease={50}/>
 			</header>
 			<section>
+			<Container fluid>
+				<Row>
+					<Col className="d-flex justify-content-between">
+						<h1 className="p-2">Schema</h1>					
+						<span className="p-3 h-80">
+						<button className="btn btn-white h-100">Info</button>
+						</span>
+					</Col>
+				</Row>
+			</Container>
+			</section>
+			<section>
 				<PanelSchemaInfo title={<FormattedMessage id="schema_info"/>}/>
 				<PanelFieldInfo title={<FormattedMessage id="field_info"/>}/>
 				<PanelDataPreview title={<FormattedMessage id="data_preview"/>}/>
 				<PanelSourceGenerator title={<FormattedMessage id="source_genaration"/>}/>
 				<PanelEtlSimulation title={<FormattedMessage id="etl_simulation"/>}/>
+			</section>
+			<section>
 				<div className="m-auto text-center">
-				<Button onClick={() => this.changeLocale('en')}>영어</Button>        
-				<Button onClick={() => this.changeLocale('ko')}>한글</Button>    
+					<Button onClick={() => this.changeLocale('en')}>영어</Button>        
+					<Button onClick={() => this.changeLocale('ko')}>한글</Button>    
+					<AlertWindow />
 				</div>
 			</section>
 		</div>

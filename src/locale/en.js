@@ -6,7 +6,9 @@ export default {
         "schema_info":'Schema Info',
 		"field_info" : 'Field Info',
         "data_preview" : 'Data Preview',
-        "name" : 'Name',        
+        "field_name" : 'Field Name',        
+        "name" : 'Name',                
+        "title" : 'Title',       
         "type" : 'Type',        
         "desc" : 'Description',        
         "sample_value" : 'Sample Value',        
@@ -18,5 +20,9 @@ export default {
         "schema_view.parentCategory":"Parent Category",
         "source_genaration":"Source Generating",
         "etl_simulation":"ETL Test",
+        "cancel":"Cancel",
+        "ok":"OK",
+        "info":"Information",
+        "label.need_login":"Login Required",
     }
 }

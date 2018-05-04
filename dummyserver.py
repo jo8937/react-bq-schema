@@ -12,7 +12,7 @@ import urllib
 from flask import Flask
 from flask import jsonify
 from flask import request
-from flask import redirect, url_for, send_from_directory
+from flask import redirect, url_for, send_from_directory, abort
 from datetime import timedelta
 from flask.templating import render_template
 import ujson
@@ -108,6 +108,7 @@ datalist = [{
     "tag1":"tag-%s"%i
 } for i in xrange(0,123)]
 
+   
 @app.route("/app/<k>/define/schema/view/<cate>.json")
 def view(k,cate):
     time.sleep(1)
@@ -185,6 +186,8 @@ def trace(k,cate):
 def generate_source(k):
     #idx: 142
     #lang: OBJC
+    #return abort(500);
+    #return redirect("http://google.com")
     try:
         return jsonify(source="hello... %s" % request.values["lang"])
     except:
@@ -207,6 +210,11 @@ def tabledata_send_sample(k,dataset,tablename):
 def tabledata_send_monitor(k,dataset,tablename):
     weblog.debug("etl monitor at...")
     return jsonify(dataList=[{"title":"a"}])
+
+@app.after_request
+def apply_caching(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
 
 if __name__ == "__main__":
     app.run("0.0.0.0", 3001, debug=True, threaded=True)

@@ -28,7 +28,8 @@ function* fetchSchemaToSourceGenerating(actions) {
 					source: res.source
 				  });
 	} catch (e) {
-	  yield put({type: "SOURCE_REJECTED", message: e.message});
+		yield put({type: "SOURCE_REJECTED", message: e.message});
+		yield put({type: "ALERT_MESSAGE", msgIdTitle: "label.need_login", message: e.message});
 	}
 }
 

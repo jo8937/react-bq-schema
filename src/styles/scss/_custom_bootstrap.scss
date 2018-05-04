@@ -78,6 +78,10 @@ $theme-colors: (
   "dark":       $dark
 ) !default;
 
+$font-family-base:  'Nanum Gothic','dotum','Arial','sans-serif' !default;
+$font-size-base:    0.9rem !default; 
+$body-color:        #6e6e6e !default;
+
 .highlight{
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
@@ -130,6 +134,50 @@ $nav-tabs-border-radius:            0 !default;
 $nav-tabs-link-hover-border-color:  $gray-200 $gray-200 $nav-tabs-border-color !default;
 $nav-tabs-link-active-color:        $blue !default;
 
+
+$model-warning-color: #ffad26;
+$model-danger-color: #fa4f57;
+$model-success-color: #32bb78;
+$model-info-color: #398ddb;
+
+$modal-content-bg:                  $model-warning-color !default;
+$modal-content-border-color:        rgba($black, .2) !default;
+$modal-content-border-width:        0 !default;
+$modal-content-border-radius:       0 !default;
+
+.modal-content{
+  color: white;
+}
+
+.modal-content.danger{
+  background-color: $model-danger-color;
+}
+
+.modal-content.warning{
+  background-color: $model-warning-color;
+}
+
+.modal-content.success{
+  background-color: $model-success-color;
+}
+
+.modal-content.info{
+  background-color: $model-info-color;
+}
+
 a.editableLink{
-  color:black;
+  color:#6e6e6e;
+}
+
+.panelhead{
+  font-size: 1rem;
+  color: #4e4e4e;
+  font-weight: bold;
+}
+
+.colhead{
+  font-size: .92rem;
+  color: #6e6e6e;
+  font-weight: bold;
+//font-weight: bold;
 }

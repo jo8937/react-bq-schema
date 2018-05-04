@@ -58,7 +58,7 @@ class PanelSchemaInfo extends Component {
 
 								return (
 								<Row className="mt-md-3 mb-md-3 justify-content-center" key={k}>
-											<Col xs="4" className="text-right font-weight-bold">
+											<Col xs="4" className="text-right colhead">
 											<FormattedMessage id={'schema_view.' + k}/>
 											</Col>
 											<Col xs="8" className="text-left">

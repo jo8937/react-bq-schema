@@ -15,18 +15,19 @@ export default function timeoutfetch(url, options) {
 
   let customoptions = Object.assign( {
     headers: {
-      'Content-type': 'application/json'
+      'Content-type': 'application/json',
+      'Access-Control-Allow-Origin':'*'
     }
   }, options );
-  console.log(customoptions)
+  
   return Promise.race([
     fetch(url, customoptions).then(res => {
-      if (res.status >= 400) {
+      if (!res.ok) {
         throw new HttpStatusError("Bad response from server : " + res.status);
       }
       return res.json();
     }).catch(err =>{
-      console.log("============" + err);
+      console.log(err);
       throw err;
     }),
     new Promise((resolve,reject) =>

@@ -7,6 +7,8 @@ export default {
 		"field_info" : '필드 정보',
         "data_preview" : '데이터 미리보기',
         "field_name" : '필드명',        
+        "name" : '이름',        
+        "title" : '제목',        
         "type" : '타입',        
         "desc" : '설명',        
         "sample_value" : '샘플값',        
@@ -18,5 +20,9 @@ export default {
         "schema_view.parentCategory":"상위 카테고리",        
         "source_genaration":"소스 생성",
         "etl_simulation":"ETL 시뮬레이션",
+        "cancel":"취소",
+        "ok":"확인",
+        "info":"안내",
+        "label.need_login":"로그인이 필요합니다",
     }
 }
