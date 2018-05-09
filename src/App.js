@@ -14,12 +14,13 @@ import { Button, Container, Row, Col, Collapse } from 'reactstrap';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { updateIntl } from 'react-intl-redux'
 import Select from 'react-select';
-import locales from './locale'
+import { locales } from './locale'
 import PanelSchemaInfo from './PanelSchemaInfo';
 import PanelFieldInfo from './PanelFieldInfo';
 import PanelDataPreview from './PanelDataPreview';
 import PanelSourceGenerator from './PanelSourceGenerator';
 import PanelEtlSimulation from './PanelEtlSimulation';
+import PanelFieldAdd from './PanelFieldAdd';
 import AlertWindow from './AlertWindow';
 import CustomUtils from './custom-utils'
 
@@ -60,6 +61,8 @@ class App extends Component {
 					alert(err);
 				})
 		});
+		console.log("00000000000000000000000000000");
+		console.log(locales);
 	}
 
 	changeLocale = (lang) => {
@@ -88,11 +91,12 @@ class App extends Component {
 			</Container>
 			</section>
 			<section>
-				<PanelSchemaInfo title={<FormattedMessage id="schema_info"/>}/>
-				<PanelFieldInfo title={<FormattedMessage id="field_info"/>}/>
-				<PanelDataPreview title={<FormattedMessage id="data_preview"/>}/>
-				<PanelSourceGenerator title={<FormattedMessage id="source_genaration"/>}/>
-				<PanelEtlSimulation title={<FormattedMessage id="etl_simulation"/>}/>
+				<PanelSchemaInfo title={<FormattedMessage id="schema_info" defaultMessage="Info"/>}/>
+				<PanelFieldInfo title={<FormattedMessage id="field_info" defaultMessage="Info"/>}/>
+				<PanelFieldAdd title={<FormattedMessage id="field_add" defaultMessage="Info"/>}/>
+				<PanelDataPreview title={<FormattedMessage id="data_preview" defaultMessage="Info"/>}/>
+				<PanelSourceGenerator title={<FormattedMessage id="source_genaration" defaultMessage="Info"/>}/>
+				<PanelEtlSimulation title={<FormattedMessage id="etl_simulation" defaultMessage="Info"/>}/>
 			</section>
 			<section>
 				<div className="m-auto text-center">

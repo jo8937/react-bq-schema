@@ -32,8 +32,8 @@ export default class CustomUtils{
   static SCHEMA_EDIT_URI = APP_URI['BASE_URI'] + "/schema/schema_edit_proc";
   static FIELD_ACTIVE_URI = APP_URI['BASE_URI'] + "/field/active";
   static FIELD_EDIT_URI = APP_URI['BASE_URI'] + "/schema/field_edit_proc";
-
-
+  static FIELD_ADD_URI = APP_URI['BASE_URI'] + "/schema/field_add_proc";
+  
   static getLocale() {
     //const parsed = querystring.parse(window.location.search);
     let lang = getQueryStringValue("lang");

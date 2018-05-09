@@ -13,7 +13,7 @@ import ReduxThunk from 'redux-thunk'
 import rootReducer from './ReduxReducer'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import locales from './locale'
+import { locales } from './locale'
 import CustomUtils from './custom-utils'
 
 import createSagaMiddleware from 'redux-saga'

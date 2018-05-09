@@ -24,5 +24,12 @@ url('../static/fonts/NanumGothic-Regular.ttf') format('truetype');
 color:black;
 background-color:white;
 border-width:1px;
-border-color:gray;
+border-color:#bebebe;
+}
+
+.btn-bordered-primary{
+color:#2d82d5;
+background-color:white;
+border-width:1px;
+border-color:#2d82d5;
 }

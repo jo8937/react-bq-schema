@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Collapse, Table, Input } from 'reactstrap';
+import { Container, Row, Col, Collapse, Table } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonDropdown  } from 'reactstrap';
 import { CircleLoader, RingLoader } from 'react-spinners';
+import { Button, Form, FormGroup, Label, Input, FormText, FormFeedback, Tooltip } from 'reactstrap';
 import Panel from './Panel';
 import { connect } from 'react-redux'
 import SelectBoxFieldActive from './SelectBoxFieldActive'
@@ -9,13 +10,16 @@ import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-i
 import { formatMessage as f } from './custom-utils'
 import EditableCustom from './EditableCustom';
 import CustomUtils from './custom-utils'
+import Select from 'react-select';
+import serialize from 'form-serialize';
 
 class PanelFieldInfo extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-			
+			tooltipOpen: false
 		}
+		this.toggleTooltip = this.toggleTooltip.bind(this);
 	}
 
 	updateFieldProperty = (k, v, prop) =>{
@@ -41,8 +45,14 @@ class PanelFieldInfo extends Component {
 		});
 	}
 	
-	getContent(){
-		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length){
+	
+  toggleTooltip() {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen
+    });
+	}
+	
+	getFieldList(){
 			return (
 				<Row>
 				<Col className="m-3">				
@@ -53,7 +63,13 @@ class PanelFieldInfo extends Component {
             <th>{f('type')}</th>
             <th>{f('desc')}</th>
             <th>{f('sample_value')}</th>
-						<th>{f('usage')}</th>
+						<th>
+						{f('usage')}
+						<span id="whatisthis" className="ml-1"><i className="fa fa-question-circle-o"/></span>
+						<Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="whatisthis" toggle={this.toggleTooltip}>
+							<FormattedMessage id="schema_define.select_data.helpText"/>
+						</Tooltip>
+						</th>
 						<th>{f('state')}</th>
           </tr>
         </thead>
@@ -93,23 +109,27 @@ class PanelFieldInfo extends Component {
 			</Col>
 				</Row>			 
 			);
-		}else{
-			return (
-				<Row className="mt-md-3 mb-md-3 justify-content-center">
-							<Col xs="2" className="text-left">
-							<RingLoader color={'#2a84d8'}/>
-							</Col>
-				</Row>
-			);
-		}
 	}
 
   render() {
-    return (
-      <Panel title={this.props.title}>
-				{this.getContent()}
-      </Panel>
-    );
+		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length){
+			return (
+				<Panel title={this.props.title}>
+					{this.getFieldList()}
+				</Panel>
+			);
+		}else{
+			return (
+				<Panel title={this.props.title}>
+					<Row className="mt-md-3 mb-md-3 justify-content-center">
+						<Col xs="2" className="text-left">
+							<RingLoader color={'#2a84d8'}/>
+						</Col>
+					</Row>
+				</Panel>
+			);
+		}
+
   }
 }
 

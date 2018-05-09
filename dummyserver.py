@@ -92,9 +92,127 @@ schema = {
     "active" : 1,
     "regDate" : 1520577078000,
     "segment" : False,
-    "clientHeader" : False
-    ,"generated" : False    
-  }]
+    "clientHeader" : False,
+    "generated" : False    
+  }
+  ,
+  {
+    "name" : "category",
+    "type" : "STRING",
+    "description" : "Cate",
+    "sampleValue" : "logining",
+    "idx" : 4,
+    "category" : "test",
+    "fieldOpt" : "NULLABLE",
+    "common" : True,
+    "required" : True,
+    "active" : 0,
+    "regDate" : 1520577078000,
+    "segment" : False,
+    "clientHeader" : False,
+    "generated" : False
+  }
+,
+  {
+    "name" : "guid",
+    "type" : "STRING",
+    "description" : "guid",
+    "sampleValue" : "sadfe13r32f",
+    "idx" : 5,
+    "category" : "test",
+    "fieldOpt" : "NULLABLE",
+    "common" : True,
+    "required" : True,
+    "active" : 0,
+    "regDate" : 1520577078000,
+    "segment" : False,
+    "clientHeader" : False,
+    "generated" : False
+  }
+  ,
+  {
+    "name" : "tag1",
+    "type" : "STRING",
+    "description" : "tag1",
+    "sampleValue" : "ttt",
+    "idx" : 6,
+    "category" : "test",
+    "fieldOpt" : "NULLABLE",
+    "common" : True,
+    "required" : True,
+    "active" : 0,
+    "regDate" : 1520577078000,
+    "segment" : False,
+    "clientHeader" : False,
+    "generated" : False
+  }
+  ,
+  {
+    "name" : "shortName",
+    "type" : "STRING",
+    "description" : "shortName",
+    "sampleValue" : "sss",
+    "idx" : 7,
+    "category" : "test",
+    "fieldOpt" : "NULLABLE",
+    "common" : True,
+    "required" : True,
+    "active" : 0,
+    "regDate" : 1520577078000,
+    "segment" : False,
+    "clientHeader" : False,
+    "generated" : False
+  }
+  ,
+  {
+    "name" : "aid",
+    "type" : "FLOAT",
+    "description" : "aid",
+    "sampleValue" : "sss",
+    "idx" : 8,
+    "category" : "test",
+    "fieldOpt" : "NULLABLE",
+    "common" : False,
+    "required" : False,
+    "active" : 0,
+    "regDate" : 1520577078000,
+    "segment" : False,
+    "clientHeader" : False,
+    "generated" : False
+  },
+  {
+    "name" : "testDate",
+    "type" : "DATETIME",
+    "description" : "aid",
+    "sampleValue" : "sss",
+    "idx" : 8,
+    "category" : "test",
+    "fieldOpt" : "NULLABLE",
+    "common" : False,
+    "required" : False,
+    "active" : 0,
+    "regDate" : 1520577078000,
+    "segment" : False,
+    "clientHeader" : False,
+    "generated" : False
+  },
+  {
+    "name" : "open",
+    "type" : "BOOLEAN",
+    "description" : "open",
+    "sampleValue" : "True",
+    "idx" : 8,
+    "category" : "test",
+    "fieldOpt" : "NULLABLE",
+    "common" : False,
+    "required" : False,
+    "active" : 0,
+    "regDate" : 1520577078000,
+    "segment" : False,
+    "clientHeader" : False,
+    "generated" : False
+  }
+  ]
 }
 
 datalist = [{
@@ -102,10 +220,12 @@ datalist = [{
     "guid":"a%s" % i,
     "dateTime":(datetime.now() + timedelta(days=i)).strftime('%Y-%m-%d %H:%M:%S'), 
     "uid":i, 
-    "aid":2, 
+    "aid":2.1, 
     "longName":"aaaa%s"%i, 
     "shortName":"b%s"%i,
-    "tag1":"tag-%s"%i
+    "tag1":"tag-%s"%i,
+    "testDate":(datetime.now() + timedelta(days=-i)).strftime('%Y-%m-%d %H:%M:%S'), 
+    "open": False
 } for i in xrange(0,123)]
 
    
@@ -200,7 +320,61 @@ def generate_source(k):
 @app.route("/app/<k>/define/tabledata/<dataset>/<tablename>.json")
 def tabledata(k,dataset,tablename):
     weblog.debug("show table data")
-    return jsonify(dataList=[{"title":"a"}])
+    req = request.json or {}
+    page = req.get("page",1)
+    listSize = req.get("listSize",10)
+    return jsonify({
+	"dataList": datalist[((page-1)*listSize):(page*listSize)]
+	,
+	"param": {
+		"token": "",
+		"page": 1,
+		"listSize": 10,
+		"pageSize": 10,
+		"dataset": "test",
+		"tableName": "loginlog",
+		"sortColumn": "",
+		"sortMethod": "ASC",
+		"previewMode": "SELECT_RECENT",
+		"search": [],
+		"cols": [],
+		"k": "",
+		"m": "like",
+		"v": "",
+		"columnNameToStringForLikeSearch": False
+	},
+	"paging": {
+		"token": "",
+		"page": 1,
+		"listSize": 10,
+		"pageSize": 10,
+		"totalData": 171,
+		"totalPage": 18,
+		"startPage": 1,
+		"endPage": 10,
+		"prevToken": "",
+		"nextToken": "",
+		"prevPage": 0,
+		"hasPrev": False,
+		"hasFirst": False,
+		"hasLast": True,
+		"hasNext": True,
+		"nextPage": 11,
+		"sort": None,
+		"pageNumber": 1,
+		"offset": 0
+	},
+	"colList": [
+        "category",
+        "guid",
+        "dateTime", 
+        "uid", 
+        "aid", 
+        "longName", 
+        "shortName",
+        "tag1"
+	]
+})
 
 @app.route("/app/<k>/define/<category>/send")
 def tabledata_send_sample(k,dataset,tablename):

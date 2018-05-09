@@ -13,56 +13,68 @@ class PanelDataPreview extends Component {
 	}
 	
 	getContent(){
-		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length){
+    let filterdCols = this.props.vo.fields.filter(row => {
+        return row.active > 0;
+    }).map( row=> row.name );
 			return (
           <Row>
             <Col className="m-3">
 <Table className="table-bordered-top-down table-thead-padded table-striped">
         <thead className="thead-light">
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            {
+              filterdCols.map( col=>{
+                return (
+                  <th>{col}</th>      
+                );
+              })
+            }
           </tr>
         </thead>
         <tbody>
-					{this.props.vo.fields.map( k => 
-          <tr key={k.name}>
-            <th scope="row">{k.name}</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-					)}
+          {this.props.datalist.map( datarow => {
+            return (
+            <tr>
+              {filterdCols.map( col=>
+                (
+                  <th>{col}</th>      
+                )
+              )} 
+            </tr>
+            )
+          })}
         </tbody>
 			</Table> 
           </Col>
         </Row>
 			);
+	}
+
+  render() {
+    if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length){
+			return (
+        <Panel title={this.props.title}>
+        {this.getContent()}
+        </Panel>
+			);
 		}else{
 			return (
+        <Panel title={this.props.title}>
 				<Row className="mt-md-3 mb-md-3 justify-content-center">
 							<Col xs="2" className="text-left">
 							<RingLoader color={'#2a84d8'}/>
 							</Col>
 				</Row>
+        </Panel>
 			);
 		}
-	}
-
-  render() {
-    return (
-      <Panel title={this.props.title}>
-				{this.getContent()}
-      </Panel>
-    );
   }
 }
 
 const mapStateToProps = state => {
 	return {
-    vo: state.schemaVo.schema
+    vo: state.schemaVo.schema,
+    datalist: []
   }
 }
 
