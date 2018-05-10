@@ -16,15 +16,11 @@ const schemaReducer = (state = { schema: null, fields: null }, action) => {
     console.log(action.payload);
     switch (action.type) {
         case "SCHEMA_FULFILLED":
-            var newState = Object.assign({}, state, action.res);
-            return newState;
         case "SOURCE_FULFILLED":
+        case "SCHEMA_UPDATE_FULFILLED":
+        case "FIELD_ADD_FULFILLED":
             var newState = Object.assign({}, state, action.res);
             return newState;
-        case "SCHEMA_UPDATE_FULFILLED":
-            return Object.assign({}, state, {});
-        case "FIELD_ADD_FULFILLED":
-            return Object.assign({}, state, {});
         default:
             return state;
     }
