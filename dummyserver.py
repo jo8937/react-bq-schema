@@ -254,7 +254,7 @@ def write_proc(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
     return jsonify(success=True)
 
-@app.route("/app/<k>/define/schema/field_add_proc.json")
+@app.route("/app/<k>/define/schema/field_add_proc.json", methods=['GET', 'POST'])
 def field_add(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
     return jsonify(success=True)
@@ -307,9 +307,9 @@ def generate_source(k):
     #idx: 142
     #lang: OBJC
     #return abort(500);
-    #return redirect("http://google.com")
+    #return redirect("http://google.com");
     try:
-        return jsonify(source="hello... %s" % request.values["lang"])
+        return jsonify(source="hello... %s" % request.values["lang"]);
     except:
         weblog.error(json.dumps(request.values, indent=4, ensure_ascii=False),exc_info=True)
         return jsonify(source="error")

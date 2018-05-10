@@ -73,7 +73,7 @@ class PanelDataPreview extends Component {
 
 const mapStateToProps = state => {
 	return {
-    vo: state.schemaVo.schema,
+    vo: state.schemaVo,
     datalist: []
   }
 }

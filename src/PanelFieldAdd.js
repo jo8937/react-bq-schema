@@ -12,6 +12,7 @@ import EditableCustom from './EditableCustom';
 import CustomUtils from './custom-utils'
 import Select from 'react-select';
 import serialize from 'form-serialize';
+import fetch from './cross-fetch-with-timeout';
 
 class PanelFieldAdd extends Component {
   constructor(props) {
@@ -31,10 +32,9 @@ class PanelFieldAdd extends Component {
   }
 
   handleSubmit(event) {
-		const data = new FormData(event.target);
-		alert('A name was submitted: ' + data);
-		alert('A name was submitted: ' + serialize(event.target));
-    event.preventDefault();
+		//const data = new FormData(event.target);
+		this.props.dispatch({ type: "REQUEST_FIELD_ADD", payload: serialize(event.target, { hash: true })});
+		event.preventDefault();
   }
 
 
@@ -51,7 +51,7 @@ class PanelFieldAdd extends Component {
 				</Row>
 				<Row>
 				<Col className="m-3">				
-					<form onSubmit={this.handleSubmit}>
+					<form onSubmit={this.handleSubmit} action={CustomUtils.FIELD_ADD_URI} method="POST">
 					<Table>
 					<tbody>
 						<tr>
@@ -98,7 +98,6 @@ class PanelFieldAdd extends Component {
 			return (
 			
 				<Panel title={<FormattedMessage id="field_add"/>}>
-				<Input type="text" name="field_type" id="field_type" placeholder={<FormattedMessage id="schema_define.add_desc.name"/>} />
 					{this.getFieldAddForm()}
 				</Panel>			
 			);
@@ -119,12 +118,12 @@ class PanelFieldAdd extends Component {
 
 const mapStateToProps = state => {
 	return {
-    vo: state.schemaVo.schema
+    vo: state.schemaVo
   }
 }
 
+
 export default injectIntl(connect(
-  mapStateToProps,
-  null
+  mapStateToProps
 )(PanelFieldAdd), { intlPropName:'intl' } );
 

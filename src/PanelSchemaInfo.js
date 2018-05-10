@@ -18,29 +18,13 @@ class PanelSchemaInfo extends Component {
 	
 	updatePropertyValue = (k, v, prop) => {
 		this.props.dispatch({
-			type: "SCHEMA_PROP_EDIT_PENDING",
-			payload:
-				fetch(CustomUtils.SCHEMA_EDIT_URI,{
-					method: 'POST',
-          headers: {
-						'Content-type': 'application/json'
-					},
-					body: JSON.stringify({ category: this.props.vo.schema.category, name: k, value: v }),
-					timeout:3000
-				})
-				.then(schema_prop => {
-					this.props.dispatch({
-						type: "SCHEMA_PROP_EDIT_FULFILLED",
-						schema_prop
-					});
-				}).catch((err) => {
-					alert(err);
-				})
+			type: "REQUEST_SCHEMA_EDIT",
+			payload:{ category: this.props.vo.schema.category, name: k, value: v }
 		});
 	}
 
 	getContent(){
-		if(this.props.vo != null){
+		if(this.props.vo && this.props.vo.schema){
 
 			return (
 				<Container>
@@ -91,7 +75,7 @@ class PanelSchemaInfo extends Component {
 
 const mapStateToProps = state => {
 	return {
-    vo: state.schemaVo.schema
+    vo: state.schemaVo
   }
 }
 

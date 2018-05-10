@@ -23,26 +23,7 @@ class PanelFieldInfo extends Component {
 	}
 
 	updateFieldProperty = (k, v, prop) =>{
-		this.props.dispatch({
-			type: "FIELD_PROP_EDIT_PENDING",
-			payload:
-				fetch(CustomUtils.FIELD_EDIT_URI,{
-					method: 'POST',
-          headers: {
-						'Content-type': 'application/json'
-					},
-					body: JSON.stringify({ category: this.props.vo.schema.category, col: prop.col, name: k, value: v }),
-					timeout:3000
-				})
-				.then(schema_prop => {
-					this.props.dispatch({
-						type: "FIELD_PROP_EDIT_FULFILLED",
-						schema_prop
-					});
-				}).catch((err) => {
-					alert(err);
-				})
-		});
+		this.props.dispatch({ type: "REQUEST_FIELD_EDIT", payload: { category: this.props.vo.schema.category, col: prop.col, name: k, value: v }});
 	}
 	
 	
@@ -135,7 +116,7 @@ class PanelFieldInfo extends Component {
 
 const mapStateToProps = state => {
 	return {
-    vo: state.schemaVo.schema
+    vo: state.schemaVo
   }
 }
 

@@ -48,21 +48,7 @@ class App extends Component {
 				locale: this.props.locale
 			}
 		)
-		this.props.dispatch({
-			type: "SCHEMA_PENDING",
-			payload:
-				fetch(CustomUtils.SCHEMA_URI,{timeout:3000})
-				.then(schema => {
-					this.props.dispatch({
-						type: "SCHEMA_FULFILLED",
-						schema
-					});
-				}).catch((err) => {
-					alert(err);
-				})
-		});
-		console.log("00000000000000000000000000000");
-		console.log(locales);
+		this.props.dispatch({ type: "REQUEST_SCHEMA" });
 	}
 
 	changeLocale = (lang) => {
