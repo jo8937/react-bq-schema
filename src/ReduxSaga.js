@@ -25,6 +25,7 @@ function* fetchSaga(actions, actionName, options) {
         let res = yield call(fetch, URI, options);
         yield put({
             type: actionType + "_FULFILLED",
+            req: actions,
             res
         });
         return res;

@@ -257,7 +257,21 @@ def write_proc(k):
 @app.route("/app/<k>/define/schema/field_add_proc.json", methods=['GET', 'POST'])
 def field_add(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
-    return jsonify(success=True)
+    return jsonify(success=True, field={
+                    "name" : request.json.get("field_name"),
+                    "type" : request.json.get("field_type"),
+                    "description" : request.json.get("field_desc"),
+                    "sampleValue" : request.json.get("field_sample_value"),
+                    "category" : schema["schema"]["category"],
+                    "fieldOpt" : "NULLABLE",
+                    "common" : False,
+                    "required" : False,
+                    "active" : request.json.get("field_active",0),
+                    "regDate" : 1520577078000,
+                    "segment" : False,
+                    "clientHeader" : False,
+                    "generated" : False
+                  })
 
 @app.route("/app/<k>/define/field/active", methods=['GET', 'POST'])
 def field_active(k):

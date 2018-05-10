@@ -16,11 +16,46 @@ const schemaReducer = (state = { schema: null, fields: null }, action) => {
     console.log(action.payload);
     switch (action.type) {
         case "SCHEMA_FULFILLED":
+            return Object.assign({}, state, action.res);
         case "SOURCE_FULFILLED":
-        case "SCHEMA_UPDATE_FULFILLED":
+            return Object.assign({}, state, action.res);
+        case "SCHEMA_EDIT_FULFILLED":
+            if(action.res.success){
+                return Object.assign({}, state,{
+                    schema: {
+                        ...state.schema,
+                        [action.req.payload.name] : action.req.payload.value
+                    }
+                });
+            }else{
+                return state;
+            }
+        case "FIELD_EDIT_FULFILLED":
+            if(action.res.success){
+                return Object.assign({}, state,{
+                    fields: state.fields.map(field=>{
+                        if(field.name == action.req.payload.name){
+                            return {...field, 
+                                [action.req.payload.col]:action.req.payload.value};
+                        }else{
+                            return field;
+                        }
+                    })
+                });
+            }else{
+                return state;
+            }
         case "FIELD_ADD_FULFILLED":
-            var newState = Object.assign({}, state, action.res);
-            return newState;
+            if(action.res.success){
+                return Object.assign({}, state,{
+                    fields: [
+                        ...state.fields,
+                        {...action.res.field}
+                    ]
+                });
+            }else{
+                return state;
+            }    
         default:
             return state;
     }
