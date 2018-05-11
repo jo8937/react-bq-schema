@@ -33,7 +33,7 @@ import CustomUtils from "./custom-utils";
 import Select from "react-select";
 import serialize from "form-serialize";
 import classnames from "classnames";
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; 
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class PanelFieldInfo extends Component {
     constructor(props) {
@@ -75,53 +75,50 @@ class PanelFieldInfo extends Component {
             <Row>
                 <Col className="m-3">
                     <Container fluid className="tablestyle">
-                    <Row className="rowhead">
-                        <Col md="2">{f("field_name")}</Col>
-                        <Col md="2">{f("type")}</Col>
-                        <Col md="3">{f("desc")}</Col>
-                        <Col md="2">{f("sample_value")}</Col>
-                        <Col md="2" className="align-middle">
-                        <span className="">{f("usage")}</span>
-                                    <span id="whatisthis" className="ml-2">
-                                        <i className="fa fa-question-circle-o" />
-                                    </span>
-                                    <span
-                                        className="ml-2"
-                                        onClick={this.toggleFields}
-                                    >
-                                        <i className="fa fa-question-circle-o" />
-                                    </span>
-                                    <Tooltip
-                                        placement="bottom"
-                                        isOpen={this.state.tooltipOpen}
-                                        target="whatisthis"
-                                        toggle={this.toggleTooltip}
-                                    >
-                                        <FormattedMessage id="schema_define.select_data.helpText" />
-                                    </Tooltip>
-                        </Col>
-                        <Col md="1">{f("state")}</Col>
-                    </Row>
-                    <ReactCSSTransitionGroup
-                        transitionName="switch"
-                        transitionEnterTimeout={500}
-                        transitionLeaveTimeout={300}
-                        transitionAppearTimeout={500}
-                        transitionAppear={true}
-                        component="div"
+                        <Row className="rowhead" onClick={this.toggleFields}>
+                            <Col md="2">{f("field_name")}</Col>
+                            <Col md="2">{f("type")}</Col>
+                            <Col md="3">{f("desc")}</Col>
+                            <Col md="2">{f("sample_value")}</Col>
+                            <Col md="2" className="align-middle">
+                                <span className="">{f("usage")}</span>
+                                <span id="whatisthis" className="ml-2">
+                                    <i className="fa fa-question-circle-o" />
+                                </span>
+                                <Tooltip
+                                    placement="bottom"
+                                    isOpen={this.state.tooltipOpen}
+                                    target="whatisthis"
+                                    toggle={this.toggleTooltip}
+                                >
+                                    <FormattedMessage id="schema_define.select_data.helpText" />
+                                </Tooltip>
+                            </Col>
+                            <Col md="1">
+                                {f("state")}<span><i className="fa fa-question-circle-o" /></span>
+                            </Col>
+                        </Row>
+                        <ReactCSSTransitionGroup
+                            transitionName="row"
+                            transitionEnterTimeout={300}
+                            transitionLeaveTimeout={300}
+                            transitionAppearTimeout={300}
+                            transitionAppear={true}
+                            component="div"
                         >
-                            
                             {this.props.vo.fields.map(k => {
                                 let isUse = k.active > 0;
                                 let isOpen =
                                     this.state.fieldOpen ||
                                     (!k.generated && isUse);
+                                if (!isOpen) {
+                                    return;
+                                }
                                 return (
-                                    <Row 
+                                    <Row
                                         key={k.name}
-                                        className={'rowbody flex-nowrap fieldrow ' + (isOpen
-                                                ? "collapse show"
-                                                : "collapse")
+                                        className={
+                                            "rowbody flex-nowrap fieldrow"
                                         }
                                     >
                                         <Col md="2">{k.name}</Col>
@@ -164,57 +161,33 @@ class PanelFieldInfo extends Component {
                     </Container>
                 </Col>
             </Row>
-        )
+        );
         return (
             <Row>
                 <Col className="m-3">
-                <Container fluid className="tablestyle">
-                <Row className="rowhead">
-                    <Col md="2">
-                    1
-                    </Col>
-                    <Col md="2">
-                    2
-                    </Col>
-                    <Col md="2">
-                    3
-                    </Col>
-                    <Col md="2">
-                    4
-                    </Col>
-                    <Col md="2">
-                    5
-                    </Col>
-                    <Col md="2">
-                    6
-                    </Col>
-                </Row>
-                <Row className="rowbody d-flex flex-nowrap">
-                    <Col md="2">
-                    1
-                    </Col>
-                    <Col md="2">
-                    2
-                    </Col>
-                    <Col md="2">
-                    3
-                    </Col>
-                    <Col md="2">
-                    4
-                    </Col>
-                    <Col md="2">
-                    6asdasdasdasasdasd123123121231231231231213f32f2
-                    </Col>
-                    <Col md="2">
-                    6
-                    </Col>
-                </Row>
-                                  
-            </Container>                
+                    <Container fluid className="tablestyle">
+                        <Row className="rowhead">
+                            <Col md="2">1</Col>
+                            <Col md="2">2</Col>
+                            <Col md="2">3</Col>
+                            <Col md="2">4</Col>
+                            <Col md="2">5</Col>
+                            <Col md="2">6</Col>
+                        </Row>
+                        <Row className="rowbody d-flex flex-nowrap">
+                            <Col md="2">1</Col>
+                            <Col md="2">2</Col>
+                            <Col md="2">3</Col>
+                            <Col md="2">4</Col>
+                            <Col md="2">
+                                6asdasdasdasasdasd123123121231231231231213f32f2
+                            </Col>
+                            <Col md="2">6</Col>
+                        </Row>
+                    </Container>
                 </Col>
-            </Row>            
-
-        )
+            </Row>
+        );
     }
 
     render() {
