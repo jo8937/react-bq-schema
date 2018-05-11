@@ -25,7 +25,7 @@ class PanelDataPreview extends Component {
             {
               filterdCols.map( col=>{
                 return (
-                  <th>{col}</th>      
+                  <th key={col}>{col}</th>     
                 );
               })
             }
@@ -34,10 +34,10 @@ class PanelDataPreview extends Component {
         <tbody>
           {this.props.datalist.map( datarow => {
             return (
-            <tr>
+            <tr key={datarow.guid}>
               {filterdCols.map( col=>
                 (
-                  <th>{col}</th>      
+                  <th key={col}>{col}</th>      
                 )
               )} 
             </tr>

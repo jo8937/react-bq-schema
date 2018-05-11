@@ -75,7 +75,7 @@ class PanelFieldInfo extends Component {
             <Row>
                 <Col className="m-3">
                     <Container fluid className="tablestyle">
-                        <Row className="rowhead" onClick={this.toggleFields}>
+                        <Row className="rowhead flex-nowrap" onClick={this.toggleFields}>
                             <Col md="2">{f("field_name")}</Col>
                             <Col md="2">{f("type")}</Col>
                             <Col md="3">{f("desc")}</Col>

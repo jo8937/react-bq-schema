@@ -18,17 +18,22 @@ class PanelFieldAdd extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-			
+			field_type: "STRING",
+			field_active: 1,
 		}
-		
-    this.handleChange = this.handleChange.bind(this);
+
+	this.handleChangeType = this.handleChangeType.bind(this);		
+    this.handleChangeActive = this.handleChangeActive.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 
 	
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleChangeActive(selectedOption) {
+    this.setState({field_active: selectedOption.value});
+  }
+  handleChangeType(selectedOption) {
+    this.setState({field_type: selectedOption.value});
   }
 
   handleSubmit(event) {
@@ -60,7 +65,20 @@ class PanelFieldAdd extends Component {
 								<Input type="text" name="field_name" id="field_name" placeholder={this.props.intl.formatMessage({"id":"schema_define.add_field.name"})} invalid={false} pattern="[a-zA-Z_]+[a-zA-Z0-9_]+" required/>
 							</th>
 							<td>
-							<Input type="text" name="field_type" id="field_type" placeholder={this.props.intl.formatMessage({"id":"schema_define.add_type.name"})} required/>
+							 {/* {this.props.intl.formatMessage({"id":"schema_define.add_type.name"})} */}
+							 <Select
+									placeholder={this.props.intl.formatMessage({"id":"schema_define.add_type.name"})}
+									reqiured={true}
+									name="field_type"
+									clearable={false}
+									searchable={false}
+									value={this.state.field_type}
+									onChange={this.handleChangeType}
+									options={[
+										{value:"STRING",label:"STRING"},
+										{value:"INTEGER",label:"INTEGER"}
+									]}
+								/>
 							</td>
 							<td>
 							<Input type="text" name="field_desc" id="field_desc" placeholder={this.props.intl.formatMessage({"id":"schema_define.add_desc.name"})} required/>
@@ -70,10 +88,11 @@ class PanelFieldAdd extends Component {
 							</td>
 							<td>
 							<Select
-									name="active"
+									name="field_active"
 									clearable={false}
 									searchable={false}
-									value={0}
+									value={this.state.field_active}
+									onChange={this.handleChangeActive}									
 									options={[
 										{ value: '0', label: <FormattedMessage id="schema_view.use_select.select"/> },
 										{ value: '1', label: <FormattedMessage id="schema_view.use_select.recommend"/> },

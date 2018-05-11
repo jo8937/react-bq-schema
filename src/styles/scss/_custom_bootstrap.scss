@@ -194,8 +194,8 @@ a.editableLink{
 }
 
 .tablestyle{
-  overflow-x: auto;
-  overflow-y: hidden;
+  // overflow-x: auto;
+  // overflow-y: auto;
   white-space: break;
 }
 .rowhead{
@@ -208,7 +208,10 @@ a.editableLink{
   border-top: 0;
   border-bottom: 1px solid #dee2e6;
   background-color: white;
- 
+}
+
+.rowbody>div{
+  width:100%;
 }
 
 .row-enter {
