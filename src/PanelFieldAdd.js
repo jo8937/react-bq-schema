@@ -35,6 +35,7 @@ class PanelFieldAdd extends Component {
 		//const data = new FormData(event.target);
 		this.props.dispatch({ type: "REQUEST_FIELD_ADD", payload: serialize(event.target, { hash: true })});
 		event.preventDefault();
+		event.target.reset();
   }
 
 

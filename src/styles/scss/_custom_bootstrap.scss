@@ -181,3 +181,32 @@ a.editableLink{
   font-weight: bold;
 //font-weight: bold;
 }
+
+%table-like-row{
+  padding: 0.75rem !important;
+  color: #495057;
+  background-color: #f5f6f9;
+  border-color: #dee2e6;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 2px solid #dee2e6;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+.tablestyle{
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: break;
+}
+.rowhead{
+  @extend %table-like-row;
+}
+.rowbody{
+  @extend %table-like-row;
+  font-weight: none;
+  border-top: 1px solid #dee2e6;
+  border-top: 0;
+  border-bottom: 1px solid #dee2e6;
+  background-color: white;
+ 
+}
