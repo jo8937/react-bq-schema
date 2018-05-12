@@ -34,6 +34,8 @@ import Select from "react-select";
 import serialize from "form-serialize";
 import classnames from "classnames";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import Switch from "react-switch";
+
 
 class PanelFieldInfo extends Component {
     constructor(props) {
@@ -75,13 +77,13 @@ class PanelFieldInfo extends Component {
             <Row>
                 <Col className="m-3">
                     <Container fluid className="tablestyle">
-                        <Row className="rowhead flex-nowrap" onClick={this.toggleFields}>
-                            <Col md="2">{f("field_name")}</Col>
-                            <Col md="2">{f("type")}</Col>
-                            <Col md="3">{f("desc")}</Col>
-                            <Col md="2">{f("sample_value")}</Col>
-                            <Col md="2" className="align-middle">
-                                <span className="">{f("usage")}</span>
+                        <Row className="rowhead flex-nowrap">
+                            <Col md="2" className="m-auto">{f("field_name")}</Col>
+                            <Col md="2" className="m-auto">{f("type")}</Col>
+                            <Col md="3" className="m-auto">{f("desc")}</Col>
+                            <Col md="2" className="m-auto">{f("sample_value")}</Col>
+                            <Col md="2" className="m-auto">
+                                <span>{f("usage")}</span>
                                 <span id="whatisthis" className="ml-2">
                                     <i className="fa fa-question-circle-o" />
                                 </span>
@@ -94,8 +96,40 @@ class PanelFieldInfo extends Component {
                                     <FormattedMessage id="schema_define.select_data.helpText" />
                                 </Tooltip>
                             </Col>
-                            <Col md="1">
-                                {f("state")}<span><i className="fa fa-question-circle-o" /></span>
+                            <Col md="1" className="m-auto">
+                            <Switch
+                                        checked={this.state.fieldOpen}
+                                        onChange={this.toggleFields}
+                                        id="field-open-switch"
+                                        width={60}
+                                        height={24}
+                                        uncheckedIcon={
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                height: "100%",
+                                                color: "orange",
+                                                paddingRight: 2
+                                              }}
+                                            >
+                                              숨김
+                                            </div>
+                                          }
+                                          checkedIcon={
+                                            <div
+                                              style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                height: "100%",
+                                                color: "orange",
+                                                paddingLeft: 2
+                                              }}
+                                            >표시</div>
+                                          }
+                                    />
                             </Col>
                         </Row>
                         <ReactCSSTransitionGroup
@@ -160,7 +194,7 @@ class PanelFieldInfo extends Component {
                         </ReactCSSTransitionGroup>
                     </Container>
                 </Col>
-            </Row>
+            </Row >
         );
         return (
             <Row>
