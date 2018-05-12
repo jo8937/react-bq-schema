@@ -80,10 +80,10 @@ schema = {
     ,"generated" : True
   },
   {
-    "name" : "longname",
+    "name" : "longName",
     "type" : "STRING",
     "description" : "Long name of application",
-    "sampleValue" : "longname sample",
+    "sampleValue" : "longName sample",
     "idx" : 3,
     "category" : "test",
     "fieldOpt" : "NULLABLE",
@@ -331,18 +331,26 @@ def generate_source(k):
 #############################################################
 # Data Explorer 
 
-@app.route("/app/<k>/define/tabledata/<dataset>/<tablename>.json")
-def tabledata(k,dataset,tablename):
+@app.route("/app/<k>/define/tabledata.json", methods=['GET', 'POST'])
+def tabledata(k):
     weblog.debug("show table data")
     req = request.json or {}
     page = req.get("page",1)
     listSize = req.get("listSize",10)
+
+    res_datalist = datalist
+    if req.get("K") and req.get("V") and req.get("M"):
+        if req.get("M") == "EQUAL":
+            res_datalist = [row for row in datalist if req["V"] == str(row.get(req["K"]))]
+        else:
+            res_datalist = [row for row in datalist if req["V"] in str(row.get(req["K"]))]
+
     return jsonify({
-	"dataList": datalist[((page-1)*listSize):(page*listSize)]
+	"dataList": res_datalist[((page-1)*listSize):(page*listSize)]
 	,
 	"param": {
 		"token": "",
-		"page": 1,
+		"page": page,
 		"listSize": 10,
 		"pageSize": 10,
 		"dataset": "test",
@@ -359,13 +367,13 @@ def tabledata(k,dataset,tablename):
 	},
 	"paging": {
 		"token": "",
-		"page": 1,
+		"page": page,
 		"listSize": 10,
 		"pageSize": 10,
-		"totalData": 171,
-		"totalPage": 18,
+		"totalData": len(res_datalist),
+		"totalPage": 1 + len(res_datalist) / 10,
 		"startPage": 1,
-		"endPage": 10,
+		"endPage": 10 if len(res_datalist) >= 100 else 1 + len(res_datalist) / 10,
 		"prevToken": "",
 		"nextToken": "",
 		"prevPage": 0,

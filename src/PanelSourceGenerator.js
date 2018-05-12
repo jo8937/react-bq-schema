@@ -134,12 +134,13 @@ class PanelSourceGenerator extends Component {
   } // end render
 
 	getContent(){
-		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length){
+    if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length > 0
+      && this.props.sourceGen && this.props.sourceGen.source){
 			return (
           <Row>
             <Col className="m-3">
             <CodeMirror
-                value={this.props.source}
+                value={this.props.sourceGen.source}
                 options={this.state.options}
                 onBeforeChange={(editor, data, value) => {
                   this.setState({value});
@@ -167,7 +168,7 @@ class PanelSourceGenerator extends Component {
 const mapStateToProps = state => {
 	return {
     vo: state.schemaVo,
-    source: state.schemaVo.source
+    sourceGen: state.sourceGen
   }
 }
 

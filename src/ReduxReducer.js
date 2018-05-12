@@ -12,8 +12,33 @@ const debuggerReducer = (state = {}, action) => {
     return state;
 };
 
+const dataPreviewReducer = (state = { dataList:[], paging:{totalData:0,page:1} }, action) => {
+    switch (action.type) {
+        case "DATALIST_FULFILLED":
+            return Object.assign({}, state, action.res);
+        default:
+            return state;
+    }
+};
+
+const etlReducer = (state = { data:null }, action) => {
+    switch (action.type) {
+        case "ETL_FULFILLED":
+            return Object.assign({}, state, action.res);
+        default:
+            return state;
+    }
+};
+
+const sourgeGenReducer = (state = { source: null  }, action) => {
+    switch (action.type) {
+        case "SOURCE_FULFILLED":
+            return Object.assign({}, state, action.res);
+        default:
+            return state;            
+    }
+};
 const schemaReducer = (state = { schema: null, fields: null }, action) => {
-    console.log(action.payload);
     switch (action.type) {
         case "SCHEMA_FULFILLED":
             return Object.assign({}, state, action.res);
@@ -94,6 +119,9 @@ const rootReducer = combineReducers({
     loadingBar: loadingBarReducer,
     debugger: debuggerReducer,
     schemaVo: schemaReducer,
+    sourceGen: sourgeGenReducer,
+    dataPreview: dataPreviewReducer,
+    etl: etlReducer,
     intl: intlReducer,
     alertmessage: alsertMessageReducer
 });

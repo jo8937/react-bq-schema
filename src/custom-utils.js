@@ -33,6 +33,6 @@ export default class CustomUtils{
   
 }
 
-export function formatMessage(message, values) {
-  return <FormattedMessage id={message} defaultMessage={message} values={values}/>;
+export function formatMessage(message, wrapperClassName) {
+  return <span className={wrapperClassName}><FormattedMessage id={message}/></span>;
 };

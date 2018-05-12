@@ -55,6 +55,15 @@ function* fetchSaga(actions, actionName, options) {
 */
 class Sagas{
 
+    static *fetch_datalist_with_schema(actions) {
+        let res = yield call(fetchSaga, actions, "DATALIST",  {
+            body: JSON.stringify({
+                category: actions[0].res.schema.category,
+                ...actions[1]
+            })
+        });
+    }
+
     static *fetch_source_with_schema(actions) {
         let res = yield call(fetchSaga, actions, "SOURCE",  {
             headers: {
@@ -110,6 +119,9 @@ export default function* rootSaga() {
 		}),
 		fork(function*(){
 			yield combineLatest(["SCHEMA_FULFILLED", "REQUEST_SOURCE"], Sagas.fetch_source_with_schema);
-		})
+        }),
+		fork(function*(){
+			yield combineLatest(["SCHEMA_FULFILLED", "REQUEST_DATALIST"], Sagas.fetch_datalist_with_schema);
+		})        
 	];
 }

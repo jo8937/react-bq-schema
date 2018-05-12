@@ -82,7 +82,8 @@ class PanelFieldInfo extends Component {
                             <Col md="2" className="m-auto">{f("type")}</Col>
                             <Col md="3" className="m-auto">{f("desc")}</Col>
                             <Col md="2" className="m-auto">{f("sample_value")}</Col>
-                            <Col md="2" className="m-auto">
+                            <Col md="2" className="m-auto d-flex justify-content-between">
+                                <div>
                                 <span>{f("usage")}</span>
                                 <span id="whatisthis" className="ml-2">
                                     <i className="fa fa-question-circle-o" />
@@ -95,9 +96,9 @@ class PanelFieldInfo extends Component {
                                 >
                                     <FormattedMessage id="schema_define.select_data.helpText" />
                                 </Tooltip>
-                            </Col>
-                            <Col md="1" className="m-auto">
-                            <Switch
+                                </div>
+                                <div>
+                                <Switch
                                         checked={this.state.fieldOpen}
                                         onChange={this.toggleFields}
                                         id="field-open-switch"
@@ -127,9 +128,13 @@ class PanelFieldInfo extends Component {
                                                 color: "orange",
                                                 paddingLeft: 2
                                               }}
-                                            >표시</div>
+                                            >전부</div>
                                           }
                                     />
+                                </div>
+                            </Col>
+                            <Col md="1" className="m-auto">
+                            
                             </Col>
                         </Row>
                         <ReactCSSTransitionGroup
@@ -148,6 +153,8 @@ class PanelFieldInfo extends Component {
                                 if (!isOpen) {
                                     return;
                                 }
+                                //let txtClass = isUse ? {color:'blue'}:{};
+                                let txtClass = isUse ? "text-primary":"";
                                 return (
                                     <Row
                                         key={k.name}
@@ -155,8 +162,8 @@ class PanelFieldInfo extends Component {
                                             "rowbody flex-nowrap fieldrow"
                                         }
                                     >
-                                        <Col md="2">{k.name}</Col>
-                                        <Col md="2">{k.type}</Col>
+                                        <Col md="2" className={txtClass}>{k.name}</Col>
+                                        <Col md="2" className={txtClass}>{k.type}</Col>
                                         <Col md="3">
                                             <EditableCustom
                                                 col="description"
@@ -169,7 +176,7 @@ class PanelFieldInfo extends Component {
                                                 }
                                             />
                                         </Col>
-                                        <Col md="2">
+                                        <Col md="2" >
                                             <EditableCustom
                                                 col="sampleValue"
                                                 name={k.name}
@@ -195,32 +202,6 @@ class PanelFieldInfo extends Component {
                     </Container>
                 </Col>
             </Row >
-        );
-        return (
-            <Row>
-                <Col className="m-3">
-                    <Container fluid className="tablestyle">
-                        <Row className="rowhead">
-                            <Col md="2">1</Col>
-                            <Col md="2">2</Col>
-                            <Col md="2">3</Col>
-                            <Col md="2">4</Col>
-                            <Col md="2">5</Col>
-                            <Col md="2">6</Col>
-                        </Row>
-                        <Row className="rowbody d-flex flex-nowrap">
-                            <Col md="2">1</Col>
-                            <Col md="2">2</Col>
-                            <Col md="2">3</Col>
-                            <Col md="2">4</Col>
-                            <Col md="2">
-                                6asdasdasdasasdasd123123121231231231231213f32f2
-                            </Col>
-                            <Col md="2">6</Col>
-                        </Row>
-                    </Container>
-                </Col>
-            </Row>
         );
     }
 

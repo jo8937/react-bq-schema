@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
 import fetch from './cross-fetch-with-timeout';
 import CustomUtils from './custom-utils'
+import { formatMessage as f } from './custom-utils'
 
 class SelectBoxFieldActive extends React.Component {
   constructor(props) {
@@ -49,9 +50,9 @@ class SelectBoxFieldActive extends React.Component {
 					value={this.state.value}
 					onChange={this.handleChange}
           options={[
-            { value: '0', label: <FormattedMessage id="schema_view.use_select.select"/> },
-            { value: '1', label: <FormattedMessage id="schema_view.use_select.recommend"/> },
-            { value: '2', label: <FormattedMessage id="schema_view.use_select.required"/> },
+            { value: '0', label: f("schema_view.use_select.select","text-light") },
+            { value: '1', label: f("schema_view.use_select.recommend") },
+            { value: '2', label: f("schema_view.use_select.required","text-primary") },
           ]}
 				/>
         </div>

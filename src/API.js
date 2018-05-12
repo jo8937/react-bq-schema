@@ -25,7 +25,7 @@ const APP_URI  = parseAppUri();
 export default class API{
   static SCHEMA_URI = APP_URI['BASE_URI'] + "/schema/view/" + APP_URI['BASE_CATEGORY'] + ".json";
   static SOURCE_URI = APP_URI['BASE_URI'] + "/schema/generate_source.json";
-  static DATA_URI = APP_URI['BASE_URI'] + "/tabledata/" + APP_URI['BASE_CATEGORY'] + ".json";
+  static DATALIST_URI = APP_URI['BASE_URI'] + "/tabledata.json";
   static SCHEMA_EDIT_URI = APP_URI['BASE_URI'] + "/schema/schema_edit_proc";
   static FIELD_ACTIVE_URI = APP_URI['BASE_URI'] + "/field/active";
   static FIELD_EDIT_URI = APP_URI['BASE_URI'] + "/schema/field_edit_proc";
