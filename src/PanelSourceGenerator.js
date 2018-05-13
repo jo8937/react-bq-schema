@@ -7,6 +7,7 @@ import Panel from './Panel';
 import { connect } from 'react-redux'
 import {Controlled as CodeMirror} from 'react-codemirror2'
 import CustomUtils from './custom-utils'
+import { formatMessage as f } from "./custom-utils";
 require('codemirror/mode/javascript/javascript');
 
 class PanelSourceGenerator extends Component {
@@ -88,13 +89,13 @@ class PanelSourceGenerator extends Component {
       return (
       <Dropdown nav isOpen={isActive} toggle={this.toggleDropdown(tab)} className={classnames({ show: isSelected || isActive })} key={tab['id']}>
         <DropdownToggle nav caret>
-          {tab["id"]} {isSelected ? this.state.selectedSubTab : ""}
+          {f(tab["id"]+"_source")} : {isSelected ? f(this.state.selectedSubTab+"_source") : ""}
         </DropdownToggle>
         <DropdownMenu>
           {
             tab["subTab"].map( (subTabId) => (
               <DropdownItem onClick={this.toggle(tab,subTabId)} key={subTabId}>
-                {subTabId}
+                {f(subTabId+"_source")}
               </DropdownItem>
             ) 
             )
