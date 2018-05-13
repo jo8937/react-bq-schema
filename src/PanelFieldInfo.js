@@ -42,10 +42,13 @@ class PanelFieldInfo extends Component {
         super(props);
         this.state = {
             tooltipOpen: false,
-            fieldOpen: false
+            fieldOpen: false,
+            switchTooltipOpen: false
         };
         this.toggleTooltip = this.toggleTooltip.bind(this);
         this.toggleFields = this.toggleFields.bind(this);
+        this.toggleSwitchTooltip = this.toggleSwitchTooltip.bind(this);
+
     }
 
     updateFieldProperty = (k, v, prop) => {
@@ -69,6 +72,12 @@ class PanelFieldInfo extends Component {
     toggleFields() {
         this.setState({
             fieldOpen: !this.state.fieldOpen
+        });
+    }
+
+    toggleSwitchTooltip() {
+        this.setState({
+            switchTooltipOpen: !this.state.switchTooltipOpen
         });
     }
 
@@ -97,7 +106,7 @@ class PanelFieldInfo extends Component {
                                     <FormattedMessage id="schema_define.select_data.helpText" />
                                 </Tooltip>
                                 </div>
-                                <div>
+                                <div id="switchArea">
                                 <Switch
                                         checked={this.state.fieldOpen}
                                         onChange={this.toggleFields}
@@ -115,7 +124,7 @@ class PanelFieldInfo extends Component {
                                                 paddingRight: 2
                                               }}
                                             >
-                                              숨김
+                                              <FormattedMessage id="toggle_hide" />
                                             </div>
                                           }
                                           checkedIcon={
@@ -127,11 +136,19 @@ class PanelFieldInfo extends Component {
                                                 height: "100%",
                                                 color: "orange",
                                                 paddingLeft: 2
-                                              }}
-                                            >전부</div>
+                                              }}                                            
+                                            ><FormattedMessage id="toggle_show" /></div>
                                           }
                                     />
                                 </div>
+                                <Tooltip
+                                    placement="top"
+                                    target="switchArea"
+                                    isOpen={this.state.switchTooltipOpen}
+                                    toggle={this.toggleSwitchTooltip}
+                                >
+                                <FormattedMessage id="toggle_optional_fields" />
+                                </Tooltip>
                             </Col>
                             <Col md="1" className="m-auto">
                             

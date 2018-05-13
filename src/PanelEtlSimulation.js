@@ -26,23 +26,18 @@ class PanelDataPreview extends Component {
 		}
   }
   
-  getFilteredCols(){
-    return this.props.vo.fields.filter(row => {
-      return row.active > 0;
-    }).map( row=> row.name );
-  }
 	getForm(){
 		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length > 0){
 			return (
         <form>
         <Row>
           
-          <Col md="12" className="m-3 d-flex">
+          <Col md="12" className="m-3 d-flex justify-content-center">
               <Col md="6">
               {
-                this.props.vo.fields.filter(row => row.active > 0)
+                this.props.vo.fields.filter(row => row.active > 0 || row.required)
                 .map( row=>  (
-                  <Row className="d-flex justify-content-left p-1">
+                  <Row className="d-flex justify-content-left p-1" key={row.name}>
                     <Col md="3" className="text-right">{row.name}</Col>
                     <Col md="9">
                     <Input type="text" name={row.name} defaultValue={row.sampleValue} required/>
@@ -51,12 +46,12 @@ class PanelDataPreview extends Component {
                 ))
               }
               </Col>
-							<Col md="2" className="m-auto">
+							<Col md="3" className="m-auto">
 						  <Button type="submit" className="btn-bordered-primary btn-block" color="primary">
               테스트 데이터 입력
               </Button>
               </Col>
-              <Col md="4">
+              <Col md="3">
               </Col>
           </Col>
         </Row>
@@ -75,18 +70,21 @@ class PanelDataPreview extends Component {
   
   getStatus(){
     return (
+      <Row className="d-flex justify-content-center">  
+      <Col md="8" className="m-3">
       <Card body>
           <CardTitle>ETL Status</CardTitle>
-          <CardText>
+          <CardText className="d-flex justify-content-around">
             <Button>1</Button>
-            →
+            <span>→</span>
             <Button>2</Button>
-            →
+            <span>→</span>
             <Button>3</Button>
-            →
-            <Button>4</Button>
           </CardText>
       </Card>
+      </Col>
+      </Row>
+
     );
   }
 

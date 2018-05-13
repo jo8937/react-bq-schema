@@ -14,11 +14,11 @@ class PanelDataPreview extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-      K:null,
-      M:null,
-      V:null,
-      SK:null,
-      SM:null
+      K:"",
+      M:"",
+      V:"",
+      SK:"",
+      SM:""
     }
     this.movePage = this.movePage.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -148,7 +148,7 @@ class PanelDataPreview extends Component {
               <PaginationLink previous href="#datePreviewTable" onClick={this.movePage(paging.prevPage)}/>
             </PaginationItem>
             {pageList.map( page => (
-              <PaginationItem active={(page==this.props.dataPreview.paging.page)}>
+              <PaginationItem key={page} active={(page==this.props.dataPreview.paging.page)}>
               <PaginationLink href="#datePreviewTable" onClick={this.movePage(page)}>
                 {page}
               </PaginationLink>

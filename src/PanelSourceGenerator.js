@@ -22,7 +22,7 @@ class PanelSourceGenerator extends Component {
         },
         {
           "id":"server",
-          "subTab" : ["JAVASCRIPT","PHP"]
+          "subTab" : ["JAVASCRIPT","PHP","ASP","JSP"]
         },
         {
           "id":"client",
