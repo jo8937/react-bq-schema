@@ -62,7 +62,7 @@ class App extends Component {
 	return (
 		<div>
 			<header>
-				<LoadingBar style={{ zIndex : 1,  backgroundColor: '#2a84d8', height: '5px', position:'fixed', top:0 }} progressIncrease={50}/>
+				<LoadingBar style={{ zIndex : 1,  backgroundColor: '#2a84d8', height: '7px', position:'fixed', top:0 }} progressIncrease={50}/>
 			</header>
 			<section>
 			<Container fluid>

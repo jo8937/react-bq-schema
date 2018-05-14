@@ -27,6 +27,7 @@ class PanelDataPreview extends Component {
     this.handleSearchMethod = this.handleSearchMethod.bind(this);
     this.resetSearch = this.resetSearch.bind(this);
     this.searchInput = this.searchInput.bind(this);
+    this.dataRefresh = this.dataRefresh.bind(this);
 	}
   
   requestDatalist(params){
@@ -230,10 +231,25 @@ class PanelDataPreview extends Component {
     )
   }
 
+  dataRefresh(){
+    console.log("refresh...");
+    this.requestDatalist(
+      {
+        page:1
+      }
+    );
+  }
+
   render() {
     if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length){
 			return (
-        <Panel title={this.props.title}>
+        <Panel title={this.props.title} titleOptional={
+          (
+            <a type="button" className="btn btn-secondary btn-sm" onClick={this.dataRefresh}>
+            <i className="fa fa-refresh"/>
+            </a>
+          )
+      }>
         {this.getContent()}
         {this.getPaging()}
         {this.getSearch()}

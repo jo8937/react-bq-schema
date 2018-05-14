@@ -30,5 +30,6 @@ export default class API{
   static FIELD_ACTIVE_URI = APP_URI['BASE_URI'] + "/field/active";
   static FIELD_EDIT_URI = APP_URI['BASE_URI'] + "/schema/field_edit_proc";
   static FIELD_ADD_URI = APP_URI['BASE_URI'] + "/schema/field_add_proc.json";
+  static LOGIN_CHECK_URI = "/api/intra/check_login_session";
   
 };

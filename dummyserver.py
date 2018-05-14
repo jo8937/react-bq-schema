@@ -407,6 +407,11 @@ def tabledata_send_monitor(k,dataset,tablename):
     weblog.debug("etl monitor at...")
     return jsonify(dataList=[{"title":"a"}])
 
+@app.route("/api/intra/check_login_session")
+def check_login_session():
+    return jsonify(success=False,message="login session not found")
+
+
 @app.after_request
 def apply_caching(response):
     response.headers["Access-Control-Allow-Origin"] = "*"
