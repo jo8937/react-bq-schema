@@ -31,19 +31,36 @@ function* fetchSaga(actions, actionName, options) {
         return res;
     } catch (e) {
         // Bad response from server : 405
+        console.log(e);
         if (e.message.match(/Network request failed/g)) {
-            yield put({
-                type: "ALERT_MESSAGE",
-                msgIdTitle: "label.need_login",
-                message: e.message
-            });
+            
+            let loginCheckSuccess = yield call(fetchLoginCheck);
+            // network fail but login is ok... 
+            if(loginCheckSuccess === true){
+                yield put({ type: actionType + "_REJECTED", message: e.message });
+            }else{
+                yield put({
+                    type: "ALERT_MESSAGE",
+                    msgIdTitle: "label.need_login",
+                    message: e.message
+                });
+            }
+
         } else {
             yield put({ type: actionType + "_REJECTED", message: e.message });
         }
     }
 }
 
-
+function* fetchLoginCheck() {
+    try{
+        let resLoginCheck = yield call(fetch, API.LOGIN_CHECK_URI);
+        return resLoginCheck.success;
+    }catch(e){
+        console.log(e);
+        return false;
+    }
+}
 /*
   static SCHEMA_URI = APP_URI['BASE_URI'] + "/schema/view/" + APP_URI['BASE_CATEGORY'] + ".json";
   static SOURCE_URI = APP_URI['BASE_URI'] + "/schema/generate_source.json";

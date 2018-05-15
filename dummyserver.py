@@ -419,7 +419,7 @@ def tabledata_send_monitor(k,dataset,tablename):
     weblog.debug("etl monitor at...")
     return jsonify(dataList=[{"title":"a"}])
 
-@app.route("/api/intra/check_login_session")
+@app.route("/api/intra/check_login_session", methods=['GET', 'POST'])
 def check_login_session():
     return jsonify(success=False,message="login session not found")
 
