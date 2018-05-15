@@ -15,7 +15,7 @@ export default function timeoutfetch(url, options) {
       'Content-type': 'application/json',
       'Access-Control-Allow-Origin':'*'
     },
-    timeout: 3000,
+    timeout: 7000,
     method: "POST"
   }, options );
   

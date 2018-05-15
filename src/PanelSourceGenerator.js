@@ -105,7 +105,7 @@ class PanelSourceGenerator extends Component {
       return (
       <Dropdown nav isOpen={isActive} toggle={this.toggleDropdown(tab)} className={classnames({ show: isSelected || isActive })} key={tab['id']}>
         <DropdownToggle nav caret>
-          {f(tab["id"]+"_source")} : {isSelected ? f(lang+"_source") : ""}
+          {f(tab["id"]+"_source")} {isSelected?" : ":""} {isSelected ? f(lang+"_source") : ""}
         </DropdownToggle>
         <DropdownMenu>
           {

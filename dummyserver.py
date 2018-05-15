@@ -15,7 +15,6 @@ from flask import request
 from flask import redirect, url_for, send_from_directory, abort
 from datetime import timedelta
 from flask.templating import render_template
-import ujson
 import logging
 from datetime import datetime, timedelta
 
