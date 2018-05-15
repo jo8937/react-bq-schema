@@ -257,7 +257,8 @@ def write_proc(k):
 @app.route("/app/<k>/define/schema/field_add_proc.json", methods=['GET', 'POST'])
 def field_add(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
-    return jsonify(success=True, field={
+    time.sleep(1)
+    newField = {
                     "name" : request.json.get("field_name"),
                     "type" : request.json.get("field_type"),
                     "description" : request.json.get("field_desc"),
@@ -271,7 +272,10 @@ def field_add(k):
                     "segment" : False,
                     "clientHeader" : False,
                     "generated" : False
-                  })
+                  }
+    schema["fields"].append(newField)
+   
+    return jsonify(success=True, field=newField)
 
 @app.route("/app/<k>/define/field/active", methods=['GET', 'POST'])
 def field_active(k):
@@ -323,10 +327,18 @@ def generate_source(k):
     #return abort(500);
     #return redirect("http://google.com");
     try:
-        return jsonify(source="hello... %s" % request.values["lang"]);
+
+        gen_schema = {
+            "schema" : schema["schema"],
+            "fields" : [{"name":row["name"],"type":row["type"],"description":row["description"],"sampleValue":row["sampleValue"]} for row in schema["fields"] if row["active"] > 0]
+        }
+
+        return jsonify(lang=request.values["lang"], source="""hello... {} .... 
+{}
+        """.format(request.values["lang"], json.dumps(gen_schema, indent=4, ensure_ascii=False))) ;
     except:
         weblog.error(json.dumps(request.values, indent=4, ensure_ascii=False),exc_info=True)
-        return jsonify(source="error")
+        return jsonify(lang=request.values["lang"], source="error")
 
 #############################################################
 # Data Explorer 

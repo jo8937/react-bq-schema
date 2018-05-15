@@ -13,6 +13,7 @@ import store from './ReduxStore'
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import MarkupSample from './routers/MarkupSample'
 import About from './routers/About'
+import SourceGenerateTest from './routers/SourceGenerateTest'
 
 ReactDOM.render(
 	<Provider store={store}>
@@ -21,6 +22,7 @@ ReactDOM.render(
 				<Switch>
 					<Route path="/sample" component={MarkupSample} />
 					<Route path="/about" component={About} />
+					<Route path="/srcgen" component={SourceGenerateTest} />
 					<Route component={App} />
 				</Switch>
 			</Router>

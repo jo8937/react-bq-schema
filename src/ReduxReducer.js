@@ -42,8 +42,6 @@ const schemaReducer = (state = { schema: null, fields: null }, action) => {
     switch (action.type) {
         case "SCHEMA_FULFILLED":
             return Object.assign({}, state, action.res);
-        case "SOURCE_FULFILLED":
-            return Object.assign({}, state, action.res);
         case "SCHEMA_EDIT_FULFILLED":
             if(action.res.success){
                 return Object.assign({}, state,{
@@ -80,7 +78,9 @@ const schemaReducer = (state = { schema: null, fields: null }, action) => {
                 });
             }else{
                 return state;
-            }    
+            } 
+        case "FIELD_ADD_REJECTED":
+            return state;
         default:
             return state;
     }

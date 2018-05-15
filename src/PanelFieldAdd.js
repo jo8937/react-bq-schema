@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Collapse, Table } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonDropdown  } from 'reactstrap';
-import { CircleLoader, RingLoader } from 'react-spinners';
+import { BarLoader, RingLoader } from 'react-spinners';
 import { Button, Form, FormGroup, Label, Input, FormText, FormFeedback } from 'reactstrap';
 import Panel from './Panel';
 import { connect } from 'react-redux'
@@ -20,6 +20,8 @@ class PanelFieldAdd extends Component {
 		this.state = {
 			field_type: "STRING",
 			field_active: 1,
+			loading: false,
+			field_name:null,
 		}
 
 	this.handleChangeType = this.handleChangeType.bind(this);		
@@ -38,13 +40,21 @@ class PanelFieldAdd extends Component {
 
   handleSubmit(event) {
 		//const data = new FormData(event.target);
-		this.props.dispatch({ type: "REQUEST_FIELD_ADD", payload: serialize(event.target, { hash: true })});
+		let data = serialize(event.target, { hash: true });
+		this.setState({loading:true,field_name:data["field_name"]});
+		this.props.dispatch({ type: "REQUEST_FIELD_ADD", payload: data});
 		event.preventDefault();
 		event.target.reset();
   }
 
-
 	getFieldAddForm(){
+
+		let loading = this.state.loading;
+		if(loading && this.props.vo && this.props.vo.fields && this.props.vo.fields.find(row => row.name == this.state.field_name)){
+			this.setState({loading:false})
+			loading = false;
+		}
+
 		return (
 			<div>
 				<Row>
@@ -101,7 +111,14 @@ class PanelFieldAdd extends Component {
 								/>
 							</td>
 							<td>
-							<Button type="submit" className="btn-bordered-primary" color="primary" value={<FormattedMessage id="schema_view.add_field.btn"/>}>필드 추가 실행</Button>
+							{loading ? (
+								<div className="m-auto">
+								<BarLoader color={'#2a84d8'} width={100} height={10}/>	
+								</div>
+							) : (
+								<Button type="submit" className="btn-bordered-primary" color="primary" value={<FormattedMessage id="schema_view.add_field.btn"/>}>필드 추가 실행</Button>	
+							)}
+							
 							</td>
 						</tr>
 					</tbody>

@@ -39,24 +39,34 @@ class SelectBoxFieldActive extends React.Component {
     
   }
 
-  
   render() {
-    return (
-      <div>
-      <Select
-          name={this.state.field.name + '_active'}
-          clearable={false}
-          searchable={false}
-					value={this.state.value}
-					onChange={this.handleChange}
-          options={[
-            { value: '0', label: f("schema_view.use_select.select","text-light") },
-            { value: '1', label: f("schema_view.use_select.recommend") },
-            { value: '2', label: f("schema_view.use_select.required","text-primary") },
-          ]}
-				/>
+
+    if(this.state.field.generated === true){
+      return (
+        <div>필수(자동생성)</div>
+      )
+    }else if(this.state.field.required === true){
+      return (
+        <div>필수</div>
+      )
+    }else{
+      return (
+        <div>
+        <Select
+            name={this.state.field.name + '_active'}
+            clearable={false}
+            searchable={false}
+            value={this.state.value}
+            onChange={this.handleChange}
+            options={[
+              { value: '0', label: f("schema_view.use_select.select","text-light") },
+              { value: '1', label: f("schema_view.use_select.recommend") },
+              { value: '2', label: f("schema_view.use_select.required","text-primary") },
+            ]}
+          />
         </div>
-    );
+      );
+    }
   }
 }
 

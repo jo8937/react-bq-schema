@@ -3,7 +3,7 @@ import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import CustomUtils from "./custom-utils";
 import API from "./API";
 import fetch from "./cross-fetch-with-timeout";
-import { fork, call, put, takeLatest, take } from "redux-saga/effects";
+import { fork, call, put, takeLatest, take, select } from "redux-saga/effects";
 
 import createSagaMiddleware from "redux-saga";
 import * as effects from "redux-saga/effects";
@@ -95,11 +95,32 @@ class Sagas{
     }
     
     static *fetch_field_edit(action) {
-        let res = yield call(fetchSaga, action, "FIELD_EDIT",{
+        yield call(fetchSaga, action, "FIELD_EDIT",{
             body: JSON.stringify( action.payload)
         });
+
+
     }
-    
+
+    static *refresh_source_and_datas(actions){
+        //let schema = actions[0]
+        //let action = actions[1]
+        let source = yield select(state => state.sourceGen)
+
+        if(source){
+            yield put({ type: "REQUEST_SOURCE", lang: source.lang })
+        }
+        
+        //let dataPreview = yield select(state => state.dataPreview)
+        //yield put({ type: "REQUEST_DATALIST", page: 1 })
+    }
+
+    static *show_long_wait(action){
+        
+    }
+    static *hide_long_wait(action){
+        
+    }
 }
 
 function* fetch_command(action){
@@ -122,6 +143,15 @@ export default function* rootSaga() {
         }),
 		fork(function*(){
 			yield combineLatest(["SCHEMA_FULFILLED", "REQUEST_DATALIST"], Sagas.fetch_datalist_with_schema);
-		})        
+        }),
+		fork(function*(){
+			yield takeLatest(action => ["SCHEMA_EDIT_FULFILLED","FIELD_ADD_FULFILLED","FIELD_EDIT_FULFILLED"].includes(action.type), Sagas.refresh_source_and_datas);
+        }),
+		fork(function*(){
+			yield takeLatest("REQUEST_FIELD_ADD", Sagas.show_long_wait);
+        }),
+		fork(function*(){
+			yield takeLatest("FIELD_ADD_FULFILLED", Sagas.hide_long_wait);
+        })
 	];
 }

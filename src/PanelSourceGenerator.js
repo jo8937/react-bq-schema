@@ -18,20 +18,21 @@ class PanelSourceGenerator extends Component {
       tabList : [
         {
           "id":"doc",
-          "subTab" : ["JSON","REDMINE_WIKI"]
+          //"subTab" : ["DOC_JSON","REDMINE_WIKI"]
+          "subTab" : ["JSONHTTP","REDMINE_WIKI"]
         },
         {
           "id":"server",
-          "subTab" : ["JAVASCRIPT","PHP","ASP","JSP"]
+          //"subTab" : ["SERVER_PHP","SERVER_JAVASCRIPT","SERVER_CSHARP_NXLOG","SERVER_JAVA","SERVER_PYTHON","SERVER_RUBY"]
+          "subTab" : ["SERVER_PHP"]
         },
         {
           "id":"client",
           "subTab" : ["CSHARP","CPP","JAVA","OBJC"]
         },
       ],
+      defaultLang: "JSONHTTP",
       dropdownOpen: [false,false,false],
-      selectedTab: "doc",
-      selectedSubTab: "JSON",
       activeTab: null,
       activeSubTab: null,
       options : {
@@ -53,7 +54,7 @@ class PanelSourceGenerator extends Component {
   }
 
 	componentDidMount(){
-    this.requestSource(this.state.selectedSubTab);
+    this.requestSource(this.state.defaultLang);
   }
   
   toggle(tab, subTabId) {
@@ -61,8 +62,6 @@ class PanelSourceGenerator extends Component {
         this.setState({
           activeTab: tab['id'],
           activeSubTab: subTabId,
-          selectedTab: tab['id'],
-          selectedSubTab: subTabId
         });
         this.requestSource(subTabId);
     }
@@ -81,15 +80,32 @@ class PanelSourceGenerator extends Component {
         
   }
 
+  findCategoryOfLang(lang){
+    let parentId = null;
+
+    this.state.tabList.forEach(tab =>{
+      tab.subTab.forEach(subTabId =>{
+        if(lang == subTabId){
+          parentId = tab["id"]
+        }
+      });
+    })
+      
+    //console.log("~~~~~~~~~~~~~~~~~~~~~~~~" + lang);
+    return parentId;
+  }
 
   render() {
+    let lang = (this.props.sourceGen && this.props.sourceGen.lang) ? this.props.sourceGen.lang : this.state.defaultLang;
+    let category = this.findCategoryOfLang(lang);
+
     let tabHtml = this.state.tabList.map( (tab,i) => {
       let isActive = this.state.activeTab === tab["id"];
-      let isSelected = this.state.selectedTab === tab["id"];
+      let isSelected = category === tab["id"];
       return (
       <Dropdown nav isOpen={isActive} toggle={this.toggleDropdown(tab)} className={classnames({ show: isSelected || isActive })} key={tab['id']}>
         <DropdownToggle nav caret>
-          {f(tab["id"]+"_source")} : {isSelected ? f(this.state.selectedSubTab+"_source") : ""}
+          {f(tab["id"]+"_source")} : {isSelected ? f(lang+"_source") : ""}
         </DropdownToggle>
         <DropdownMenu>
           {
