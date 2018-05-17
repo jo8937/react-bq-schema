@@ -23,6 +23,7 @@ ReactDOM.render(
 					<Route path="/sample" component={MarkupSample} />
 					<Route path="/about" component={About} />
 					<Route path="/srcgen" component={SourceGenerateTest} />
+					<Route path="/index.html/abcd" component={SourceGenerateTest} />
 					<Route component={App} />
 				</Switch>
 			</Router>

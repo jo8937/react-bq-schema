@@ -31,7 +31,7 @@ class AlertWindow extends Component {
   render() {
     return (
 				<div>
-				<Button color="danger" onClick={this.toggleModal}>Open</Button>
+				{/* <Button color="danger" onClick={this.toggleModal}>Open</Button> */}
 				<Modal isOpen={this.props.alertmessage.open} toggle={this.toggleModal} contentClassName={this.props.alertmessage.theme}>
 				<ModalHeader toggle={this.toggleModal}>
 					<span>

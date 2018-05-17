@@ -29,10 +29,10 @@ class PanelDataPreview extends Component {
 	getForm(){
 		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length > 0){
 			return (
-        <form>
+        <form style={{margin:0}}>
         <Row>
           
-          <Col md="12" className="m-3 d-flex justify-content-center">
+          <Col md="12" className="mt-3 mb-3 d-flex justify-content-center">
               <Col md="6">
               {
                 this.props.vo.fields.filter(row => row.active > 0 || row.required)
@@ -71,7 +71,7 @@ class PanelDataPreview extends Component {
   getStatus(){
     return (
       <Row className="d-flex justify-content-center">  
-      <Col md="8" className="m-3">
+      <Col md="8" className="mt-3">
       <Card body>
           <CardTitle>ETL Status</CardTitle>
           <CardText className="d-flex justify-content-around">
