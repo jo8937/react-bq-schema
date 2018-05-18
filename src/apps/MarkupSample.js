@@ -4,7 +4,7 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem  } from 'reactstra
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import { Table } from 'reactstrap';
-import Checkbox from '../Checkbox';
+import Checkbox from '../compo/Checkbox';
 
 import {
   BrowserRouter as Router,

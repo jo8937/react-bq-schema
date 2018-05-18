@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Collapse } from 'reactstrap';
 import { CircleLoader, RingLoader } from 'react-spinners';
-import Panel from './Panel';
 import { connect } from 'react-redux'
-import EditableCustom from './EditableCustom';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { FormattedMessage } from 'react-intl';
-import CustomUtils from './custom-utils'
+
+import Panel from '../compo/Panel';
+import EditableCustom from '../compo/EditableCustom';
+import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
 
 class PanelSchemaInfo extends Component {
   constructor(props) {

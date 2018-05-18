@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { getQueryStringValue } from './custom-utils';
+import { getQueryStringValue } from '../utils/custom-utils';
 
 function parseAppUri(){
   let regexPrefix = "^https?://"+window.location.host+".*/app/([^/]+)/([^/]+)";

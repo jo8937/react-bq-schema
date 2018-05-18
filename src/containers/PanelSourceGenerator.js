@@ -3,11 +3,12 @@ import { Container, Row, Col, Collapse, Table  } from 'reactstrap';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 import { CircleLoader, RingLoader } from 'react-spinners';
 import classnames from 'classnames';
-import Panel from './Panel';
 import { connect } from 'react-redux'
 import {Controlled as CodeMirror} from 'react-codemirror2'
-import CustomUtils from './custom-utils'
-import { formatMessage as f } from "./custom-utils";
+
+import Panel from '../compo/Panel';
+import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
+
 require('codemirror/mode/javascript/javascript');
 
 class PanelSourceGenerator extends Component {

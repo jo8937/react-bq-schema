@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { CircleLoader, RingLoader } from 'react-spinners';
+import { PacmanLoader, ClimbingBoxLoader, RingLoader } from 'react-spinners';
 import { Card, CardTitle, CardText } from 'reactstrap';
 import { Container, Row, Col, Collapse, Table  } from 'reactstrap';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input, FormText, FormFeedback } from 'reactstrap';
 import {injectIntl, FormattedMessage } from 'react-intl';
-import { formatMessage as f } from './custom-utils'
-import Panel from './Panel';
 import { connect } from 'react-redux'
 import Select from 'react-select';
 import serialize from 'form-serialize';
 //import {Controlled as CodeMirror} from 'react-codemirror2'
 //require('codemirror/mode/javascript/javascript');
+
+import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
+import Panel from '../compo/Panel';
 
 class PanelDataPreview extends Component {
   constructor(props) {
@@ -21,15 +22,25 @@ class PanelDataPreview extends Component {
         lineNumbers: true,
         theme: "default",
         mode:"javascript", 
-        json: true
+        json: true,
+        sending: false
       }
-		}
+    }
+    this.sendLogData = this.sendLogData.bind(this);
   }
   
+  sendLogData(event){
+    let data = serialize(event.target, { hash: true });
+    console.log(data);
+    this.setState({sending:true});
+    this.props.onSendData(data);
+    event.preventDefault();
+  }
+
 	getForm(){
 		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length > 0){
 			return (
-        <form style={{margin:0}}>
+        <form style={{margin:0}} onSubmit={this.sendLogData} method="POST" action="/">
         <Row>
           
           <Col md="12" className="mt-3 mb-3 d-flex justify-content-center">
@@ -46,12 +57,30 @@ class PanelDataPreview extends Component {
                 ))
               }
               </Col>
-							<Col md="3" className="m-auto">
-						  <Button type="submit" className="btn-bordered-primary btn-block" color="primary">
-              테스트 데이터 입력
-              </Button>
+							<Col md="4" className="m-auto">
+                {this.state.sending ? (
+                  <div>
+                      <div><ClimbingBoxLoader color={'#2a84d8'}/></div>
+                      <div>sending ...</div>
+                  </div>
+                  ) : (
+                    <div>
+                      <div>
+                      <Button type="submit" className="btn-bordered-primary btn-block" color="primary">
+                      데이터 입력
+                      </Button>
+                      </div>
+                      <div>
+                      <ul>
+                        <li>
+                          <FormattedMessage id="etl_simulation_data_cannnot_delete"/>
+                        </li>
+                      </ul>
+                      </div>
+                    </div>
+                )}
               </Col>
-              <Col md="3">
+              <Col md="2">
               </Col>
           </Col>
         </Row>
@@ -71,15 +100,15 @@ class PanelDataPreview extends Component {
   getStatus(){
     return (
       <Row className="d-flex justify-content-center">  
-      <Col md="8" className="mt-3">
+      <Col md="6" className="mt-3 mb-3">
       <Card body>
           <CardTitle>ETL Status</CardTitle>
           <CardText className="d-flex justify-content-around">
-            <Button>1</Button>
+            <Button>WAS</Button>
             <span>→</span>
-            <Button>2</Button>
+            <Button>Fluentd</Button>
             <span>→</span>
-            <Button>3</Button>
+            <Button>Bigquery</Button>
           </CardText>
       </Card>
       </Col>
@@ -107,14 +136,16 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onTodoClick: id => {
-      dispatch()
+    onSendData: formData => {
+      dispatch({
+        type:"REQUEST_ETL_SEND",
+        payload: formData
+      })
     }
   }
 }
 
-export default connect(
+export default injectIntl(connect(
   mapStateToProps,
   mapDispatchToProps
-)(PanelDataPreview);
-
+)(PanelDataPreview), {intlPropName:'intl'});

@@ -3,18 +3,16 @@ import { Container, Row, Col, Collapse, Table } from 'reactstrap';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonDropdown  } from 'reactstrap';
 import { BarLoader, RingLoader } from 'react-spinners';
 import { Button, Form, FormGroup, Label, Input, FormText, FormFeedback } from 'reactstrap';
-import Panel from './Panel';
-import { connect } from 'react-redux'
-import SelectBoxFieldActive from './SelectBoxFieldActive'
 import {injectIntl, IntlProvider, FormattedMessage, addLocaleData} from 'react-intl';
-import { formatMessage as f } from './custom-utils'
-import EditableCustom from './EditableCustom';
-import CustomUtils from './custom-utils'
 import Select from 'react-select';
 import serialize from 'form-serialize';
-import fetch from './cross-fetch-with-timeout';
 
-class PanelFieldAdd extends Component {
+import Panel from '../compo/Panel';
+import SelectBoxFieldActive from '../compo/SelectBoxFieldActive'
+import EditableCustom from '../compo/EditableCustom';
+import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
+
+export default class PanelFieldAdd extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
@@ -42,7 +40,7 @@ class PanelFieldAdd extends Component {
 		//const data = new FormData(event.target);
 		let data = serialize(event.target, { hash: true });
 		this.setState({loading:true,field_name:data["field_name"]});
-		this.props.dispatch({ type: "REQUEST_FIELD_ADD", payload: data});
+		this.props.onFieldAdd(data);
 		event.preventDefault();
 		event.target.reset();
   }
@@ -152,15 +150,4 @@ class PanelFieldAdd extends Component {
 
   }
 }
-
-const mapStateToProps = state => {
-	return {
-    vo: state.schemaVo
-  }
-}
-
-
-export default injectIntl(connect(
-  mapStateToProps
-)(PanelFieldAdd), { intlPropName:'intl' } );
 

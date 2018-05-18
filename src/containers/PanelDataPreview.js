@@ -4,11 +4,12 @@ import { Container, Row, Col, Collapse, Table  } from 'reactstrap';
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input, FormText, FormFeedback } from 'reactstrap';
 import {injectIntl, FormattedMessage } from 'react-intl';
-import { formatMessage as f } from './custom-utils'
-import Panel from './Panel';
 import { connect } from 'react-redux'
 import Select from 'react-select';
 import serialize from 'form-serialize';
+
+import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
+import Panel from '../compo/Panel';
 
 class PanelDataPreview extends Component {
   constructor(props) {

@@ -10,15 +10,15 @@ import enLocaleData from 'react-intl/locale-data/en'
 import zhLocaleData from 'react-intl/locale-data/zh'
 import jaLocaleData from 'react-intl/locale-data/ja'
 import ReduxThunk from 'redux-thunk'
-import rootReducer from './ReduxReducer'
+
 import { composeWithDevTools } from 'redux-devtools-extension';
-
-import { locales } from './locale'
-import CustomUtils from './custom-utils'
-
 import createSagaMiddleware from 'redux-saga'
-import rootSaga from './ReduxSaga'
 
+import { locales } from '../locales'
+import CustomUtils from '../utils/custom-utils'
+
+import rootReducer from './reducer'
+import rootSaga from './saga'
 
 var initialLocale = CustomUtils.getLocale();
 

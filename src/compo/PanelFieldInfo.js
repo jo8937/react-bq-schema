@@ -18,26 +18,27 @@ import {
     FormFeedback,
     Tooltip
 } from "reactstrap";
-import Panel from "./Panel";
 import { connect } from "react-redux";
-import SelectBoxFieldActive from "./SelectBoxFieldActive";
+
 import {
     injectIntl,
     IntlProvider,
     FormattedMessage,
     addLocaleData
 } from "react-intl";
-import { formatMessage as f } from "./custom-utils";
-import EditableCustom from "./EditableCustom";
-import CustomUtils from "./custom-utils";
+
 import Select from "react-select";
 import serialize from "form-serialize";
 import classnames from "classnames";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import Switch from "react-switch";
 
+import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
+import EditableCustom from "../compo/EditableCustom";
+import Panel from "../compo/Panel";
+import SelectBoxFieldActive from "../compo/SelectBoxFieldActive";
 
-class PanelFieldInfo extends Component {
+export default class PanelFieldInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,15 +53,7 @@ class PanelFieldInfo extends Component {
     }
 
     updateFieldProperty = (k, v, prop) => {
-        this.props.dispatch({
-            type: "REQUEST_FIELD_EDIT",
-            payload: {
-                category: this.props.vo.schema.category,
-                col: prop.col,
-                name: k,
-                value: v
-            }
-        });
+        this.props.onFieldEdit(this.props.vo.schema.category, prop.col, k, v);
     };
 
     toggleTooltip() {
@@ -209,6 +202,8 @@ class PanelFieldInfo extends Component {
                                             <SelectBoxFieldActive
                                                 field={k}
                                                 schema={this.props.vo.schema}
+                                                intl={this.props.intl}
+                                                onFieldActivate={this.props.onFieldActivate}
                                             />
                                         </Col>
                                         <Col md="1" />
@@ -245,10 +240,3 @@ class PanelFieldInfo extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        vo: state.schemaVo
-    };
-};
-
-export default injectIntl(connect(mapStateToProps, null)(PanelFieldInfo));

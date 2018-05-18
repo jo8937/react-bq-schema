@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { combineReducers, createStore, applyMiddleware, compose } from "redux";
-import CustomUtils from "./custom-utils";
-import API from "./API";
-import fetch from "./cross-fetch-with-timeout";
 import { fork, call, put, takeLatest, take, select } from "redux-saga/effects";
-
 import createSagaMiddleware from "redux-saga";
 import * as effects from "redux-saga/effects";
 import "babel-polyfill";
 import createCombineLatest from "redux-saga-combine-latest";
+
+import API from "./API";
+import CustomUtils from "../utils/custom-utils";
+import fetch from "../utils/cross-fetch-with-timeout";
 
 const combineLatest = createCombineLatest(effects);
 
