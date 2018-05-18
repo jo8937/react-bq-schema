@@ -21,6 +21,8 @@ import CustomUtils from '../utils/custom-utils'
 import PanelFieldInfo from '../compo/PanelFieldInfo';
 import PanelFieldAdd from '../compo/PanelFieldAdd';
 
+import * as actions from '../actions/action';
+
 class App extends Component {
 
 	constructor(props) {
@@ -104,44 +106,11 @@ const mapStateToProps = state => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-const FieldInfo_DispatchToProps = dispatch => {
-	return {
-	  dispatch: dispatch,
-	  onFieldEdit: (...args) => {
-		dispatch({
-            type: "REQUEST_FIELD_EDIT",
-            payload: {
-                category: args[0], //category,
-                col: args[1], //col,
-                name: args[2], //k,
-                value: args[3], //v
-			}
-		  });
-	  },
-	  onFieldActivate: (payload) => {
-			dispatch({
-				type: "REQUEST_FIELD_EDIT",
-				payload
-			});
-	  },
-	  
-	}  
-}
-
-const PanelFieldInfoConnected = injectIntl(connect(mapStateToProps, FieldInfo_DispatchToProps)(PanelFieldInfo), { intlPropName:'intl' });
+const PanelFieldInfoConnected = injectIntl(connect(mapStateToProps, actions.FieldInfo_DispatchToProps)(PanelFieldInfo), { intlPropName:'intl' });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const FieldAdd_D2P = dispatch => {
-	return {
-		onFieldAdd: payload => {
-			dispatch({ type: "REQUEST_FIELD_ADD", payload});
-		}
-	}
-	
-}
-
-const PanelFieldAddConnected = injectIntl(connect(mapStateToProps, FieldAdd_D2P)(PanelFieldAdd), { intlPropName:'intl' });
+const PanelFieldAddConnected = injectIntl(connect(mapStateToProps, actions.FieldAdd_D2P)(PanelFieldAdd), { intlPropName:'intl' });
 
 
 export default injectIntl(connect(

@@ -13,6 +13,7 @@ import serialize from 'form-serialize';
 
 import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
 import Panel from '../compo/Panel';
+import { etlSimulDispatchToProps } from "../actions/action"
 
 class PanelDataPreview extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class PanelDataPreview extends Component {
 	getForm(){
 		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length > 0){
 			return (
-        <form style={{margin:0}} onSubmit={this.sendLogData} method="POST" action="/">
+        <form style={{margin:0}} onSubmit={this.sendLogData} method="POST" action="#">
         <Row>
           
           <Col md="12" className="mt-3 mb-3 d-flex justify-content-center">
@@ -104,11 +105,11 @@ class PanelDataPreview extends Component {
       <Card body>
           <CardTitle>ETL Status</CardTitle>
           <CardText className="d-flex justify-content-around">
-            <Button>WAS</Button>
+            <Button className={this.props.etl.status.was?"btn-bordered-primary":""}>WAS</Button>
             <span>→</span>
-            <Button>Fluentd</Button>
+            <Button className={this.props.etl.status.fluentd?"btn-bordered-primary":""}>Fluentd</Button>
             <span>→</span>
-            <Button>Bigquery</Button>
+            <Button className={this.props.etl.status.bigquery?"btn-bordered-primary":""}>Bigquery</Button>
           </CardText>
       </Card>
       </Col>
@@ -134,18 +135,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onSendData: formData => {
-      dispatch({
-        type:"REQUEST_ETL_SEND",
-        payload: formData
-      })
-    }
-  }
-}
-
 export default injectIntl(connect(
   mapStateToProps,
-  mapDispatchToProps
+  etlSimulDispatchToProps
 )(PanelDataPreview), {intlPropName:'intl'});

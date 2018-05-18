@@ -37,12 +37,13 @@ export default class PanelFieldAdd extends Component {
   }
 
   handleSubmit(event) {
-		//const data = new FormData(event.target);
-		let data = serialize(event.target, { hash: true });
-		this.setState({loading:true,field_name:data["field_name"]});
-		this.props.onFieldAdd(data);
-		event.preventDefault();
-		event.target.reset();
+	event.preventDefault();	
+	//const data = new FormData(event.target);
+	let data = serialize(event.target, { hash: true });
+	this.setState({loading:true,field_name:data["field_name"]});
+	this.props.onFieldAdd(data);
+	
+	event.target.reset();
   }
 
 	getFieldAddForm(){
@@ -65,7 +66,7 @@ export default class PanelFieldAdd extends Component {
 				</Row>
 				<Row>
 				<Col className="m-3">				
-					<form onSubmit={this.handleSubmit} action={CustomUtils.FIELD_ADD_URI} method="POST">
+					<form onSubmit={this.handleSubmit} action="#" method="POST">
 					<Table>
 					<tbody>
 						<tr>

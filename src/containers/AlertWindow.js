@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Container, Row, Col, Collapse } from 'reactstrap';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { alertWindowDispatchToProps } from '../actions/action';
 
 class AlertWindow extends Component {
 	constructor(props) {
@@ -59,19 +60,8 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    closeModel: id => {
-      dispatch({
-
-			})
-		}
-		,
-		dispatch: dispatch
-  }
-}
 
 export default injectIntl(connect(
   mapStateToProps,
-  mapDispatchToProps
+	alertWindowDispatchToProps
 )(AlertWindow));

@@ -21,7 +21,7 @@ const dataPreviewReducer = (state = { dataList:[], paging:{totalData:0,page:1} }
     }
 };
 
-const etlReducer = (state = { data:null }, action) => {
+const etlReducer = (state = { data:null, status:{ was:false, fluentd:false, bigquery:false } }, action) => {
     switch (action.type) {
         case "ETL_FULFILLED":
             return Object.assign({}, state, action.res);

@@ -11,6 +11,8 @@ import serialize from 'form-serialize';
 import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
 import Panel from '../compo/Panel';
 
+import * as actions from '../actions/action';
+
 class PanelDataPreview extends Component {
   constructor(props) {
 		super(props);
@@ -31,25 +33,15 @@ class PanelDataPreview extends Component {
     this.dataRefresh = this.dataRefresh.bind(this);
 	}
   
-  requestDatalist(params){
-    if(params.page <= 0){
-      params.page = 1;
-    }
-    this.props.dispatch(
-      {
-        type:"REQUEST_DATALIST",
-        ...params
-      }
-    )
-  }
+  
 
 	componentDidMount(){
-    this.requestDatalist({page:this.props.dataPreview.paging.page});
+    this.props.requestDatalist({page:this.props.dataPreview.paging.page});
   }
 
   movePage(page){
     return (event) => {
-        this.requestDatalist(
+        this.props.requestDatalist(
           {
             page:page,
             ...this.state
@@ -73,7 +65,7 @@ class PanelDataPreview extends Component {
     this.setState({
       ...searchParams
     })
-		this.props.dispatch({ type: "REQUEST_DATALIST", ...searchParams});
+		this.props.requestDatalist(searchParams);
 		event.preventDefault();
   }
 
@@ -169,7 +161,7 @@ class PanelDataPreview extends Component {
     this.setState({
       V:""
     })
-    this.requestDatalist(
+    this.props.requestDatalist(
       {
         page:1
       }
@@ -190,7 +182,7 @@ class PanelDataPreview extends Component {
     return (
       <Row>
         <Col className="p-3">
-        <form onSubmit={this.handleSearch} method="POST">
+        <form onSubmit={this.handleSearch} method="POST" action="#">
 					<div className="d-flex justify-content-center">
             <Col md="1" className="p-0">
             <Select
@@ -234,7 +226,7 @@ class PanelDataPreview extends Component {
 
   dataRefresh(){
     console.log("refresh...");
-    this.requestDatalist(
+    this.props.requestDatalist(
       {
         page:1
       }
@@ -270,21 +262,8 @@ class PanelDataPreview extends Component {
   }
 }
 
-const mapStateToProps = state => {
-	return {
-    vo: state.schemaVo,
-    dataPreview: state.dataPreview
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    dispatch:dispatch
-  }
-}
-
 export default injectIntl(connect(
-  mapStateToProps,
-  mapDispatchToProps
+  actions.dataListStateToProps,
+  actions.datalistDispatchToProps
 )(PanelDataPreview), { intlPropName:'intl' });
 
