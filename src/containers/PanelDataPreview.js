@@ -105,9 +105,9 @@ class PanelDataPreview extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.dataPreview.dataList.map( datarow => {
+          {this.props.dataPreview.dataList.map( (datarow, i) => {
             return (
-            <tr key={datarow.guid}>
+            <tr key={datarow.guid + '_' + i}>
               {filterdCols.map( col=>
                 (
                   <th key={datarow.guid + '_' + col}>{datarow[col]}</th>      
@@ -172,6 +172,7 @@ class PanelDataPreview extends Component {
     this.setState({
       V:event.target.value
     });
+    
   }
   getSearch(){
     let filterdCols = this.getFilteredCols();
@@ -212,7 +213,7 @@ class PanelDataPreview extends Component {
             </Col>
             <Col md="1" className="p-0 d-flex">
             <Button type="submit" className="btn-bordered-primary btn-block" color="primary"><FormattedMessage id="search"/></Button>
-            {this.state.V &&
+            {this.props.dataPreview.param.v &&
             <Button className="btn-white" color="secondary" onClick={this.resetSearch}><FormattedMessage id="reset"/></Button>
             }
             </Col>

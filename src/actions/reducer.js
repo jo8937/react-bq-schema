@@ -12,7 +12,7 @@ const debuggerReducer = (state = {}, action) => {
     return state;
 };
 
-const dataPreviewReducer = (state = { dataList:[], paging:{totalData:0,page:1} }, action) => {
+const dataPreviewReducer = (state = { dataList:[], paging:{totalData:0,page:1}, param:{k:"",m:"",v:""} }, action) => {
     switch (action.type) {
         case "DATALIST_FULFILLED":
             return Object.assign({}, state, action.res);
@@ -21,7 +21,7 @@ const dataPreviewReducer = (state = { dataList:[], paging:{totalData:0,page:1} }
     }
 };
 
-const etlReducer = (state = { data:null, sending:false, status:{ was:false, fluentd:false, bigquery:false } }, action) => {
+const etlReducer = (state = { data:{}, sending:false, status:{ was:false, fluentd:false, bigquery:false } }, action) => {
     switch (action.type) {
         case "ETL_SEND_FULFILLED":
             return Object.assign({}, state, action.res, {sending: true});

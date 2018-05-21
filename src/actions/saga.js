@@ -160,6 +160,13 @@ class Sagas{
                 body: JSON.stringify({})
             });
             if(res && res.status && res.status.bigquery){
+                yield put({
+					type:"REQUEST_DATALIST",
+                    page: 1,
+                    K:"guid",
+                    M:"EQUAL",
+                    V:res.data.guid
+				});
                 return true;
             }else{
                 yield call(sleep, 3000);

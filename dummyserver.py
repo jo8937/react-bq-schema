@@ -350,7 +350,7 @@ def tabledata(k):
     req = request.json or {}
     page = req.get("page",1)
     listSize = req.get("listSize",10)
-
+    global datalist
     res_datalist = datalist
     if req.get("K") and req.get("V") and req.get("M"):
         if req.get("M") == "EQUAL":
@@ -373,9 +373,9 @@ def tabledata(k):
 		"previewMode": "SELECT_RECENT",
 		"search": [],
 		"cols": [],
-		"k": "",
-		"m": "like",
-		"v": "",
+		"k": req.get("K"),
+		"m": req.get("M"),
+		"v": req.get("V"),
 		"columnNameToStringForLikeSearch": False
 	},
 	"paging": {
@@ -423,7 +423,22 @@ def tabledata_send_monitor(k):
     weblog.debug("etl monitor at...%s",monitor_counts)
     diff = datetime.now() - monitor_counts
     if diff.seconds > 7:
-        return jsonify(status=dict( was=True, fluentd=True, bigquery=True))
+        global datalist
+        i = diff.seconds
+        d = {
+            "category":"loginlog",
+            "guid":"avdvsavdsavsdvasdv%s" % i,
+            "dateTime":(datetime.now()).strftime('%Y-%m-%d %H:%M:%S'), 
+            "uid":i, 
+            "aid":2.1, 
+            "longName":"asdfasdfasdfaaaa%s"%i, 
+            "shortName":"b%s"%i,
+            "tag1":"tag-%s"%i,
+            "testDate":(datetime.now()).strftime('%Y-%m-%d %H:%M:%S'), 
+            "open": False
+        }
+        datalist.append(d)
+        return jsonify(status=dict(was=True, fluentd=True, bigquery=True), data=d)
     elif diff.seconds > 3:
         return jsonify(status=dict(was=True, fluentd=True, bigquery=False))
     else:
