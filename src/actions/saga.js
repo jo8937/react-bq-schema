@@ -30,9 +30,16 @@ function* fetchSaga(actions, actionName, options) {
         });
         return res;
     } catch (e) {
-        // Bad response from server : 405
         console.log(e);
-        if (e.message.match(/Network request failed/g)) {
+        if(e.status && e.status == 401 && e.body){
+            let blobres = yield call(() => e.body);
+            let jsonres = JSON.parse(blobres);
+            yield put({
+                type: "ALERT_MESSAGE",
+                msgIdTitle: "label.need_login",
+                message: jsonres.message
+            });
+        }else if (e.message.match(/Network request failed/g)) {
             
             let loginCheckSuccess = yield call(fetchLoginCheck);
             // network fail but login is ok... 
@@ -70,6 +77,10 @@ function* fetchLoginCheck() {
   static FIELD_EDIT_URI = APP_URI['BASE_URI'] + "/schema/field_edit_proc";
   static FIELD_ADD_URI = APP_URI['BASE_URI'] + "/schema/field_add_proc";
 */
+function *sleep(time) {
+    yield new Promise(resolve => setTimeout(resolve, time));
+  }
+
 class Sagas{
 
     static *fetch_datalist_with_schema(actions) {
@@ -115,8 +126,12 @@ class Sagas{
         yield call(fetchSaga, action, "FIELD_EDIT",{
             body: JSON.stringify( action.payload)
         });
+    }
 
-
+    static *fetch_etl_send(action) {
+        yield call(fetchSaga, action, "ETL_SEND",{
+            body: JSON.stringify( action.payload)
+        });
     }
 
     static *refresh_source_and_datas(actions){
@@ -137,6 +152,20 @@ class Sagas{
     }
     static *hide_long_wait(action){
         
+    }
+
+    static *waiting_for_bigquery(action){
+        for(let i=0; i < 10; i++){
+            let res = yield call(fetchSaga, action, "ETL_MONITOR",{
+                body: JSON.stringify({})
+            });
+            if(res && res.status && res.status.bigquery){
+                return true;
+            }else{
+                yield call(sleep, 3000);
+            }
+        }
+        return false;
     }
 }
 
@@ -167,8 +196,11 @@ export default function* rootSaga() {
 		fork(function*(){
 			yield takeLatest("REQUEST_FIELD_ADD", Sagas.show_long_wait);
         }),
+        fork(function*(){
+			yield takeLatest("ETL_SEND_FULFILLED", Sagas.waiting_for_bigquery);
+        }),
 		fork(function*(){
 			yield takeLatest("FIELD_ADD_FULFILLED", Sagas.hide_long_wait);
-        })
+        }),
 	];
 }

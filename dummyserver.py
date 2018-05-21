@@ -13,7 +13,6 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 from flask import redirect, url_for, send_from_directory, abort
-from datetime import timedelta
 from flask.templating import render_template
 import logging
 from datetime import datetime, timedelta
@@ -35,6 +34,8 @@ def hello():
 
 #############################################################
 # Schema Explorer
+
+monitor_counts = datetime.now()
 
 schema = {
   "schema" : {
@@ -228,12 +229,12 @@ datalist = [{
 } for i in xrange(0,123)]
 
    
-@app.route("/app/<k>/define/schema/view/<cate>.json")
+@app.route("/app/<k>/logdef/schema/view/<cate>.json")
 def view(k,cate):
     time.sleep(1)
     return jsonify(schema)
 
-@app.route("/app/<k>/define/schema/detail/<cate>.json")
+@app.route("/app/<k>/logdef/schema/detail/<cate>.json")
 def viewdetail(k,cate):
     return jsonify({
     "category" : "test",
@@ -248,12 +249,12 @@ def viewdetail(k,cate):
 #############################################################
 # Schema Controller
 
-@app.route("/app/<k>/define/schema/write_proc.json")
+@app.route("/app/<k>/logdef/schema/write_proc.json")
 def write_proc(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
     return jsonify(success=True)
 
-@app.route("/app/<k>/define/schema/field_add_proc.json", methods=['GET', 'POST'])
+@app.route("/app/<k>/logdef/schema/field_add_proc.json", methods=['GET', 'POST'])
 def field_add(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
     time.sleep(1)
@@ -276,7 +277,7 @@ def field_add(k):
    
     return jsonify(success=True, field=newField)
 
-@app.route("/app/<k>/define/field/active", methods=['GET', 'POST'])
+@app.route("/app/<k>/logdef/field/active", methods=['GET', 'POST'])
 def field_active(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
 
@@ -287,7 +288,7 @@ def field_active(k):
 
     return jsonify(success=True)
 
-@app.route("/app/<k>/define/schema/field_edit_proc", methods=['GET', 'POST'])
+@app.route("/app/<k>/logdef/schema/field_edit_proc", methods=['GET', 'POST'])
 def field_edit_proc(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
 
@@ -297,7 +298,7 @@ def field_edit_proc(k):
 
     return jsonify(success=True)
 
-@app.route("/app/<k>/define/schema/schema_edit_proc", methods=['GET', 'POST'])
+@app.route("/app/<k>/logdef/schema/schema_edit_proc", methods=['GET', 'POST'])
 def schema_edit_proc(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
 
@@ -310,7 +311,7 @@ def schema_edit_proc(k):
 #############################################################
 # Utils
 
-@app.route("/app/<k>/define/trace/<cate>")
+@app.route("/app/<k>/logdef/schema/trace/<cate>")
 def trace(k,cate):
     j = json.dumps(schema, indent=4, ensure_ascii=False)
     weblog.debug(j)
@@ -319,10 +320,11 @@ def trace(k,cate):
 #############################################################
 # Utils : Source Generating .. etc 
 
-@app.route("/app/<k>/define/schema/generate_source.json", methods=['GET', 'POST'])
+@app.route("/app/<k>/logdef/schema/generate_source.json", methods=['GET', 'POST'])
 def generate_source(k):
     #idx: 142
     #lang: OBJC
+    #return jsonify(url="/login", message="need login"), 401
     #return abort(500);
     #return redirect("http://google.com");
     try:
@@ -342,7 +344,7 @@ def generate_source(k):
 #############################################################
 # Data Explorer 
 
-@app.route("/app/<k>/define/tabledata.json", methods=['GET', 'POST'])
+@app.route("/app/<k>/logdef/data/tabledata.json", methods=['GET', 'POST'])
 def tabledata(k):
     weblog.debug("show table data")
     req = request.json or {}
@@ -409,18 +411,27 @@ def tabledata(k):
 	]
 })
 
-@app.route("/app/<k>/define/<category>/send")
-def tabledata_send_sample(k,dataset,tablename):
+@app.route("/app/<k>/logdef/etl/send", methods=['GET', 'POST'])
+def tabledata_send_sample(k):
+    global monitor_counts
+    monitor_counts = datetime.now()
     return jsonify(dataList=[{"title":"a"}])
 
-@app.route("/app/<k>/define/<category>/monitor")
-def tabledata_send_monitor(k,dataset,tablename):
-    weblog.debug("etl monitor at...")
-    return jsonify(dataList=[{"title":"a"}])
+@app.route("/app/<k>/logdef/etl/monitor", methods=['GET', 'POST'])
+def tabledata_send_monitor(k):
+    global monitor_counts
+    weblog.debug("etl monitor at...%s",monitor_counts)
+    diff = datetime.now() - monitor_counts
+    if diff.seconds > 7:
+        return jsonify(status=dict( was=True, fluentd=True, bigquery=True))
+    elif diff.seconds > 3:
+        return jsonify(status=dict(was=True, fluentd=True, bigquery=False))
+    else:
+        return jsonify(status=dict(was=True, fluentd=False, bigquery=False))
 
 @app.route("/api/intra/check_login_session", methods=['GET', 'POST'])
 def check_login_session():
-    return jsonify(success=False,message="login session not found")
+    return jsonify(success=True,message="login session not found")
 
 
 @app.after_request

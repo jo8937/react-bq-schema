@@ -15,7 +15,7 @@ import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
 import Panel from '../compo/Panel';
 import { etlSimulDispatchToProps } from "../actions/action"
 
-class PanelDataPreview extends Component {
+class PanelEtlSimulation extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
@@ -23,8 +23,7 @@ class PanelDataPreview extends Component {
         lineNumbers: true,
         theme: "default",
         mode:"javascript", 
-        json: true,
-        sending: false
+        json: true
       }
     }
     this.sendLogData = this.sendLogData.bind(this);
@@ -33,7 +32,6 @@ class PanelDataPreview extends Component {
   sendLogData(event){
     let data = serialize(event.target, { hash: true });
     console.log(data);
-    this.setState({sending:true});
     this.props.onSendData(data);
     event.preventDefault();
   }
@@ -59,7 +57,7 @@ class PanelDataPreview extends Component {
               }
               </Col>
 							<Col md="4" className="m-auto">
-                {this.state.sending ? (
+                {this.props.etl.sending ? (
                   <div>
                       <div><ClimbingBoxLoader color={'#2a84d8'}/></div>
                       <div>sending ...</div>
@@ -138,4 +136,4 @@ const mapStateToProps = state => {
 export default injectIntl(connect(
   mapStateToProps,
   etlSimulDispatchToProps
-)(PanelDataPreview), {intlPropName:'intl'});
+)(PanelEtlSimulation), {intlPropName:'intl'});

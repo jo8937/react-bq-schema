@@ -1,11 +1,16 @@
 import fetch from 'cross-fetch';
 
 class FetchTimeoutError extends Error {
-  a = 0;
+  status = 0;
 }
 
-class HttpStatusError extends Error {
-
+class CustomFetchHttpStatusError extends Error {
+  constructor(status, message, body) {
+    super();
+    this.status = status;
+    this.message = message;
+    this.body = body;
+  }
 }
 
 
@@ -24,10 +29,15 @@ export default function timeoutfetch(url, options) {
       if (!res.ok) {
         console.log("-------------- FETCH ERROR RES : " + res.status + " FROM " + url);
         console.log(res);
-        if(res.status && res.status == 405){
-          throw new HttpStatusError("Network request failed : " + res);
+        if(res.status){
+          if(res.status == 405){
+            throw new CustomFetchHttpStatusError(res.status, "Network request failed : " + res.statusText, res.text());
+          }
+          if(res.status == 401){
+            throw new CustomFetchHttpStatusError(res.status, "Auth fail : " + res.statusText, res.text());
+          }
         }
-        throw new HttpStatusError("Bad response from server : " + res);
+        throw new CustomFetchHttpStatusError(res.status, "Bad response from server : " + res.statusText, res.text());
       }
       return res.json();
     }).catch(err =>{
