@@ -32,7 +32,7 @@ module.exports.ko = {
     "etl_simulation_data_cannnot_delete":"입력한 데이터는 삭제할 수 없습니다",
     "toggle_optional_fields":"사용하지 않는 필드를 숨기거나 펼칩니다",
     "toggle_show":"펼침",
-    "toggle_hide":"숨김",
+    "toggle_hide":"접음",
     "input_search":"검색값을 입력하세요",
     "schema_view.gameGroup": "그룹",
     "schema_view.category": "카테고리",
