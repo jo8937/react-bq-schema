@@ -6,6 +6,7 @@ module.exports.ko = {
     "field_info": "필드 정보",
     "data_preview": "데이터 미리보기",
     "field_name": "필드명",
+    "reset":"리셋",
     "name": "이름",
     "title": "제목",
     "type": "타입",

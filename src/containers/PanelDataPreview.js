@@ -17,11 +17,6 @@ class PanelDataPreview extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-      K:"",
-      M:"",
-      V:"",
-      SK:"",
-      SM:""
     }
     this.movePage = this.movePage.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -44,7 +39,11 @@ class PanelDataPreview extends Component {
         this.props.requestDatalist(
           {
             page:page,
-            ...this.state
+            K:this.props.dataPreview.param.k,
+            M:this.props.dataPreview.param.m,
+            V:this.props.dataPreview.param.v,
+            SM:this.props.dataPreview.param.sortMethod,
+            SK:this.props.dataPreview.param.sortKey,
           }
         );
         event.preventDefault();
@@ -158,9 +157,6 @@ class PanelDataPreview extends Component {
   }
 
   resetSearch(event){
-    this.setState({
-      V:""
-    })
     this.props.requestDatalist(
       {
         page:1
@@ -169,10 +165,7 @@ class PanelDataPreview extends Component {
   }
   
   searchInput(event){
-    this.setState({
-      V:event.target.value
-    });
-    
+    this.props.editDatalistCond(event.target);
   }
   getSearch(){
     let filterdCols = this.getFilteredCols();
@@ -209,7 +202,7 @@ class PanelDataPreview extends Component {
 								/>
             </Col>
             <Col md="2" className="p-0">
-            <Input type="text" name="V" value={this.state.V} onChange={this.searchInput} id="field_sample_value" placeholder={this.props.intl.formatMessage({"id":"input_search"})} required/>
+            <Input type="text" name="V" defaultValue={this.props.dataPreview.param.v} onChange={this.searchInput} id="field_sample_value" placeholder={this.props.intl.formatMessage({"id":"input_search"})} required/>
             </Col>
             <Col md="1" className="p-0 d-flex">
             <Button type="submit" className="btn-bordered-primary btn-block" color="primary"><FormattedMessage id="search"/></Button>

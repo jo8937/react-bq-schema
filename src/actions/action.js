@@ -55,6 +55,14 @@ export const datalistDispatchToProps = dispatch => {
 					...params
 				}
 			)
+		},
+		modifyDatalistCond : (params) => {
+			dispatch(
+				{
+					type:"CHANGE_DATALIST_COND",
+					...params
+				}
+			)
 		}
 		
 	}

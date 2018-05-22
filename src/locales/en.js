@@ -6,6 +6,7 @@ module.exports.en = {
     "field_info": "Field Info",
     "data_preview": "Data Preview",
     "field_name": "Field Name",
+    "reset":"reset",
     "name": "Name",
     "title": "Title",
     "type": "Type",
