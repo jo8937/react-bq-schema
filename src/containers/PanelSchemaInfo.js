@@ -8,12 +8,13 @@ import { FormattedMessage } from 'react-intl';
 import Panel from '../compo/Panel';
 import EditableCustom from '../compo/EditableCustom';
 import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
+import * as moment from 'moment';
 
 class PanelSchemaInfo extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-			labelKeys : ["gameGroup","category","description","parentCategory"]
+			labelKeys : ["gameGroup","category","parentCategory","regDate","description"]
 		}
 	}
 	
@@ -29,7 +30,7 @@ class PanelSchemaInfo extends Component {
 
 			return (
 				<Container>
-						{this.state.labelKeys.map( k => {
+						{this.state.labelKeys.filter(k => this.props.vo.schema[k]).map( k => {
 								var content = this.props.vo.schema[k]
 								if(["description"].includes(k)){
 										content = <EditableCustom 
@@ -39,6 +40,8 @@ class PanelSchemaInfo extends Component {
 										value={this.props.vo.schema[k]}
 										onSubmit={this.updatePropertyValue}
 										/>
+								}else if(k == "regDate"){
+									content = moment(this.props.vo.schema[k]).format("YYYY-MM-DD HH:mm:ss")
 								}
 
 								return (

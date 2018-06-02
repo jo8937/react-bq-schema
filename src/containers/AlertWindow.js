@@ -26,6 +26,11 @@ class AlertWindow extends Component {
 		if(this.props.alertmessage.onOk){
 			this.props.alertmessage.onOk();
 		}
+
+		if(this.props.alertmessage.url){
+			window.location.href = this.props.alertmessage.url;
+		}
+
 		this.toggleModal();
 	}
 
@@ -45,7 +50,6 @@ class AlertWindow extends Component {
 				</ModalBody>
 				<ModalFooter>
 					<Button className={"mr-auto text-"+this.props.alertmessage.theme} color="secondary" onClick={this.clickOk}><FormattedMessage id={this.props.alertmessage.msgIdOk}/></Button>{' '}
-					{/* <Button color="secondary" onClick={this.toggleModal}><FormattedMessage id="cancel"/></Button> */}
 				</ModalFooter>
 				</Modal>
 				</div>

@@ -19,13 +19,45 @@ import CustomUtils from '../utils/custom-utils'
 
 import rootReducer from './reducer'
 import rootSaga from './saga'
+import { toast  } from 'react-toastify';
+import { RES_PATTERN, REQ_PATTERN } from './action'
 
 var initialLocale = CustomUtils.getLocale();
 
 addLocaleData([...koLocaleData, ...enLocaleData, ...jaLocaleData, ...zhLocaleData])
 
 const customMiddleWare = store => next => action => {
-	console.log("Middleware triggered:", action);
+	// ajax 요청 type 패턴이 오면 토스트 로딩 띄움
+	if(action.type.match(REQ_PATTERN)){
+		let actionTypeId = REQ_PATTERN.exec(action.type)[1];
+		let message = action.type;
+		let intl = store.getState().intl;
+		let toastId = null;
+		if(intl && intl.messages["loading."+actionTypeId.toLowerCase()]){
+			message = intl.messages["loading."+actionTypeId.toLowerCase()];
+			toastId = toast(message);
+		}
+		store.dispatch({
+			type: "SAVE_TOAST_ID",
+			actionTypeId: actionTypeId,
+			toastId : toastId
+		})
+	// ajax 응답 type 이 오면... 토스트 로딩 지음
+	}else if(action.type.match(RES_PATTERN)){
+		let actionTypeId = RES_PATTERN.exec(action.type)[1];
+		let ls = store.getState().loadingStatus;
+		if (ls && ls[actionTypeId] && ls[actionTypeId].toastId){
+			toast.dismiss(ls[actionTypeId].toastId);
+		};
+		store.dispatch({
+			type: "DELETE_TOAST_ID",
+			actionTypeId: actionTypeId
+		})
+		
+	}else if(action.type == "SHOW_TOAST"){
+		//toast(action.message, action.options);
+	}
+
 	next(action);
 }
 
@@ -41,7 +73,7 @@ const sagaMiddleware = createSagaMiddleware()
 const store = createStore(rootReducer, initialState,
 	composeWithDevTools(
 		applyMiddleware(
-			logger,
+			//logger,
 			ReduxThunk,
 			sagaMiddleware,
 			customMiddleWare,

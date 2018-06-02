@@ -9,6 +9,8 @@ import {Controlled as CodeMirror} from 'react-codemirror2'
 import Panel from '../compo/Panel';
 import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
 
+import * as actions from '../actions/action';
+
 require('codemirror/mode/javascript/javascript');
 
 class PanelSourceGenerator extends Component {
@@ -24,8 +26,8 @@ class PanelSourceGenerator extends Component {
         },
         {
           "id":"server",
-          //"subTab" : ["SERVER_PHP","SERVER_JAVASCRIPT","SERVER_CSHARP_NXLOG","SERVER_JAVA","SERVER_PYTHON","SERVER_RUBY"]
-          "subTab" : ["SERVER_PHP"]
+          "subTab" : ["SERVER_PHP","SERVER_JAVASCRIPT","SERVER_JAVA","SERVER_PYTHON","SERVER_CSHARP","SERVER_CSHARP_NXLOG","SERVER_PHP_SCRIBED"]
+          //"subTab" : ["SERVER_PHP"]
         },
         {
           "id":"client",
@@ -46,12 +48,7 @@ class PanelSourceGenerator extends Component {
 	}
   
   requestSource(lang){
-    this.props.dispatch(
-      {
-        type:"REQUEST_SOURCE",
-        lang: lang
-      }
-    )
+    this.props.dispatch(actions.requestSource(lang));
   }
 
 	componentDidMount(){
@@ -106,7 +103,13 @@ class PanelSourceGenerator extends Component {
       return (
       <Dropdown nav isOpen={isActive} toggle={this.toggleDropdown(tab)} className={classnames({ show: isSelected || isActive })} key={tab['id']}>
         <DropdownToggle nav caret>
-          {f(tab["id"]+"_source")} {isSelected?" : ":""} {isSelected ? f(lang+"_source") : ""}
+          {isSelected ? 
+            (
+              <span>[{f(tab["id"]+"_source")}] <strong>{f(lang+"_source")}</strong></span>
+            )  
+            :
+            f(tab["id"]+"_source")
+          }
         </DropdownToggle>
         <DropdownMenu>
           {
@@ -123,52 +126,68 @@ class PanelSourceGenerator extends Component {
     }
     );
   
-
-    return (
-      <Panel title={this.props.title}>
-          <Row>
-            <Col className="m-3">
-            <Nav tabs>
-              {tabHtml}
-              {/* 
-              <NavItem>
-                <NavLink className={classnames({ active: this.state.activeTab === '3' })} onClick={() => { this.toggle('3'); }}>
-                  Other
-                </NavLink>
-              </NavItem> 
-              */}
-            </Nav>
-        <TabContent>
-          <TabPane>
-            <Card style={{borderTop:0, borderRadius:0}}>
-                {this.getContent()}
-            </Card>
-          </TabPane>
-        </TabContent>
-            </Col>
+    if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length > 0){
+      return (
+        <Panel title={this.props.title}>
+            <Row>
+              <Col className="m-3">
+              <Nav tabs>
+                {tabHtml}
+              </Nav>
+          <TabContent>
+            <TabPane>
+              <Card style={{borderTop:0, borderRadius:0}}>
+                  {this.getContent()}
+              </Card>
+            </TabPane>
+          </TabContent>
+              </Col>
+            </Row>
+        </Panel>
+      );
+    }else{
+      return (
+        <Panel title={this.props.title}>
+          <Row className="mt-md-3 mb-md-3 justify-content-center">
+                <Col xs="2" className="text-left">
+                <RingLoader color={'#2a84d8'}/>
+                </Col>
           </Row>
-      </Panel>
-    );
+        </Panel>
+			);
+    }
   } // end render
 
 	getContent(){
-    if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length > 0
-      && this.props.sourceGen && this.props.sourceGen.source){
+    if(this.props.sourceGen && this.props.sourceGen.source){
 			return (
+        <div>
           <Row>
-            <Col className="m-3">
-            <CodeMirror
-                value={this.props.sourceGen.source}
-                options={this.state.options}
-                onBeforeChange={(editor, data, value) => {
-                  this.setState({value});
-                }}
-                onChange={(editor, data, value) => {
-                  console.log(value);
-                }}
-              />
-            </Col>
-        </Row>
+              <Col className="m-3">
+              <CodeMirror
+                  value={this.props.sourceGen.source}
+                  options={this.state.options}
+                  onBeforeChange={(editor, data, value) => {
+                    this.setState({value});
+                  }}
+                  onChange={(editor, data, value) => {
+                    console.log(value);
+                  }}
+                />
+              </Col>
+          </Row>
+          {this.props.sourceGen.lang.startsWith("SERVER_") && (
+          <Row>
+              <Col className="m-3">
+              <i className="fa fa-hand-o-right mr-2"/>
+              <a href="#" target="_blank">
+              #
+              </a>
+              </Col>
+          </Row> 
+          )
+          }
+        </div>
 			);
 		}else{
 			return (

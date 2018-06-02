@@ -33,10 +33,12 @@ import classnames from "classnames";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import Switch from "react-switch";
 
+import ReactTooltip from 'react-tooltip';
 import CustomUtils, {formatMessage as f } from '../utils/custom-utils'
 import EditableCustom from "../compo/EditableCustom";
 import Panel from "../compo/Panel";
 import SelectBoxFieldActive from "../compo/SelectBoxFieldActive";
+import * as moment from 'moment';
 
 export default class PanelFieldInfo extends Component {
     constructor(props) {
@@ -52,6 +54,17 @@ export default class PanelFieldInfo extends Component {
 
     }
 
+    componentDidUpdate(prevProps, prevState){
+        if(
+            (prevState.fieldOpen != this.state.fieldOpen)
+            ||
+            (prevProps.vo.fields != this.props.vo.fields)
+        ){
+            ReactTooltip.rebuild();
+        }
+    }
+
+      
     updateFieldProperty = (k, v, prop) => {
         this.props.onFieldEdit(this.props.vo.schema.category, prop.col, k, v);
     };
@@ -172,11 +185,13 @@ export default class PanelFieldInfo extends Component {
                                             "rowbody flex-nowrap fieldrow"
                                         }
                                     >
-                                        <Col md="2" className={txtClass}>{k.name}</Col>
+                                        <Col md="2" className={txtClass} data-for="">
+                                        {k.name}
+                                        </Col>
                                         <Col md="2" className={txtClass}>{k.type}</Col>
                                         <Col md="3">
                                             <EditableCustom
-                                                col="description"
+                                                col="DESC"
                                                 name={k.name}
                                                 dataType="text"
                                                 mode="inline"
@@ -188,7 +203,7 @@ export default class PanelFieldInfo extends Component {
                                         </Col>
                                         <Col md="2" >
                                             <EditableCustom
-                                                col="sampleValue"
+                                                col="SAMPLE"
                                                 name={k.name}
                                                 dataType="text"
                                                 mode="inline"
@@ -206,7 +221,21 @@ export default class PanelFieldInfo extends Component {
                                                 onFieldActivate={this.props.onFieldActivate}
                                             />
                                         </Col>
-                                        <Col md="1" />
+                                        <Col md="1" data-for="fieldStatus" data-tip={
+                                            k.bigquery_info? 
+                                            (
+                                            this.props.intl.messages['schema_list.datalist.title.regDate'] + " : " + moment(k.regDate).format("YYYY-MM-DD HH:mm:ss")
+                                            )
+                                            :
+                                            this.props.intl.messages['bigquery.not.found']
+                                        }>
+                                        {
+                                            k.bigquery_info ? 
+                                            ""
+                                            :
+                                            <span><i className="fa fa-remove text-danger"/></span>
+                                        }
+                                        </Col>
                                     </Row>
                                 );
                             })}
@@ -224,7 +253,15 @@ export default class PanelFieldInfo extends Component {
             this.props.vo.fields.length
         ) {
             return (
-                <Panel title={this.props.title}>{this.getFieldList()}</Panel>
+                <Panel title={this.props.title}>
+                {this.getFieldList()}
+                <ReactTooltip 
+                    id="fieldStatus"
+                    type="success"
+                    aria-haspopup='true'
+                    effect="float"
+                    getContent={(status) => status}/>
+                </Panel>
             );
         } else {
             return (

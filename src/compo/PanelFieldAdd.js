@@ -40,8 +40,8 @@ export default class PanelFieldAdd extends Component {
 	event.preventDefault();	
 	//const data = new FormData(event.target);
 	let data = serialize(event.target, { hash: true });
-	this.setState({loading:true,field_name:data["field_name"]});
-	this.props.onFieldAdd(data);
+	this.setState({loading:true,field_name:data["name"]});
+	this.props.onFieldAdd( this.props.vo.schema, data);
 	
 	event.target.reset();
   }
@@ -50,7 +50,6 @@ export default class PanelFieldAdd extends Component {
 
 		let loading = this.state.loading;
 		if(loading && this.props.vo && this.props.vo.fields && this.props.vo.fields.find(row => row.name == this.state.field_name)){
-			this.setState({loading:false})
 			loading = false;
 		}
 
@@ -71,33 +70,35 @@ export default class PanelFieldAdd extends Component {
 					<tbody>
 						<tr>
 							<th scope="row">
-								<Input type="text" name="field_name" id="field_name" placeholder={this.props.intl.formatMessage({"id":"schema_define.add_field.name"})} invalid={false} pattern="[a-zA-Z_]+[a-zA-Z0-9_]+" required/>
+								<Input type="text" name="name" id="field_name" placeholder={this.props.intl.formatMessage({"id":"schema_define.add_field.name"})} invalid={false} pattern="[a-zA-Z_]+[a-zA-Z0-9_]+" required/>
 							</th>
 							<td>
 							 {/* {this.props.intl.formatMessage({"id":"schema_define.add_type.name"})} */}
 							 <Select
 									placeholder={this.props.intl.formatMessage({"id":"schema_define.add_type.name"})}
 									reqiured={true}
-									name="field_type"
+									name="type"
 									clearable={false}
 									searchable={false}
 									value={this.state.field_type}
 									onChange={this.handleChangeType}
 									options={[
 										{value:"STRING",label:"STRING"},
-										{value:"INTEGER",label:"INTEGER"}
+										{value:"INTEGER",label:"INTEGER"},
+										// {value:"INTEGER",label:"BOOLEAN"},
+										// {value:"INTEGER",label:"TIMESTAMP"}
 									]}
 								/>
 							</td>
 							<td>
-							<Input type="text" name="field_desc" id="field_desc" placeholder={this.props.intl.formatMessage({"id":"schema_define.add_desc.name"})} required/>
+							<Input type="text" name="description" id="field_desc" placeholder={this.props.intl.formatMessage({"id":"schema_define.add_desc.name"})} required/>
 							</td>
 							<td>
-							<Input type="text" name="field_sample_value" id="field_sample_value" placeholder={this.props.intl.formatMessage({"id":"schema_define.add_sample.name"})} required/>
+							<Input type="text" name="sampleValue" id="field_sample_value" placeholder={this.props.intl.formatMessage({"id":"schema_define.add_sample.name"})} required/>
 							</td>
 							<td>
 							<Select
-									name="field_active"
+									name="active"
 									clearable={false}
 									searchable={false}
 									value={this.state.field_active}

@@ -2,6 +2,7 @@ import fetch from 'cross-fetch';
 
 class FetchTimeoutError extends Error {
   status = 0;
+  timeout = "15sec";
 }
 
 class CustomFetchHttpStatusError extends Error {
@@ -18,9 +19,10 @@ export default function timeoutfetch(url, options) {
   let customoptions = Object.assign( {
     headers: {
       'Content-type': 'application/json',
-      'Access-Control-Allow-Origin':'*'
+      'Access-Control-Allow-Origin':'*',
+      "x-requested-with": "XMLHttpRequest"
     },
-    timeout: 7000,
+    timeout: 15000,
     method: "POST"
   }, options );
   

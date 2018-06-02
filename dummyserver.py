@@ -17,6 +17,7 @@ from flask.templating import render_template
 import logging
 from datetime import datetime, timedelta
 
+# test 222
 app = Flask(__name__, template_folder="build",static_folder='build/static',)
 
 reload(sys)  
@@ -229,27 +230,26 @@ datalist = [{
 } for i in xrange(0,123)]
 
    
-@app.route("/app/<k>/logdef/schema/view/<cate>.json")
-def view(k,cate):
+@app.route("/app/<k>/logdef/schema/view.json", methods=['GET', 'POST'])
+def view(k):
     time.sleep(1)
     return jsonify(schema)
 
-@app.route("/app/<k>/logdef/schema/detail/<cate>.json")
-def viewdetail(k,cate):
+@app.route("/app/<k>/logdef/schema/get/list.json", methods=['GET', 'POST'])
+def schemalist(k):
+    time.sleep(1)
     return jsonify({
-    "category" : "test",
-    "description" : "테스트",
-    "gameGroup" : "test",
-    "logType" : 0,
-    "parentCategory" : "",
-    "bigquery_dataset" : "",
-    "aaa" : "",
+        "dataList" : [
+            {"category":"loginlog"},
+            {"category":"downloadlog"},
+            {"category":"exitlog"}
+        ]
     })
 
 #############################################################
 # Schema Controller
 
-@app.route("/app/<k>/logdef/schema/write_proc.json")
+@app.route("/app/<k>/logdef/schema/write_proc.json", methods=['GET', 'POST'])
 def write_proc(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
     return jsonify(success=True)
@@ -257,17 +257,19 @@ def write_proc(k):
 @app.route("/app/<k>/logdef/schema/field_add_proc.json", methods=['GET', 'POST'])
 def field_add(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
+    f = request.json.get("fields")[0]
     time.sleep(1)
+    global schema
     newField = {
-                    "name" : request.json.get("field_name"),
-                    "type" : request.json.get("field_type"),
-                    "description" : request.json.get("field_desc"),
-                    "sampleValue" : request.json.get("field_sample_value"),
+                    "name" : f.get("name"),
+                    "type" : f.get("type"),
+                    "description" : f.get("description"),
+                    "sampleValue" : f.get("sampleValue"),
                     "category" : schema["schema"]["category"],
                     "fieldOpt" : "NULLABLE",
                     "common" : False,
                     "required" : False,
-                    "active" : request.json.get("field_active",0),
+                    "active" : f.get("active",0),
                     "regDate" : 1520577078000,
                     "segment" : False,
                     "clientHeader" : False,
@@ -275,28 +277,30 @@ def field_add(k):
                   }
     schema["fields"].append(newField)
    
-    return jsonify(success=True, field=newField)
+    return jsonify(success=True, data=[newField])
 
 @app.route("/app/<k>/logdef/field/active", methods=['GET', 'POST'])
 def field_active(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
-
+    f = None
     for index, row in enumerate(schema["fields"]):
         if request.json["name"] == row["name"]:
             weblog.debug("...")
             schema["fields"][index]["active"] = request.json["value"]
+            f = schema["fields"][index]
 
-    return jsonify(success=True)
+    return jsonify(success=True, data=f)
 
 @app.route("/app/<k>/logdef/schema/field_edit_proc", methods=['GET', 'POST'])
 def field_edit_proc(k):
     weblog.debug(json.dumps(request.json, indent=4, ensure_ascii=False))
-
+    f = None
     for index, row in enumerate(schema["fields"]):
         if request.json["name"] == row["name"]:
-            schema["fields"][index][request.json["col"]] = request.json["value"]
+            schema["fields"][index][request.json["col"].lower()] = request.json["value"]
+            f = schema["fields"][index]
 
-    return jsonify(success=True)
+    return jsonify(success=True, data=f)
 
 @app.route("/app/<k>/logdef/schema/schema_edit_proc", methods=['GET', 'POST'])
 def schema_edit_proc(k):
@@ -343,6 +347,9 @@ def generate_source(k):
 
 #############################################################
 # Data Explorer 
+@app.route("/app/<k>/logdef/schema/bigquery.json", methods=['GET', 'POST'])
+def bqschema(k):
+    return jsonify(schema = schema)
 
 @app.route("/app/<k>/logdef/data/tabledata.json", methods=['GET', 'POST'])
 def tabledata(k):
@@ -376,6 +383,8 @@ def tabledata(k):
 		"k": req.get("K"),
 		"m": req.get("M"),
 		"v": req.get("V"),
+        "sm": req.get("sm","DESC"),
+        "sk": req.get("sk"),
 		"columnNameToStringForLikeSearch": False
 	},
 	"paging": {

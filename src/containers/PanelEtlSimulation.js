@@ -37,7 +37,6 @@ class PanelEtlSimulation extends Component {
   }
 
 	getForm(){
-		if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length > 0){
 			return (
         <form style={{margin:0}} onSubmit={this.sendLogData} method="POST" action="#">
         <Row>
@@ -50,7 +49,15 @@ class PanelEtlSimulation extends Component {
                   <Row className="d-flex justify-content-left p-1" key={row.name}>
                     <Col md="3" className="text-right">{row.name}</Col>
                     <Col md="9">
+                    { row.name == "category" ? 
+                    (
+                    <Input type="text" name={row.name} defaultValue={this.props.vo.schema.category} required readOnly={true}/>
+                    )
+                    :
+                    (
                     <Input type="text" name={row.name} defaultValue={row.sampleValue} required/>
+                    )
+                    }
                     </Col>
                   </Row>
                 ))
@@ -66,7 +73,7 @@ class PanelEtlSimulation extends Component {
                     <div>
                       <div>
                       <Button type="submit" className="btn-bordered-primary btn-block" color="primary">
-                      데이터 입력
+                      <FormattedMessage id="submit_data"/>
                       </Button>
                       </div>
                       <div>
@@ -85,15 +92,6 @@ class PanelEtlSimulation extends Component {
         </Row>
         </form>
 			);
-		}else{
-			return (
-				<Row className="mt-md-3 mb-md-3 justify-content-center">
-							<Col xs="2" className="text-left">
-							<RingLoader color={'#2a84d8'}/>
-							</Col>
-				</Row>
-			);
-		}
   }
   
   getStatus(){
@@ -117,12 +115,25 @@ class PanelEtlSimulation extends Component {
   }
 
   render() {
-    return (
-      <Panel title={this.props.title}>
-        {this.getForm()}
-        {this.getStatus()}
-      </Panel>
-    );
+    if(this.props.vo && this.props.vo.fields && this.props.vo.fields.length > 0){
+      return (
+        <Panel title={this.props.title}>
+          {this.getForm()}
+          {this.getStatus()}
+        </Panel>
+      );
+    }else{
+      return (
+        <Panel title={this.props.title}>
+          <Row className="mt-md-3 mb-md-3 justify-content-center">
+                <Col xs="2" className="text-left">
+                <RingLoader color={'#2a84d8'}/>
+                </Col>
+          </Row>
+        </Panel>
+			);
+    }
+    
   }
 }
 

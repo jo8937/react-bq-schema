@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 
-function getQueryStringValue (key) {  
+export function getQueryStringValue (key) {  
   return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
 }  
 
@@ -34,5 +34,10 @@ export default class CustomUtils{
 }
 
 export function formatMessage(message, wrapperClassName) {
-  return <span className={wrapperClassName}><FormattedMessage id={message}/></span>;
+  if(message){
+    return <span className={wrapperClassName}><FormattedMessage id={message}/></span>;
+  }else{
+    return "";
+  }
+  
 };

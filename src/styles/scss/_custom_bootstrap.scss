@@ -165,6 +165,10 @@ $modal-content-border-radius:       0 !default;
   background-color: $model-info-color;
 }
 
+.modal-content.primary{
+  background-color: $primary;
+}
+
 a.editableLink{
   color:#6e6e6e;
 }

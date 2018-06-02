@@ -36,6 +36,9 @@ class Panel extends Component {
 						<div className="mt-auto mb-auto ml-1">
 						{this.props.titleOptional}
 						</div>
+						<div className="mt-auto mb-auto ml-1">
+						{this.props.titleOptional2}
+						</div>
 						<button type="button" aria-label="Close" className="btn btn-link ml-auto pl-3 pr-3" style={{borderLeft:1}} onClick={this.eventHandler}>
 						<i className={this.state.toggle ? 'fa fa-angle-up' : 'fa fa-angle-down'} aria-hidden="true">&nbsp;</i>
 						</button>

@@ -29,7 +29,7 @@ export default class SelectBoxFieldActive extends React.Component {
   handleChange = (selectedOption) => {
     this.setState(selectedOption);
     console.log(`Selected: ${selectedOption.value}, ${selectedOption.label}`);
-    this.props.onFieldActivate({ category: this.props.schema.category, col:"active", name: this.state.field.name, value: selectedOption.value });
+    this.props.onFieldActivate({ category: this.props.schema.category, col:"ACTIVE", name: this.state.field.name, value: selectedOption.value });
   }
 
   render() {
