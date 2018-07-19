@@ -1,5 +1,13 @@
 {
     "editor.fontSize": 14,
     "prettier.tabWidth": 4,
-    "prettier.jsxBracketSameLine": false
+    "prettier.jsxBracketSameLine": false,
+    "ruby.lint": {
+        "reek": true,
+        "rubocop": true,
+        "ruby": true, //Runs ruby -wc
+        "fasterer": true,
+        "debride": true,
+        "ruby-lint": true
+    }
 }
