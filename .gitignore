@@ -21,3 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .sass-cache
+
+yark.lock
+package-lock.json
